@@ -1,0 +1,16 @@
+<ion-view view-title="Rankin">
+  <ion-content>
+    <div class="list">
+      <div class="item item-remove-animate  chat-item item-avatar  " ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+        <img ng-src="./img/user.png" class="animated flipIxnX">
+        <!--<span class="item-note" ng-class="{'withcount': chat.msgCount}">-->
+        </span>
+        <h3>{{chat.name}}</h3>
+        <p style="color:#404d97; font-size:12px" class="animated fadeIn">{{chat.message}}</p>
+        <!--<p class="item-avatar-notify  animated " ng-class="{'green-notify': chat.online , 'flash': chat.online}"></p>-->
+        <span class="badge badge-positive">{{chat.msgCount}}</span>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

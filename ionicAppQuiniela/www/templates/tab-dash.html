@@ -1,0 +1,31 @@
+<ion-view view-title="La Quiniela">
+  <ion-content>
+
+    <div class="dashboard-main-container animated bounceInDown">
+      <!--<h3>Nombre</h3>-->
+      <div class="avatar-conatainer">
+        <span class="badge">10Xp</span>
+        <!--<i class="badge-notify"></i>
+        <i class="badge-red"></i>-->
+        <img ng-src="./img/user.png">
+      </div>
+      <div class="box box-blue">
+        <h4>Nombre</h4>
+        <p>nombre@gmail.com</p>
+        <p>1234456543</p>
+      </div>
+
+    </div>
+
+    <div class="card chart-card">
+      <div class="item item-text-wrap">
+        <canvas id="line" class="chart chart-line" data="lineData" labels="lineLabels" legend="true" series="lineSeries" options="{showTooltips: false}"></canvas>
+      </div>
+      <div class="item item-text-wrap">
+        <canvas id="doughnut" data="pieData" labels="pieLabels" class="chart chart-doughnut" legend="true" series="series" options="{showTooltips: false}">
+        </canvas>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,16 @@
+.background.scroll-content {
+  background: url('/img/loginCover.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  z-index: 2;
+}
+
+.visitorTeamImg {
+  top: 10px;
+  float: right;
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+  height: 100%;
+}
