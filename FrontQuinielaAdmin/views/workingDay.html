@@ -1,0 +1,48 @@
+<div class="col-lg-12">
+  <div class="col-lg-12">
+    <h1 class="page-header">Insert Working Day</h1>
+  </div>
+  <form style="margin-bottom: 10px;">
+    <div class="form-group col-lg-3">
+      <label>Season</label>
+      <select class="form-control" data-ng-model="seasonSelected" data-ng-options="s.name for s in seasonList"></select>
+    </div>
+    <div class="form-group col-lg-3">
+      <label>Name</label>
+      <input class="form-control" data-ng-model="workinDayName" type="number" />
+    </div>
+    <div class="form-group col-lg-3">
+      <label>Date</label>
+      <input class="form-control" data-ng-model="workinDayDate" type="Date" />
+    </div>
+    <div class="form-group col-lg-12">
+      <button type="button" class="btn btn-success" ng-click='addWorkingDay()'>Save</button>
+    </div>
+  </form>
+  <div class="col-lg-12">
+    <h1 class="page-header">Working Days List</h1>
+  </div>
+  <div class="col-lg-12">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="w in workinDayList">
+          <th>{{w.season.name}}</th>
+          <th>{{w.name}}</th>
+          <th>{{w.date | date}}</th>
+          <td>
+            <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;"></i>
+            <i class="fa fa-fw fa-trash" title="Delete" style="cursor:pointer;"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
