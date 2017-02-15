@@ -45,6 +45,7 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         controller: 'LoginController'
       })
 
+
       // setup an abstract state for the tabs directive
       .state('tab', {
         url: '/tab',
@@ -60,6 +61,16 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
           'tab-dash': {
             templateUrl: 'templates/tab-dash.html',
             controller: 'DashCtrl'
+          }
+        }
+      })
+
+      .state('tab.myVotes', {
+        url: '/myVotes',
+        views: {
+          'tab-myVotes': {
+            templateUrl: 'templates/tab-myVotes.html',
+            controller: 'MyVotesCtrl'
           }
         }
       })

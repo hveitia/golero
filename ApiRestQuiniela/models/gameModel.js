@@ -23,6 +23,9 @@ exports = module.exports = function(app, mongoose) {
     },
     state: {
       type: String
+    },
+    especialDate: {
+      type: Date
     }
   });
 

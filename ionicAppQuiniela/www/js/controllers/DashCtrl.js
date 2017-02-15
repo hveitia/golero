@@ -1,37 +1,34 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function($scope) {
+  .controller('DashCtrl', function($scope, $state, Vote, DatabaseService) {
 
-    // --------------------- Pie Chart Configuration -----------------------------
-    $scope.pieLabels = ["FB", "Twitter", "Instagram"];
-    $scope.pieData = [300, 500, 100];
+    $scope.voteList = [];
 
-    // --------------------- Line Chart Configuration ----------------------------
-    $scope.lineSeries = ['Active', 'Inactive'];
-    $scope.lineLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
-    $scope.lineData = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
+    $scope.showMyVotes = function() {
+      $state.go('tab.myVotes');
+    };
 
-    // --------------------- animation for green color .badge-notification icon---
-    anime({
-      targets: ['.badge-notify'],
-      scale: [1.2, 1],
-      delay: 1800,
-      duration: 2000,
+    $scope.loadVotesByUser = function() {
+      DatabaseService.initDB();
+      DatabaseService.getData("userData").then(function(res) {
+        Vote.getVoteByUser(res.data.token).success(function(data) {
+            $scope.voteList = data;
+          })
+          .error(function(err) {
+
+            console.log(err);
+          });
+      });
+
+    };
+
+    $scope.pageLoad = function() {
+      $scope.loadVotesByUser();
+    };
+
+    $scope.$on('$ionicView.enter', function() {
+      $scope.voteList = [];
+
+      $scope.pageLoad();
     });
-
-    // --------------------- animation for blue  color .badge --------------------
-    anime({
-      targets: ['.badge'],
-      rotate: {
-        value: 720,
-        delay: 300,
-        duration: 1500,
-        easing: 'easeInOutQuad'
-      },
-      direction: 'normal'
-    });
-
   })

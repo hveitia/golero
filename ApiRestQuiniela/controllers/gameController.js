@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var GAMEMODEL = mongoose.model('GAMEMODEL');
 var TEAMMODEL = mongoose.model('TEAMMODEL');
 var WORKINGDAYMODEL = mongoose.model('WORKINGDAYMODEL');
+var utils = require('../utils/utils.js');
 
 exports.findAll = function(req, res) {
 
@@ -102,6 +103,55 @@ exports.update = function(req, res) {
       if (err) return res.send(500, err.message);
 
       res.status(200).jsonp(result);
+    });
+  });
+};
+
+exports.addSpecialDate = function(req, res) {
+
+  GAMEMODEL.findById(req.params.id, function(err, result) {
+
+    result.especialDate = req.body.especialDate;
+
+    result.save(function(err) {
+
+      if (err) return res.send(500, err.message);
+
+      res.status(200).jsonp(result);
+    });
+  });
+};
+
+
+exports.gameToVoteByDate = function(req, res) {
+
+  var listGames = [];
+  GAMEMODEL.find(function(err, result) {
+    TEAMMODEL.populate(result, {
+      path: "localTeam"
+    }, function(err, localTeam) {
+      if (err) res.send(500, err.message);
+    });
+    TEAMMODEL.populate(result, {
+      path: "visitorTeam"
+    }, function(err, visitorTeam) {
+      if (err) res.send(500, err.message);
+    });
+    WORKINGDAYMODEL.populate(result, {
+      path: "workingDay"
+    }, function(err, workingDay) {
+      if (err) res.send(500, err.message);
+
+      for (var i = 0; i < result.length; i++) {
+
+        if (utils.canVoteGame(result[i])) {
+
+          listGames.push(result[i]);
+        }
+      }
+
+      res.status(200).jsonp(listGames);
+
     });
   });
 };

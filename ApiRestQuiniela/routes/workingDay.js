@@ -7,13 +7,13 @@ var middleware = require('../middleware');
 var workingDayController = require('../controllers/workingDayController');
 
 router.route('/workingDay')
-  .get(workingDayController.findAll)
-  .post(workingDayController.add);
+  .get(middleware.ensureAuthenticated, workingDayController.findAll)
+  .post(middleware.ensureAuthenticated, workingDayController.add);
 
 router.route('/workingDay/:season')
-  .get(workingDayController.findBySeason);
+  .get(middleware.ensureAuthenticated, workingDayController.findBySeason);
 
 router.route('/workingDayName/:name')
-  .get(workingDayController.findByName);
+  .get(middleware.ensureAuthenticated, workingDayController.findByName);
 
 module.exports = router;

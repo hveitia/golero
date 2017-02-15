@@ -4,28 +4,20 @@
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
       <div class="avatar-conatainer">
-        <span class="badge">10Xp</span>
-        <!--<i class="badge-notify"></i>
+        <!--<span class="badge">10Xp</span>
+        <i class="badge-notify"></i>
         <i class="badge-red"></i>-->
-        <img ng-src="./img/user.png">
+        <img ng-src="./img/logos/0990166900001.png">
       </div>
       <div class="box box-blue">
-        <h4>Nombre</h4>
-        <p>nombre@gmail.com</p>
-        <p>1234456543</p>
+        <h2>Runbincho 08</h2>
+        <p><strong>Puntos: 100</strong></p>
       </div>
-
-    </div>
-
-    <div class="card chart-card">
-      <div class="item item-text-wrap">
-        <canvas id="line" class="chart chart-line" data="lineData" labels="lineLabels" legend="true" series="lineSeries" options="{showTooltips: false}"></canvas>
-      </div>
-      <div class="item item-text-wrap">
-        <canvas id="doughnut" data="pieData" labels="pieLabels" class="chart chart-doughnut" legend="true" series="series" options="{showTooltips: false}">
-        </canvas>
+      <div class="row" style="color: darkblue">
+        <div class="col col-50" style="border-right: 1px solid;"><strong>Posicion 30</strong></div>
+        <div class="col col-50" style="border-left: 1px solid;" data-ng-click="showMyVotes()"><strong>Votos {{voteList.length}}</strong></div>
       </div>
     </div>
-
   </ion-content>
+
 </ion-view>

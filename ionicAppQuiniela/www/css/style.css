@@ -1,3 +1,21 @@
+.fontCustom {
+  font-family: 'GarciaRegular'; //'FyodorBold';
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/*naranja #f99c00
+naranja #e85b01*/
+
+h1.fontCustom {
+  text-align: center;
+  color: #f99c00;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .background.scroll-content {
   background: url('/img/loginCover.jpg') no-repeat;
   background-size: cover;
@@ -9,8 +27,56 @@
 .visitorTeamImg {
   top: 10px;
   float: right;
-  max-width: 80px;
+  max-width: 20%;
   max-height: 80px;
   width: 100%;
   height: 100%;
+}
+
+.itemLocalTem {
+  max-width: 20% !important;
+}
+
+.itemPronosticar {
+  min-height: 95px !important;
+}
+
+.bar-header, .dashboard-main-container {
+  background: darkblue !important;
+  color: white;
+}
+
+.dashboard-main-container {
+  max-height: 100px !important;
+  padding-top: 40px;
+}
+
+ion-content {
+  background: #fff;
+}
+
+.dashboard-main-container .box {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.dashboard-main-container .avatar-conatainer img {
+  border: none;
+  border-radius: 0;
+}
+
+.loginInput {
+  border: none !important;
+  border-bottom: 1px solid white !important;
+  background: darkblue !important;
+  color: white !important;
+  padding-left: 20px !important;
+}
+
+.buttonCenter {
+  background-color: #f99c00 !important;
+  width: 90% !important;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
 }

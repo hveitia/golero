@@ -10,8 +10,8 @@ var teamController = require('../controllers/teamController');
 
 
 router.route('/team')
-  .get(teamController.findAll)
-  .post(teamController.add);
+  .get(middleware.ensureAuthenticated, teamController.findAll)
+  .post(middleware.ensureAuthenticated, teamController.add);
 
 
 module.exports = router;

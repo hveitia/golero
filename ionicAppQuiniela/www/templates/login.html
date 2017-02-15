@@ -1,34 +1,47 @@
 <ion-view view-title="{{title}}" name="login-view">
-  <ion-content class="padding" style="background: #FFFFFF;" data-ng-show="showView == 'LOGIN'">
-    <div class="list list-inset">
-      <label class="item item-input">
-              <input type="text" placeholder="Username" ng-model="data.username">
-          </label>
-      <label class="item item-input">
-              <input type="password" placeholder="Password" ng-model="data.password">
-          </label>
+  <ion-content style="background: darkblue; color: white" data-ng-show="showView == 'REG'">
+    <div class="list list-inset" style="width: 90%; background: darkblue;">
+      <label class="item item-input" style="background: darkblue; border: none;">
+          <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
+          <input type="text" class="loginInput" placeholder="Nombre" data-ng-model="data.username">
+        </label>
+      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
+          <i class="icon ion-ios-email placeholder-icon" style="position: absolute;"></i>
+          <input type="email" class="loginInput" placeholder="Email" data-ng-model="data.email">
+        </label>
+      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
+          <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+          <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password">
+        </label>
+      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
+          <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+          <input type="password" class="loginInput" placeholder="Confirmar Contraseña" data-ng-model="data.passwordConfirm">
+        </label>
     </div>
-    <button class="button button-block button-positive" ng-click="login()">Login</button>
+    <div class="row">
+      <button class="button button-block buttonCenter" data-ng-click="addUser()">Crear Cuenta</button>
+    </div>
+    <div class="row">
+      <button class="button button-block buttonCenter" data-ng-click="backButtonClick()">Atrás</button>
+    </div>
   </ion-content>
-  <ion-content class="padding" style="background: #FFFFFF;" data-ng-show="showView == 'REG'">
-    <div class="list">
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Nombre</span>
-        <input type="text" placeholder="Nombre" ng-model="data.username">
+  <ion-content style="background: darkblue; color: white" data-ng-show="showView == 'HOME'">
+    <!--  <h1 class="fontCustom">Quiniela</h1>-->
+    <div class="list list-inset" style="width: 90%; background: darkblue;">
+      <label class="item item-input" style="background: darkblue; border: none;">
+        <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
+        <input type="text" class="loginInput" placeholder="Usuario" data-ng-model="data.username">
       </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Email</span>
-        <input type="email" placeholder="Email" ng-model="data.email">
+      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
+        <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+        <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password">
       </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Contraseña</span>
-        <input type="password" placeholder="Contraseña" ng-model="data.password">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Confirmar Contraseña</span>
-        <input type="password" placeholder="Confirmar Contraseña" ng-model="data.passwordConfirm">
-      </label>
-      <button class="button button-block button-positive" ng-click="addUser()">Crear Cuenta</button>
+    </div>
+    <div class="row">
+      <button class="button button-block buttonCenter" data-ng-click="login()">Entrar</button>
+    </div>
+    <div class="row">
+      <button class="button button-block buttonCenter" data-ng-click="creatAccountButtonClick()">Crear Cuenta</button>
     </div>
   </ion-content>
 </ion-view>

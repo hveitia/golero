@@ -15,21 +15,21 @@ exports.authenticate = function(req, res) {
 
       res.json({
         success: false,
-        message: 'Authentication failed. User not found.'
+        message: '0003'
       });
     } else {
 
       if (user) {
 
-        var md5sum = crypto.createHash('md5');
-        md5sum.update(user.pass);
-        var encryptedPass = md5sum.digest('hex');
+        //var md5sum = crypto.createHash('md5');
+        //md5sum.update(user.pass);
+        //var encryptedPass = md5sum.digest('hex');
 
-        if (encryptedPass != req.body.pass) {
+        if (user.pass != req.body.pass) {
 
           res.json({
             success: false,
-            message: 'Authentication failed. Wrong password.'
+            message: '0003'
           });
         } else {
 

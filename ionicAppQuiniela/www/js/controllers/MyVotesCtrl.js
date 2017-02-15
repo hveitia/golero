@@ -1,10 +1,9 @@
 angular.module('QuinielaIonicApp')
-  .controller('PronosticarCtrl', function($scope, $http, $q, Game, Vote, $stateParams, $ionicPopup, $state, DatabaseService) {
+  .controller('MyVotesCtrl', function($scope, $http, $q, Game, Vote, $stateParams, $ionicPopup, $state, DatabaseService) {
 
     $scope.gameToVoteList = [];
     $scope.voteList = [];
     $scope.gameVotedList = [];
-
 
     $scope.loadGame = function() {
       DatabaseService.initDB();
@@ -35,35 +34,8 @@ angular.module('QuinielaIonicApp')
       });
     };
 
-    $scope.addVote = function(game, voteValue) {
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        $http({
-            method: 'POST',
-            url: urlApi + 'vote',
-            headers: {
-              'Authorization': 'Bearer ' + res.data.token,
-              'Content-Type': 'application/json'
-            },
-            data: {
-              "valueVote": voteValue,
-              "game": game._id
-            }
-          }).success(function(response) {
-            for (var i = 0; i < $scope.gameToVoteList.length; i++) {
-              if ($scope.gameToVoteList[i]._id == game._id) {
-                $scope.gameToVoteList.splice(i, 1);
-                break;
-              }
-            }
-          })
-          .error(function(err) {
-            console.log(err);
-          });
-      });
-    };
-
     $scope.loadVotesByUser = function() {
+
       DatabaseService.initDB();
       DatabaseService.getData("userData").then(function(res) {
         Vote.getVoteByUser(res.data.token).success(function(data) {
@@ -122,5 +94,12 @@ angular.module('QuinielaIonicApp')
 
     };
 
-    $scope.pageLoad();
+    $scope.$on('$ionicView.enter', function() {
+      $scope.gameToVoteList = [];
+      $scope.voteList = [];
+      $scope.gameVotedList = [];
+      $scope.pageLoad();
+    });
+
+
   })

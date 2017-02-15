@@ -1,23 +1,40 @@
 angular.module('QuinielaIonicApp')
 
 
-  .controller('LoginController', function($scope, $http, Accounts, $stateParams, LoginService, $ionicPopup, $state, md5) {
+  .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5, DatabaseService) {
 
     $scope.data = {};
-    $scope.showView = 'REG';
-    $scope.title = 'Registrar';
+    $scope.showView = 'HOME';
+    $scope.title = '';
 
     $scope.login = function() {
 
-      $state.go('tab.dash');
-      /*LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-        $state.go('tab.dash');
-      }).error(function(data) {
-        var alertPopup = $ionicPopup.alert({
-          title: 'Login failed!',
-          template: 'Please check your credentials!'
+      $http.post(urlApi + 'authenticate', {
+          "user": $scope.data.username,
+          "pass": md5.createHash($scope.data.password || '')
+        })
+        .success(function(response) {
+
+          if (!response.success) {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Ingreso Fallido',
+              template: returnApiCodes[response.message]
+            });
+
+          } else {
+            var objDatosUsuario = {
+              "token": response.token
+            };
+            DatabaseService.initDB();
+            DatabaseService.addData("userData", objDatosUsuario);
+            $state.go('tab.dash');
+          }
+
+        })
+        .error(function(err) {
+          console.log(err);
         });
-      });*/
+
     }
 
     $scope.addUser = function() {
@@ -57,6 +74,16 @@ angular.module('QuinielaIonicApp')
       }
     };
 
+    $scope.creatAccountButtonClick = function() {
+      $scope.showView = 'REG';
+      $scope.title = 'Crear Cuenta';
+    };
+
+    $scope.backButtonClick = function() {
+      $scope.showView = 'HOME';
+      $scope.title = '';
+    };
+
     $scope.registerValidate = function() {
       if (!$scope.data.username ||
         !$scope.data.email ||
@@ -67,5 +94,17 @@ angular.module('QuinielaIonicApp')
       }
       return true;
     };
+
+    $scope.cerrarSesion = function() {
+      DatabaseService.initDB();
+      DatabaseService.getData("userData").then(function(res) {
+        DatabaseService.deleteData(res);
+      });
+    };
+
+    $scope.$on('$ionicView.enter', function() {
+      $scope.cerrarSesion();
+
+    });
 
   });

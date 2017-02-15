@@ -1,5 +1,5 @@
 (function() {
-  angular.module('QuinielaApp', ['ngRoute', 'QuinielaAppServices'])
+  angular.module('QuinielaApp', ['ngRoute', 'QuinielaAppServices', 'angular-md5'])
 
     .config(['$routeProvider', function($routeProvider) {
 

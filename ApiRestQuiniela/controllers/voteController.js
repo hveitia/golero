@@ -15,13 +15,25 @@ exports.add = function(req, res) {
 
   var obj = new VOTEMODEL({
     valueVote: req.body.valueVote,
-    user: req.body.user,
+    user: req.user,
     game: req.body.game
 
   });
 
   obj.save(function(err, result) {
     if (err) return res.send(500, err.message);
+    res.status(200).jsonp(result);
+  });
+
+
+};
+
+exports.getVotesByUser = function(req,res) {
+
+  VOTEMODEL.find({user: req.user}, function (err, result) {
+
+    if (err) res.send(500, err.message);
+
     res.status(200).jsonp(result);
   });
 };

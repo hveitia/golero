@@ -3,8 +3,10 @@ var urlApi = 'http://localhost:3000/api/';
 var returnApiCodes = {
   "0001": "El usuario ingresado ya está en uso.",
   "0002": "El email ingresado ya está en uso.",
+  "0003": "Usuario y/o Contraseña Incorrectos."
 };
 
+var tokenUser = '';
 
 canVoteGame = function(game) {
   var now = new Date();

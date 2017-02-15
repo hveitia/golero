@@ -11,17 +11,22 @@ var gameController = require('../controllers/gameController');
 
 
 router.route('/game')
-  .get(gameController.findAll)
-  .post(gameController.add);
+  .get(middleware.ensureAuthenticated,gameController.findAll)
+  .post(middleware.ensureAuthenticated,gameController.add);
 
 router.route('/game/:workingDay')
-  .get(gameController.findByWorkingDay);
+  .get(middleware.ensureAuthenticated,gameController.findByWorkingDay);
 
 router.route('/gameState/:state')
-  .get(gameController.findByState);
+  .get(middleware.ensureAuthenticated,gameController.findByState);
 
 router.route('/gameUpdate/:id')
-  .put(gameController.update);
+  .put(middleware.ensureAuthenticated,gameController.update);
 
+router.route('/gameUpdateSpecialDate/:id')
+    .put(middleware.ensureAuthenticated,gameController.addSpecialDate);
+
+router.route('/gameToVoteByDate')
+  .get(middleware.ensureAuthenticated,gameController.gameToVoteByDate);
 
 module.exports = router;

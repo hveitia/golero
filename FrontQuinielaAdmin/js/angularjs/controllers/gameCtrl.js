@@ -56,6 +56,7 @@ angular.module('QuinielaApp')
       HandleDataService.getAllGames().success(function(data) {
           $scope.gameList = data;
           for (var i = 0; i < $scope.gameList.length; i++) {
+            $scope.gameList[i].date = ($scope.gameList[i].especialDate) ? $scope.gameList[i].especialDate : $scope.gameList[i].workingDay.date;
             if (isGameToUpdate($scope.gameList[i])) {
               $scope.gameList[i].toUpdate = true;
             } else {
@@ -81,6 +82,41 @@ angular.module('QuinielaApp')
         .error(function(err) {
           console.log(err);
         });
+    };
+
+    $scope.addGameSpecialDate = function() {
+      var obj = {
+        id: $scope.gameId,
+        especialDate: $scope.specialDate
+      };
+      HandleDataService.updateGameSpecialDate(obj).success(function(data) {
+          $('#modalAddEditSpecialDate').modal('hide')
+        })
+        .error(function(err) {
+          alert(err);
+          console.log(err);
+        });
+    };
+
+    $scope.editGameClick = function(item) {
+
+      $scope.gameId = item._id;
+      $scope.local = item.localTeam.name;
+      $scope.visitor = item.visitorTeam.name;
+      $scope.goalsLocal = 0;
+      $scope.goalsVisitor = 0;
+
+    };
+
+    $scope.editGameDateClick = function(item) {
+
+      $scope.gameId = item._id;
+      $scope.local = item.localTeam.name;
+      $scope.visitor = item.visitorTeam.name;
+      $scope.goalsLocal = 0;
+      $scope.goalsVisitor = 0;
+      $scope.specialDate = new Date(item.workingDay.date);
+
     };
 
     $scope.pageload();

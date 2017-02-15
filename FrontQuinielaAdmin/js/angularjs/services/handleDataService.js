@@ -6,43 +6,71 @@
         getRegisteredUsers: function() {
           return $http({
             method: 'GET',
-            url: urlApi + 'user'
+            url: urlApi + 'user',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getAllTeams: function() {
           return $http({
             method: 'GET',
-            url: urlApi + 'team'
+            url: urlApi + 'team',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getAllWorkingDays: function() {
           return $http({
             method: 'GET',
-            url: urlApi + 'workingDay'
+            url: urlApi + 'workingDay',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getAllGames: function() {
           return $http({
             method: 'GET',
-            url: urlApi + 'game'
+            url: urlApi + 'game',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getGamesByWorkingDay: function(workingDay) {
           return $http({
             method: 'GET',
-            url: urlApi + 'game/' + workingDay
+            url: urlApi + 'game/' + workingDay,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getGameByState: function(state) {
           return $http({
             method: 'GET',
-            url: urlApi + 'gameState/' + state
+            url: urlApi + 'gameState/' + state,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
         getAllSeansons: function() {
           return $http({
             method: 'GET',
-            url: urlApi + 'season'
+            url: urlApi + 'season',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
           });
         },
 
@@ -53,10 +81,29 @@
             data: {
               "goalsLocalTeam": game.goalsLocalTeam,
               "goalsVisitorTeam": game.goalsVisitorTeam
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+
+        },
+        updateGameSpecialDate: function(game) {
+          return $http({
+            method: 'PUT',
+            url: urlApi + 'gameUpdateSpecialDate/' + game.id,
+            data: {
+              "especialDate": game.especialDate
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
             }
           });
 
         }
+
         //////////////////////////////////////////////
       }
     }]);

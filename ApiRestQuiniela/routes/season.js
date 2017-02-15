@@ -10,8 +10,8 @@ var seasonController = require('../controllers/seasonController');
 
 
 router.route('/season')
-  .get(seasonController.findAll)
-  .post(seasonController.add);
+  .get(middleware.ensureAuthenticated, seasonController.findAll)
+  .post(middleware.ensureAuthenticated, seasonController.add);
 
 
 module.exports = router;

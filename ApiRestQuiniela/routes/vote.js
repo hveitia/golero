@@ -10,8 +10,11 @@ var voteController = require('../controllers/voteController');
 
 
 router.route('/vote')
-  .get(voteController.findAll)
-  .post(voteController.add);
+  .get(middleware.ensureAuthenticated, voteController.findAll)
+  .post(middleware.ensureAuthenticated, voteController.add);
+
+router.route('/voteByUser')
+    .get(middleware.ensureAuthenticated, voteController.getVotesByUser);
 
 
 module.exports = router;

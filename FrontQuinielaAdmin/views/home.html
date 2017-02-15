@@ -119,11 +119,11 @@
               <tbody>
                 <tr ng-repeat="g in gameList">
                   <td>{{g.workingDay.name}}</td>
-                  <td>{{g.workingDay.date | date}}</td>
+                  <td>{{g.date | date}}</td>
                   <td>{{g.localTeam.name}}</td>
                   <td>{{g.visitorTeam.name}}</td>
                   <td>
-                    <i class="fa fa-fw fa-edit" data-ng-click="editGameClick(g)" title="Edit" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-edit" data-ng-click="editGameClick(g)" title="Edit" style="cursor:pointer;" data-toggle="modal" data-target="#modalUpdateGame">
                      </i>
                     <span class="label label-success" data-ng-show="g.state == 'UPDATED'">UPDATED</span>
                     <span class="label label-warning" data-ng-show="g.state == 'SCHEDULED'">SCHEDULED</span>
@@ -144,7 +144,7 @@
 
 
   <!-- Modal Edit - Update Game -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal fade" id="modalUpdateGame" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

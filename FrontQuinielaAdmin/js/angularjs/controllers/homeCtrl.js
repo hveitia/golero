@@ -1,16 +1,23 @@
 angular.module('QuinielaApp')
 
-  .controller('HomeCtrl', ['$scope', '$http', '$q', 'HandleDataService',
-    function($scope, $http, $q, HandleDataService) {
+  .controller('HomeCtrl', ['$scope', '$http', '$q', 'HandleDataService', '$window',
+    function($scope, $http, $q, HandleDataService, $window) {
 
 
       $scope.votesNextDate = 0;
       $scope.gamesToUpdate = 0;
+      $scope.isLogued = false;
 
       $scope.pageload = function() {
-        $scope.loadRegisteredUsers();
-        $scope.loadWorkingDays();
-        $scope.loadGamesToUpdate();
+
+        if (!GetLocalStorage('isLogued')) {
+          $window.location = 'login.html';
+        } else {
+          $scope.loadRegisteredUsers();
+          $scope.loadWorkingDays();
+          $scope.loadGamesToUpdate();
+        }
+
       };
 
       $scope.loadRegisteredUsers = function() {
@@ -29,6 +36,9 @@ angular.module('QuinielaApp')
             $scope.gameList = data;
 
             for (var i = 0; i < $scope.gameList.length; i++) {
+
+              $scope.gameList[i].date = ($scope.gameList[i].especialDate) ? $scope.gameList[i].especialDate : $scope.gameList[i].workingDay.date;
+
               if (isGameToUpdate($scope.gameList[i])) {
                 $scope.gameList[i].toUpdate = true;
               } else {
@@ -71,8 +81,6 @@ angular.module('QuinielaApp')
           });
       };
 
-
-
       $scope.editGameClick = function(item) {
 
         $scope.gameId = item._id;
@@ -90,7 +98,7 @@ angular.module('QuinielaApp')
           goalsVisitorTeam: $scope.goalsVisitor
         };
         HandleDataService.updateGame(obj).success(function(data) {
-            $('#exampleModal').modal('hide')
+            $('#modalUpdateGame').modal('hide')
           })
           .error(function(err) {
             alert(err);

@@ -10,7 +10,7 @@ var userController = require('../controllers/userController');
 var authController = require('../controllers/authenticationController')
 
 router.route('/user')
-  .get(userController.findAll)
+  .get(middleware.ensureAuthenticated, userController.findAll)
   .post(userController.add);
 
 router.route('/authenticate')

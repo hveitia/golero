@@ -42,7 +42,7 @@
       <tbody>
         <tr ng-repeat="g in gameList">
           <td>{{g.workingDay.name}}</td>
-          <td>{{g.workingDay.date | date}}</td>
+          <td>{{g.date | date}} <i class="fa fa-fw fa-edit pull-right" title="Edit" style="cursor:pointer; color: blue;" data-ng-click="editGameDateClick(g)" data-toggle="modal" data-target="#modalAddEditSpecialDate"></i> </td>
           <td>{{g.localTeam.name}}</td>
           <td>{{g.visitorTeam.name}}</td>
           <td>{{g.goalsLocalTeam}}</td>
@@ -59,4 +59,34 @@
       </tbody>
     </table>
   </div>
+
+
+  <!-- Modal Edit - SpecialDate -->
+  <div class="modal fade" id="modalAddEditSpecialDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exampleModalLabel">{{local}} VS {{visitor}} - Add/Edit - Special Date </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <form>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="recipient-name" class="control-label">Special Date</label>
+                  <input type="date" class="form-control" data-ng-model="specialDate">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-ng-click="addGameSpecialDate()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Edit - SpecialDate -->
 </div>

@@ -1,6 +1,6 @@
 exports = module.exports = function(app, mongoose) {
   var USERMODEL = mongoose.model('USERMODEL');
-  var GAMEMODEL = mongoose.model('GAMEMODEL')
+  var GAMEMODEL = mongoose.model('GAMEMODEL');
 
   var voteSchema = new mongoose.Schema({
     valueVote: {
