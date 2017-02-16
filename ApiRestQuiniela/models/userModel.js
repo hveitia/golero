@@ -15,6 +15,9 @@ exports = module.exports = function(app, mongoose) {
     },
     state: {
       type: String
+    },
+    registerHash: {
+      type: String
     }
 
   });

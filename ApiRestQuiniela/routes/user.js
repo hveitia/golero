@@ -7,7 +7,7 @@ var middleware = require('../middleware');
 var userModel = require('../models/userModel')(app, mongoose);
 
 var userController = require('../controllers/userController');
-var authController = require('../controllers/authenticationController')
+var authController = require('../controllers/authenticationController');
 
 router.route('/user')
   .get(middleware.ensureAuthenticated, userController.findAll)
@@ -16,5 +16,7 @@ router.route('/user')
 router.route('/authenticate')
   .post(authController.authenticate);
 
+router.route('/userActivation/:hash')
+    .get(userController.confirmRegistration);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var service = require('../service');
-var crypto = require('crypto');
 var USERMODEL = mongoose.model('USERMODEL');
 
 exports.authenticate = function(req, res) {
@@ -20,11 +19,6 @@ exports.authenticate = function(req, res) {
     } else {
 
       if (user) {
-
-        //var md5sum = crypto.createHash('md5');
-        //md5sum.update(user.pass);
-        //var encryptedPass = md5sum.digest('hex');
-
         if (user.pass != req.body.pass) {
 
           res.json({

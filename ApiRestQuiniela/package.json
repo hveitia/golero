@@ -10,6 +10,7 @@
     "moment": "^2.17.1"
   },
   "devDependencies": {
+    "fs": "0.0.1-security",
     "nodemailer": "^3.1.1"
   }
 }

@@ -15,3 +15,4 @@ exports.canVoteGame = function(game) {
   return false;
 
 };
+
