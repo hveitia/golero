@@ -1,14 +1,29 @@
 <ion-view view-title="Pronosticar">
   <ion-content>
+
+
+    <div class="list">
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Filtrar por fecha
+        </div>
+        <select>
+          <option data-ng-repeat="item in workingDayList">Fecha {{item.name}}</option>
+        </select>
+      </label>
+
+    </div>
+
     <div class="list social-list">
-      <a class=" itemPronosticar item item-thumbnail-left item-text-wrap" ng-repeat="item in gameToVoteList track by $index" style="text-align: center;">
-        <!--  <img class=" itemLocalTem animated zoomIn" ng-src="./img/logos/{{item.localTeam.logo}}" style="float: left;" data-ng-click="addVote(item,'1')">
-        <img class="animated zoomIn visitorTeamImg" ng-src="./img/logos/{{item.visitorTeam.logo}}" data-ng-click="addVote(item,'2')">-->
-        <img class="animated zoomIn" ng-src="./img/user.png" style="float: left;">
-        <img class="animated zoomIn visitorTeamImg" ng-src="./img/user.png">
-        <i class="fa fa-times-circle fa-3x animated zoomIn" aria-hidden="true" style="color: darkblue;"></i>
+      <a class=" itemPronosticar item item-thumbnail-left item-text-wrap" data-ng-repeat="item in gameToVoteList" style="text-align: center;">
+        <img class="itemLocalTem animated zoomIn" ng-src="./img/logos/{{item.localTeam.logo}}" style="float: left;" data-ng-click="addVote(item,'1')">
+        <img class="animated zoomIn visitorTeamImg" ng-src="./img/logos/{{item.visitorTeam.logo}}" data-ng-click="addVote(item,'2')">
+        <i class="fa fa-times-circle fa-3x" aria-hidden="true" style="color: darkblue;" data-ng-click="addVote(item,'0')"></i>
         <span style="display:block; margin-top: 5px; font-size: 75%;">{{item.date | date: "dd-MM-yyyy"}}</span>
       </a>
     </div>
+
+
   </ion-content>
 </ion-view>

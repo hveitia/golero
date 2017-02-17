@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path    = require("path");
+var utils = require('../utils/utils.js');
 
 
 
@@ -132,16 +133,18 @@ sendRegistrationConfirmation = function (obj) {
         html: file//'localhost:3000/api/userActivation/' + obj.registerHash
       };
 
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-          res.json({yo: 'error'});
-        } else {
-          console.log('Message sent: ' + info.response);
-          res.json({yo: info.response});
-        }
+      if(utils.modoSend()) {
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+            res.json({yo: 'error'});
+          } else {
+            console.log('Message sent: ' + info.response);
+            res.json({yo: info.response});
+          }
 
-      });
+        });
+      }
     }
   });
 

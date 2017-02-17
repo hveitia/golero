@@ -16,7 +16,14 @@ exports.authenticate = function(req, res) {
         success: false,
         message: '0003'
       });
-    } else {
+    }
+    if(user.state != 'ACTIVE'){
+      res.json({
+        success: false,
+        message: '0004'
+      });
+    }
+    else {
 
       if (user) {
         if (user.pass != req.body.pass) {

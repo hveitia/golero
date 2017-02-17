@@ -4,6 +4,11 @@
   font-style: normal;
 }
 
+.ion-content {
+  background: darkblue;
+  color: white;
+}
+
 
 /*naranja #f99c00
 naranja #e85b01*/
@@ -79,4 +84,9 @@ ion-content {
   margin-left: auto;
   margin-right: auto;
   color: white;
+}
+
+.imagenGrayScale {
+  filter: grayscale(100%);
+  opacity: 0.2;
 }

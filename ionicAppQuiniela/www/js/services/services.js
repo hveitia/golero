@@ -76,6 +76,16 @@ angular.module('QuinielaIonicApp.Services', [])
   .factory('Game', ['$http', '$q', 'DatabaseService', function($http, $q, DatabaseService) {
 
     return {
+      getAllWorkingDay: function(token) {
+        return $http({
+          method: 'GET',
+          url: urlApi + 'workingDay',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        });
+      },
       getAllGames: function(token) {
         return $http({
           method: 'GET',

@@ -16,3 +16,5 @@ exports.canVoteGame = function(game) {
 
 };
 
+exports.modoSend = function(){return false};
+

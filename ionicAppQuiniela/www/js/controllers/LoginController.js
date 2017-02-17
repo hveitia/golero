@@ -3,38 +3,38 @@ angular.module('QuinielaIonicApp')
 
   .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5, DatabaseService) {
 
-    $scope.data = {};
-    $scope.showView = 'HOME';
-    $scope.title = '';
+
 
     $scope.login = function() {
 
-      $http.post(urlApi + 'authenticate', {
-          "user": $scope.data.username,
-          "pass": md5.createHash($scope.data.password || '')
-        })
-        .success(function(response) {
+      if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
+        $http.post(urlApi + 'authenticate', {
+            "user": $scope.data.username,
+            "pass": md5.createHash($scope.data.password || '')
+          })
+          .success(function(response) {
 
-          if (!response.success) {
-            var alertPopup = $ionicPopup.alert({
-              title: 'Ingreso Fallido',
-              template: returnApiCodes[response.message]
-            });
+            if (!response.success) {
+              var alertPopup = $ionicPopup.alert({
+                title: 'Ingreso Fallido',
+                template: returnApiCodes[response.message]
+              });
 
-          } else {
-            var objDatosUsuario = {
-              "token": response.token
-            };
-            DatabaseService.initDB();
-            DatabaseService.addData("userData", objDatosUsuario);
-            $state.go('tab.dash');
-          }
+            } else {
+              var objDatosUsuario = {
+                "token": response.token,
+                "userName": $scope.data.username
+              };
+              DatabaseService.initDB();
+              DatabaseService.addData("userData", objDatosUsuario);
+              $state.go('tab.dash');
+            }
 
-        })
-        .error(function(err) {
-          console.log(err);
-        });
-
+          })
+          .error(function(err) {
+            console.log(err);
+          });
+      } else {}
     }
 
     $scope.addUser = function() {
@@ -58,7 +58,8 @@ angular.module('QuinielaIonicApp')
                   template: returnApiCodes[response.message]
                 });
               } else {
-                $state.go('tab.dash');
+                $scope.showView = 'SUCCESS';
+                $scope.title = '';
               }
 
             })
@@ -82,6 +83,7 @@ angular.module('QuinielaIonicApp')
     $scope.backButtonClick = function() {
       $scope.showView = 'HOME';
       $scope.title = '';
+      $scope.data = {};
     };
 
     $scope.registerValidate = function() {
@@ -103,6 +105,11 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.$on('$ionicView.enter', function() {
+
+      $scope.data = {};
+      $scope.showView = 'HOME';
+      $scope.title = '';
+
       $scope.cerrarSesion();
 
     });

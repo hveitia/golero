@@ -3,7 +3,8 @@ var urlApi = 'http://localhost:3000/api/';
 var returnApiCodes = {
   "0001": "El usuario ingresado ya está en uso.",
   "0002": "El email ingresado ya está en uso.",
-  "0003": "Usuario y/o Contraseña Incorrectos."
+  "0003": "Usuario y/o Contraseña Incorrectos.",
+  "0004": "El usuario no está activo, por favor proceda con la activación de su usuario desde su email."
 };
 
 var tokenUser = '';

@@ -1,11 +1,6 @@
 angular.module('QuinielaIonicApp')
   .controller('PronosticarCtrl', function($scope, $http, $q, Game, Vote, $stateParams, $ionicPopup, $state, DatabaseService) {
 
-    $scope.gameToVoteList = [];
-    $scope.voteList = [];
-    $scope.gameVotedList = [];
-
-
     $scope.loadGame = function() {
       DatabaseService.initDB();
       DatabaseService.getData("userData").then(function(res) {
@@ -26,7 +21,7 @@ angular.module('QuinielaIonicApp')
               }
             }
 
-            $scope.getGameVoted();
+
           })
           .error(function(err) {
             $scope.gameToVoteList = [];
@@ -88,39 +83,28 @@ angular.module('QuinielaIonicApp')
       return true;
     };
 
-    $scope.getGameVoted = function() {
+    $scope.loadAllWorkingDay = function() {
       DatabaseService.initDB();
       DatabaseService.getData("userData").then(function(res) {
-        Game.getAllGames(res.data.token).success(function(data) {
-
-            for (var i = 0; i < data.length; i++) {
-              for (var j = 0; j < $scope.voteList.length; j++) {
-                if ($scope.voteList[j].game == data[i]._id) {
-
-                  if (data[i].especialDate) {
-                    data[i].date = data[i].especialDate;
-                  } else {
-                    data[i].date = data[i].workingDay.date;
-                  }
-                  $scope.gameVotedList.push(data[i]);
-                  $scope.voteList.splice(i, 1);
-
-                }
-              }
-            }
+        Game.getAllWorkingDay(res.data.token).success(function(data) {
+            $scope.workingDayList = data;
           })
           .error(function(err) {
-            $scope.gameVotedList = [];
+            $scope.workingDayList = [];
             console.log(err);
           });
       });
     };
 
-    $scope.pageLoad = function() {
+    $scope.$on('$ionicView.enter', function() {
+
+      $scope.gameToVoteList = [];
+      $scope.voteList = [];
+      $scope.gameVotedList = [];
+      $scope.workingDayList = [];
 
       $scope.loadVotesByUser();
+      $scope.loadAllWorkingDay();
+    });
 
-    };
-
-    $scope.pageLoad();
   })

@@ -1,5 +1,5 @@
 <ion-view view-title="{{title}}" name="login-view">
-  <ion-content style="background: darkblue; color: white" data-ng-show="showView == 'REG'">
+  <ion-content class="ion-content" data-ng-show="showView == 'REG'">
     <div class="list list-inset" style="width: 90%; background: darkblue;">
       <label class="item item-input" style="background: darkblue; border: none;">
           <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
@@ -25,8 +25,8 @@
       <button class="button button-block buttonCenter" data-ng-click="backButtonClick()">Atrás</button>
     </div>
   </ion-content>
-  <ion-content style="background: darkblue; color: white" data-ng-show="showView == 'HOME'">
-    <!--  <h1 class="fontCustom">Quiniela</h1>-->
+  <ion-content class="ion-content" data-ng-show="showView == 'HOME'">
+    <h1 class="fontCustom">Quiniela</h1>
     <div class="list list-inset" style="width: 90%; background: darkblue;">
       <label class="item item-input" style="background: darkblue; border: none;">
         <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
@@ -44,4 +44,17 @@
       <button class="button button-block buttonCenter" data-ng-click="creatAccountButtonClick()">Crear Cuenta</button>
     </div>
   </ion-content>
+  <ion-content class="ion-content" data-ng-show="showView == 'SUCCESS'">
+    <h1 class="fontCustom">Registro Exitoso</h1>
+    <div class="card">
+      <div class="item item-text-wrap" style="background-color: darkblue; color: white; text-align: center;">
+        Bienvenido a la Quiniela. Ahora podrás demostrar que eres quien más conoce de fútbol. Por favor active su usuario desde su email y comienza desde ya a optar por los premios.
+      </div>
+    </div>
+    <div class="row">
+      <button class="button button-block buttonCenter" data-ng-click="backButtonClick()">Ir al Inicio</button>
+    </div>
+  </ion-content>
+
+
 </ion-view>
