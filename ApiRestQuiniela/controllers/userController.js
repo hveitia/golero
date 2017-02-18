@@ -23,6 +23,36 @@ exports.findAll = function(req, res) {
   });
 };
 
+exports.userRanking = function(req, res) {
+
+  USERMODEL.find({state: 'ACTIVE'}, null, {sort: {'points': -1}}, function(err, result) {
+
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    res.status(200).jsonp(result);
+  });
+};
+
+exports.userRankingPosition = function(req, res) {
+
+  USERMODEL.find({state: 'ACTIVE'}, null, {sort: {'points': -1}}, function(err, result) {
+
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    for(var i=0;i<result.length;i++){
+      if(result[i]._doc._id == req.user){
+        res.status(200).jsonp({'pos':i+1,'points':result[i].points}) ;
+      }
+
+    }
+
+  });
+};
+
 exports.add = function(req, res) {
 
   USERMODEL.findOne({
@@ -52,7 +82,9 @@ exports.add = function(req, res) {
             email: req.body.email,
             points: 0,
             state: 'CREATED',
-            registerHash:registerHash
+            registerHash:registerHash,
+            avatar: 'user.png',
+            favoriteTeam: 'noteam.png'
           });
           obj.save(function(err, result) {
             if (err) return res.send(500, err.message);
@@ -77,6 +109,70 @@ exports.add = function(req, res) {
     }
   });
 
+};
+
+exports.editFavoriteTeam = function(req, res) {
+
+  USERMODEL.findOne({
+    _id: req.user
+  }, function(err, user) {
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    if (user) {
+
+      user.favoriteTeam = req.body.team;
+
+      user.save(function (err, result) {
+        if (err) return res.send(500, err.message);
+
+        res.send(200,'ok');
+      });
+
+    } else {
+      res.send(500, 'User not found');
+    }
+  });
+
+};
+
+exports.editAvatar = function(req, res) {
+
+  USERMODEL.findOne({
+    _id: req.user
+  }, function(err, user) {
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    if (user) {
+
+      user.avatar = req.body.avatar;
+
+      user.save(function (err, result) {
+        if (err) return res.send(500, err.message);
+
+        res.send(200,'ok');
+      });
+
+    } else {
+      res.send(500, 'User not found');
+    }
+  });
+
+};
+
+exports.getUser = function(req, res){
+
+  USERMODEL.findOne({_id: req.user},function(err, result) {
+
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    res.status(200).jsonp(result);
+  });
 };
 
 exports.confirmRegistration = function(req, res) {

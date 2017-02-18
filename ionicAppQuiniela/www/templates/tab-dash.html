@@ -4,20 +4,84 @@
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
       <div class="avatar-conatainer">
-        <!--<span class="badge">10Xp</span>
-        <i class="badge-notify"></i>
-        <i class="badge-red"></i>-->
-        <img ng-src="./img/logos/0990166900001.png">
+
+        <img ng-src="./img/avatars/{{user.avatar}}" data-ng-click="openModalAvatar()">
       </div>
+      <img ng-src="./img/logos/{{user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
       <div class="box box-blue">
         <h2>{{userName}}</h2>
-        <p><strong>Puntos: 100</strong></p>
+        <p><strong style="font-size:25px;"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i> {{points}}</strong></p>
       </div>
       <div class="row" style="color: darkblue">
-        <div class="col col-50" style="border-right: 1px solid;"><strong>Posicion 30</strong></div>
-        <div class="col col-50" style="border-left: 1px solid;" data-ng-click="showMyVotes()"><strong>Votos {{voteList.length}}</strong></div>
+        <div class="col col" style="border-right: 1px solid;" data-ng-click="goToRanking()">
+          <strong> <i class="fa fa-list" aria-hidden="true" style="margin-right: 5px;"></i> Ranking {{rankingPosition}}</strong>
+        </div>
+        <div class="col col" style="border-left: 1px solid;" data-ng-click="goToMyVotes()">
+          <strong>
+            <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>Pronosticados {{voteList.length}}
+          </strong>
+        </div>
       </div>
     </div>
   </ion-content>
-
+  <script id="select-team-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title" style="color:white;">Seleccione su equipo favorito</h1>
+      </ion-header-bar>
+      <ion-content style="text-align:center;">
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/logos/barcelona.png" style="width:80%;" data-ng-click="editFAvoriteTeam('barcelona.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/clanjuvenil.png" style="width:80%;" data-ng-click="editFAvoriteTeam('clanjuvenil.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/cuenca.png" style="width:80%;" data-ng-click="editFAvoriteTeam('cuenca.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/logos/delfin.png" style="width:80%;" data-ng-click="editFAvoriteTeam('delfin.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/emelec.png" style="width:80%;" data-ng-click="editFAvoriteTeam('emelec.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/famarilla.png" style="width:80%;" data-ng-click="editFAvoriteTeam('famarilla.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/logos/independiente.png" style="width:80%;" data-ng-click="editFAvoriteTeam('independiente.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/liga.png" style="width:80%;" data-ng-click="editFAvoriteTeam('liga.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/macara.png" style="width:80%;" data-ng-click="editFAvoriteTeam('macara.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/logos/nacional.png" style="width:80%;" data-ng-click="editFAvoriteTeam('nacional.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/river.png" style="width:80%;" data-ng-click="editFAvoriteTeam('river.png')"></div>
+          <div class="col-30"><img ng-src="./img/logos/ucatolica.png" style="width:80%;" data-ng-click="editFAvoriteTeam('ucatolica.png')"></div>
+        </div>
+        <button class="button button-positive" ng-click="modal.hide()" style="margin-top: 20px; padding:0 13px; line-height: 20px; background-color: darkblue; min-height:15px;">Cancelar</button>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <script id="select-avatar-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title" style="color:white;">Seleccione su avatar</h1>
+      </ion-header-bar>
+      <ion-content style="text-align:center;">
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/1.png" style="width:80%;" data-ng-click="editAvatar('1.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/2.png" style="width:80%;" data-ng-click="editAvatar('2.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/3.png" style="width:80%;" data-ng-click="editAvatar('3.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/4.png" style="width:80%;" data-ng-click="editAvatar('4.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/5.png" style="width:80%;" data-ng-click="editAvatar('5.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/6.png" style="width:80%;" data-ng-click="editAvatar('6.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/7.png" style="width:80%;" data-ng-click="editAvatar('7.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/8.png" style="width:80%;" data-ng-click="editAvatar('8.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/9.png" style="width:80%;" data-ng-click="editAvatar('9.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/10.png" style="width:80%;" data-ng-click="editAvatar('10.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/11.png" style="width:80%;" data-ng-click="editAvatar('11.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/12.png" style="width:80%;" data-ng-click="editAvatar('12.png')"></div>
+        </div>
+        <button class="button button-positive" ng-click="modalAvatar.hide()" style="margin-top: 20px; padding:0 13px; line-height: 20px; background-color: darkblue; min-height:15px;">Cancelar</button>
+      </ion-content>
+    </ion-modal-view>
+  </script>
 </ion-view>

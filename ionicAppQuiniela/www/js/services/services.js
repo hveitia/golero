@@ -19,7 +19,10 @@ angular.module('QuinielaIonicApp.Services', [])
         revs_limit: 1,
         auto_compaction: true
       });*/
-      _db = new PouchDB('appData');
+      _db = new PouchDB('appData', {
+        revs_limit: 1,
+        auto_compaction: true
+      });
     };
 
     function addData(key, data) {
@@ -41,39 +44,34 @@ angular.module('QuinielaIonicApp.Services', [])
       return $q.when(_db.put(doc));
     }
   }])
-  .factory('Chats', function() {
-    // Might use a resource here that returns a JSON array
 
-    // Some fake testing data
-    var chats = [{
-      id: 5,
-      msgCount: 2,
-      time: 'FRIDAY',
-      name: 'Alice Whitman',
-      online: true,
-      message: 'Thank You hunny. I love u sooooo much......',
-      face: 'img/mike.png'
-    }];
+  .factory('RankinService', ['$http', '$q', function($http, $q) {
 
     return {
-      all: function() {
-        return chats;
-      },
-      remove: function(chat) {
-        chats.splice(chats.indexOf(chat), 1);
-      },
-      get: function(chatId) {
-        for (var i = 0; i < chats.length; i++) {
-          if (chats[i].id === parseInt(chatId)) {
-            return chats[i];
+      getRanking: function(token) {
+        return $http({
+          method: 'GET',
+          url: urlApi + 'userRanking',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
           }
-        }
-        return null;
+        });
+      },
+      getRankingPosition: function(token) {
+        return $http({
+          method: 'GET',
+          url: urlApi + 'userRankingPosition',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        });
       }
     };
-  })
+  }])
 
-  .factory('Game', ['$http', '$q', 'DatabaseService', function($http, $q, DatabaseService) {
+  .factory('Game', ['$http', '$q', function($http, $q) {
 
     return {
       getAllWorkingDay: function(token) {
@@ -109,7 +107,7 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Vote', ['$http', '$q', 'DatabaseService', function($http, $q, DatabaseService) {
+  .factory('Vote', ['$http', '$q', function($http, $q) {
 
     return {
       getVoteByUser: function(token) {
@@ -117,6 +115,22 @@ angular.module('QuinielaIonicApp.Services', [])
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUser',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        });
+
+      }
+    };
+  }])
+  .factory('UserService', ['$http', '$q', function($http, $q) {
+
+    return {
+      getUser: function(token) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getUser',
           headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'

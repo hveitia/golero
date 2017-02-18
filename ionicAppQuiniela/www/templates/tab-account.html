@@ -1,20 +1,12 @@
 <ion-view view-title="Mi Perfil">
   <ion-content>
-
     <div class="dashboard-main-container animated bounceInDown">
-      <!--<h3>Nombre</h3>-->
       <div class="avatar-conatainer">
-        <span class="badge">10Xp</span>
-        <!--<i class="badge-notify"></i>
-        <i class="badge-red"></i>-->
-        <img ng-src="./img/user.png">
-      </div>
-      <div class="box box-blue">
-        <h4>Nombre</h4>
-        <p>nombre@gmail.com</p>
-        <p>1234456543</p>
-      </div>
 
+        <img ng-src="./img/avatars/{{user.avatar}}" data-ng-click="openModalAvatar()">
+      </div>
+      <img ng-src="./img/logos/{{user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
     </div>
   </ion-content>
+
 </ion-view>

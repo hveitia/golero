@@ -18,6 +18,12 @@ exports = module.exports = function(app, mongoose) {
     },
     registerHash: {
       type: String
+    },
+    avatar:{
+      type: String
+    },
+    favoriteTeam:{
+      type: String
     }
 
   });

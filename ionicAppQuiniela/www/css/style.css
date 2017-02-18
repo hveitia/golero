@@ -34,8 +34,7 @@ h1.fontCustom {
   float: right;
   max-width: 20%;
   max-height: 80px;
-  width: 100%;
-  height: 100%;
+  width: 15%;
 }
 
 .itemLocalTem {
@@ -43,7 +42,7 @@ h1.fontCustom {
 }
 
 .itemPronosticar {
-  min-height: 95px !important;
+  min-height: 70px !important;
 }
 
 .bar-header, .dashboard-main-container {
@@ -67,7 +66,7 @@ ion-content {
 
 .dashboard-main-container .avatar-conatainer img {
   border: none;
-  border-radius: 0;
+  border-radius: 100%;
 }
 
 .loginInput {
@@ -89,4 +88,30 @@ ion-content {
 .imagenGrayScale {
   filter: grayscale(100%);
   opacity: 0.2;
+}
+
+.positionNumber {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.chat-item {
+  background: #fff !important;
+}
+
+.userRankingTeamLogo {
+  width: 9%;
+  position: absolute;
+  left: 40%;
+  top: 45%;
+}
+
+.favoriteTeamDash {
+  width: 13%;
+  position: absolute;
+  top: 125%;
+  left: 31%;
 }

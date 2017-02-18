@@ -34,7 +34,12 @@ angular.module('QuinielaIonicApp')
           .error(function(err) {
             console.log(err);
           });
-      } else {}
+      } else {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Ingreso Fallido',
+          template: 'Verifique que no existen campos vacíos.'
+        });
+      }
     }
 
     $scope.addUser = function() {

@@ -219,10 +219,6 @@ ion-content {
   font-size: 10px;
 }
 
-.chat-item {
-  background: #edf2f5 !important;
-}
-
 .green-notify {
   background: #19b608;
 }
@@ -10019,7 +10015,7 @@ progress {
 }
 
 .button:hover {
-  color: #444;
+  /*color: #444;*/
   text-decoration: none;
 }
 

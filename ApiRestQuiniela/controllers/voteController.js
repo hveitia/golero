@@ -28,9 +28,19 @@ exports.add = function(req, res) {
 
 };
 
-exports.getVotesByUser = function(req,res) {
+exports.getVotesByOwnUser = function(req,res) {
 
   VOTEMODEL.find({user: req.user}, function (err, result) {
+
+    if (err) res.send(500, err.message);
+
+    res.status(200).jsonp(result);
+  });
+};
+
+exports.getVotesByUser = function(req,res) {
+
+  VOTEMODEL.find({user: req.params.user}, function (err, result) {
 
     if (err) res.send(500, err.message);
 

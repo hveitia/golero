@@ -14,6 +14,10 @@ router.route('/vote')
   .post(middleware.ensureAuthenticated, voteController.add);
 
 router.route('/voteByUser')
+    .get(middleware.ensureAuthenticated, voteController.getVotesByOwnUser);
+
+
+router.route('/voteByUserAny/:user')
     .get(middleware.ensureAuthenticated, voteController.getVotesByUser);
 
 
