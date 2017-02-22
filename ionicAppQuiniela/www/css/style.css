@@ -1,3 +1,11 @@
+.imageLogin {
+  background-image: url("../img/cover.jpeg");
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  z-index: 2;
+}
+
 .fontCustom {
   font-family: 'GarciaRegular'; //'FyodorBold';
   font-weight: normal;
@@ -5,7 +13,6 @@
 }
 
 .ion-content {
-  background: darkblue;
   color: white;
 }
 
@@ -29,20 +36,12 @@ h1.fontCustom {
   z-index: 2;
 }
 
-.visitorTeamImg {
-  top: 10px;
-  float: right;
-  max-width: 20%;
-  max-height: 80px;
-  width: 15%;
+img.pronosticarList {
+  width: 45%;
 }
 
-.itemLocalTem {
-  max-width: 20% !important;
-}
-
-.itemPronosticar {
-  min-height: 70px !important;
+.itemPronosicar {
+  padding: 0 !important;
 }
 
 .bar-header, .dashboard-main-container {
@@ -51,8 +50,7 @@ h1.fontCustom {
 }
 
 .dashboard-main-container {
-  max-height: 100px !important;
-  padding-top: 40px;
+  max-height: 70px !important;
 }
 
 ion-content {
@@ -96,10 +94,6 @@ ion-content {
   top: 20px;
   padding: 5px;
   border-radius: 50%;
-}
-
-.chat-item {
-  background: #fff !important;
 }
 
 .userRankingTeamLogo {

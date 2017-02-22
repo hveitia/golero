@@ -35,27 +35,35 @@ angular.module('QuinielaIonicApp')
                   }
 
                   if ($scope.voteList[j].valueVote == '1') {
-                    data[i].localTeamClass = "itemLocalTem animated zoomIn";
-                    data[i].visitoTeamClass = 'animated zoomIn visitorTeamImg imagenGrayScale';
-                    data[i].tiedClass = 'fa fa-times-circle fa-3x animated zoomIn imagenGrayScale';
+                    data[i].localTeamClass = 'animated zoomIn pronosticarList';
+                    data[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                    data[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
                   } else {
                     if ($scope.voteList[j].valueVote == '2') {
-                      data[i].localTeamClass = "itemLocalTem animated zoomIn imagenGrayScale";
-                      data[i].visitoTeamClass = 'animated zoomIn visitorTeamImg';
-                      data[i].tiedClass = 'fa fa-times-circle fa-3x animated zoomIn imagenGrayScale';
+                      data[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                      data[i].visitoTeamClass = 'animated zoomIn pronosticarList';
+                      data[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
                     } else {
-                      data[i].localTeamClass = "itemLocalTem animated zoomIn imagenGrayScale";
-                      data[i].visitoTeamClass = 'animated zoomIn visitorTeamImg imagenGrayScale';
-                      data[i].tiedClass = 'fa fa-times-circle fa-3x animated zoomIn';
+                      data[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                      data[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                      data[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn';
                     }
                   }
-
                   $scope.gameVotedList.push(data[i]);
                   $scope.voteList.splice(i, 1);
-
                 }
               }
             }
+
+            for (var i = 0; i < $scope.gameVotedList.length; i++) {
+              if (i + 1 < $scope.gameVotedList.length) {
+                if ($scope.gameVotedList[i].workingDay.name != $scope.gameVotedList[i + 1].workingDay.name) {
+                  $scope.gameVotedList[i + 1].showDivid = true;
+                }
+              }
+            }
+
+            $scope.gameVotedList[0].showDivid = true;
           })
           .error(function(err) {
             $scope.gameVotedList = [];

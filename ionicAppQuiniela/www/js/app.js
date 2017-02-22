@@ -110,4 +110,11 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
     $urlRouterProvider.otherwise('/login');
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
 
+  })
+  .controller('MainCtrl', function($scope) {
+
+
+    $scope.$on('$ionicView.enter', function() {
+      $scope.showNavBar = false;
+    });
   });

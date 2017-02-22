@@ -2,7 +2,11 @@ var mongoose = require('mongoose');
 var GAMEMODEL = mongoose.model('GAMEMODEL');
 var TEAMMODEL = mongoose.model('TEAMMODEL');
 var WORKINGDAYMODEL = mongoose.model('WORKINGDAYMODEL');
+var USERMODEL = mongoose.model('USERMODEL');
+var VOTEMODEL = mongoose.model('VOTEMODEL');
 var utils = require('../utils/utils.js');
+
+
 
 exports.findAll = function(req, res) {
 
@@ -92,19 +96,74 @@ exports.add = function(req, res) {
 
 exports.update = function(req, res) {
 
-  GAMEMODEL.findById(req.params.id, function(err, result) {
+  GAMEMODEL.findById(req.params.id, function (err, result) {
 
     result.goalsLocalTeam = req.body.goalsLocalTeam;
     result.goalsVisitorTeam = req.body.goalsVisitorTeam;
     result.state = 'UPDATED';
 
-    result.save(function(err) {
 
-      if (err) return res.send(500, err.message);
+    result.save(function (err) {
 
-      res.status(200).jsonp(result);
+      VOTEMODEL.find({game: req.params.id}, function (err, voteList) {
+
+        USERMODEL.populate(voteList, {path: "user"}, function (err, list) {
+
+          if (err) res.send(500, err.message);
+
+        });
+        GAMEMODEL.populate(voteList,{path: "game"},function(err, list){
+
+          if (err) res.send(500, err.message);
+
+          for(var i=0;i<list.length;i++) {
+
+            var value = -1;
+            switch (list[i].valueVote) {
+              case "1":
+              {
+                value = (list[i].game.goalsLocalTeam < list[i].game.goalsVisitorTeam) ? 3 : -1;
+              }
+                break;
+              case "2":
+              {
+                value=(list[i].game.goalsLocalTeam > list[i].game.goalsVisitorTeam) ? 3 : -1;
+              }
+                break;
+              default:
+              {
+                value =(list[i].game.goalsLocalTeam == list[i].game.goalsVisitorTeam) ? 3 : -1;
+              }
+            }
+
+            list[i].user.points += value;
+            if(list[i].user.points < 0) list[i].user.points = 0;
+            list[i].user.save(function (err, result) {
+              if (err) return res.send(500, err.message);
+
+              res.status(200).send('ok');
+            });
+          }
+        });
+      });
     });
   });
+};
+
+calculatePoints = function(vote, game){
+
+  switch(vote.valueVote){
+    case 1:{
+      return game.goalsLocalTeam < game.goalsVisitorTeam;
+    }break;
+    case 2:{
+      return game.goalsLocalTeam > game.goalsVisitorTeam;
+    }break;
+    default: {
+      return game.goalsLocalTeam == game.goalsVisitorTeam;
+    }
+  }
+
 };
 
 exports.addSpecialDate = function(req, res) {
@@ -121,7 +180,6 @@ exports.addSpecialDate = function(req, res) {
     });
   });
 };
-
 
 exports.gameToVoteByDate = function(req, res) {
 

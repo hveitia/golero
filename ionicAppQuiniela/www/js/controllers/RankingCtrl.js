@@ -1,5 +1,6 @@
 angular.module('QuinielaIonicApp')
-  .controller('RankingCtrl', function($scope, RankinService, DatabaseService) {
+  .controller('RankingCtrl', function($scope, $timeout,
+    RankinService, DatabaseService) {
 
 
     $scope.loadRanking = function() {
@@ -23,6 +24,13 @@ angular.module('QuinielaIonicApp')
                 default:
                   $scope.rankinList[i].class = 'darkblue';
               }
+
+              if ($scope.rankinList[i].user == res.data.userName) {
+                $scope.rankinList[i].backGroundClass = '#ddd';
+              } else {
+                $scope.rankinList[i].backGroundClass = '#fff';
+              }
+
             }
           })
           .error(function(err) {
@@ -36,7 +44,6 @@ angular.module('QuinielaIonicApp')
 
       $scope.rankinList = [];
       $scope.loadRanking();
-
     });
 
   })

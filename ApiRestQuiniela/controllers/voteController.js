@@ -47,3 +47,15 @@ exports.getVotesByUser = function(req,res) {
     res.status(200).jsonp(result);
   });
 };
+
+exports.getVotesByGame = function(game) {
+
+  VOTEMODEL.find({game: game}, function (err, result) {
+
+    if (err) res.send(500, err.message);
+
+   return  result;
+  });
+};
+
+

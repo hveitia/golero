@@ -6,13 +6,15 @@ var middleware = require('../middleware');
 
 var workingDayModel = require('../models/workingDayModel')(app, mongoose);
 var gameModel = require('../models/gameModel')(app, mongoose);
+var voteModel = require('../models/voteModel')(app, mongoose);
 
 var gameController = require('../controllers/gameController');
 
 
 router.route('/game')
   .get(middleware.ensureAuthenticated,gameController.findAll)
-  .post(middleware.ensureAuthenticated,gameController.add);
+  //.post(middleware.ensureAuthenticated,gameController.add);
+.post(gameController.add);
 
 router.route('/game/:workingDay')
   .get(middleware.ensureAuthenticated,gameController.findByWorkingDay);

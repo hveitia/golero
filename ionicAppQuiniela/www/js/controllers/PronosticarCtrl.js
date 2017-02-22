@@ -2,12 +2,14 @@ angular.module('QuinielaIonicApp')
   .controller('PronosticarCtrl', function($scope, $http, $q, Game, Vote, $stateParams, $ionicPopup, $state, DatabaseService) {
 
     $scope.loadGame = function() {
+      $scope.gameToVoteList = [];
+      $scope.gameToVoteListByDate = [];
       DatabaseService.initDB();
       DatabaseService.getData("userData").then(function(res) {
         Game.getGameToVote(res.data.token).success(function(data) {
 
             $scope.gameToVoteList = data;
-
+            $scope.fechaName = '';
             for (var i = 0; i < $scope.gameToVoteList.length; i++) {
               if ($scope.canShowGame($scope.gameToVoteList[i]._id)) {
                 if ($scope.gameToVoteList[i].especialDate) {
@@ -15,13 +17,21 @@ angular.module('QuinielaIonicApp')
                 } else {
                   $scope.gameToVoteList[i].date = $scope.gameToVoteList[i].workingDay.date;
                 }
+
               } else {
                 $scope.gameToVoteList.splice(i, 1);
                 i--;
               }
             }
 
-
+            for (var i = 0; i < $scope.gameToVoteList.length; i++) {
+              if (i + 1 < $scope.gameToVoteList.length) {
+                if ($scope.gameToVoteList[i].workingDay.name != $scope.gameToVoteList[i + 1].workingDay.name) {
+                  $scope.gameToVoteList[i + 1].showDivid = true;
+                }
+              }
+            }
+            $scope.gameToVoteList[0].showDivid = true;
           })
           .error(function(err) {
             $scope.gameToVoteList = [];
@@ -96,12 +106,18 @@ angular.module('QuinielaIonicApp')
       });
     };
 
+    $scope.buttonIKnowClick = function() {
+      $scope.showTipsHowToVote = false;
+    };
     $scope.$on('$ionicView.enter', function() {
 
       $scope.gameToVoteList = [];
+      $scope.gameToVoteListByDate = [];
       $scope.voteList = [];
       $scope.gameVotedList = [];
       $scope.workingDayList = [];
+
+      $scope.showTipsHowToVote = true;
 
       $scope.loadVotesByUser();
       $scope.loadAllWorkingDay();

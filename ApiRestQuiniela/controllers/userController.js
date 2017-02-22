@@ -7,7 +7,6 @@ var path    = require("path");
 var utils = require('../utils/utils.js');
 
 
-
 exports.findAll = function(req, res) {
 
   //var token = req.headers.authorization.split(" ")[1];
@@ -127,7 +126,7 @@ exports.editFavoriteTeam = function(req, res) {
       user.save(function (err, result) {
         if (err) return res.send(500, err.message);
 
-        res.send(200,'ok');
+        res.status(200).send('ok');
       });
 
     } else {
@@ -153,7 +152,35 @@ exports.editAvatar = function(req, res) {
       user.save(function (err, result) {
         if (err) return res.send(500, err.message);
 
-        res.send(200,'ok');
+        res.status(200).send('ok');
+      });
+
+    } else {
+      res.send(500, 'User not found');
+    }
+  });
+
+};
+
+exports.editPoints = function(user, points) {
+
+  USERMODEL.findOne({
+    _id: user
+  }, function (err, user) {
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    if (user) {
+
+      user.points = user.points + points;
+
+      if (user.points < 0)user.points = 0;
+
+      user.save(function (err, result) {
+        if (err) return res.send(500, err.message);
+
+        res.status(200).send('ok');
       });
 
     } else {

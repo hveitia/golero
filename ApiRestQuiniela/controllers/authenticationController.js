@@ -16,30 +16,31 @@ exports.authenticate = function(req, res) {
         success: false,
         message: '0003'
       });
-    }
-    if(user.state != 'ACTIVE'){
-      res.json({
-        success: false,
-        message: '0004'
-      });
-    }
-    else {
+    }else {
+      if (user.state != 'ACTIVE') {
+        res.json({
+          success: false,
+          message: '0004'
+        });
+      }
+      else {
 
-      if (user) {
-        if (user.pass != req.body.pass) {
+        if (user) {
+          if (user.pass != req.body.pass) {
 
-          res.json({
-            success: false,
-            message: '0003'
-          });
-        } else {
+            res.json({
+              success: false,
+              message: '0003'
+            });
+          } else {
 
-          // return the information including token as JSON
-          res.json({
-            success: true,
-            message: 'Login Success!',
-            token: service.createToken(user)
-          });
+            // return the information including token as JSON
+            res.json({
+              success: true,
+              message: 'Login Success!',
+              token: service.createToken(user)
+            });
+          }
         }
       }
     }

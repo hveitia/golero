@@ -81,8 +81,11 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.creatAccountButtonClick = function() {
+
+      $scope.data = {};
       $scope.showView = 'REG';
       $scope.title = 'Crear Cuenta';
+
     };
 
     $scope.backButtonClick = function() {

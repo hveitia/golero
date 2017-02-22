@@ -128,6 +128,7 @@ angular.module('QuinielaIonicApp')
       });
     };
     $scope.$on('$ionicView.enter', function() {
+      $scope.showNavBar = true;
       $scope.voteList = [];
       $scope.loadUserData();
       $scope.loadVotesByUser();

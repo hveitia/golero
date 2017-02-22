@@ -16,5 +16,5 @@ exports.canVoteGame = function(game) {
 
 };
 
-exports.modoSend = function(){return false};
+exports.modoSend = function(){return true};
 

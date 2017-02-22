@@ -1,4 +1,4 @@
-var urlApi = 'http://localhost:3000/api/';
+var urlApi = 'http://10.0.20.51:3000/api/';
 
 var returnApiCodes = {
   "0001": "El usuario ingresado ya está en uso.",

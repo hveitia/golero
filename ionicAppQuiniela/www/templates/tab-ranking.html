@@ -1,16 +1,16 @@
+<!--   oro: #ffd700 plata: #c0c0c0 bronce: #8c7853 ---->
 <ion-view view-title="Rankin">
   <ion-content>
     <div class="list  animated bounceInDown">
-      <div class="item item-remove-animate  chat-item item-avatar " ng-repeat="item in rankinList track by $index" type="item-text-wrap">
+      <div class="item item-remove-animate  chat-item item-avatar " ng-repeat="item in rankinList track by $index" style="background-color: {{item.backGroundClass}} !important;">
+
         <img ng-src="./img/avatars/{{item.avatar}}" class="animated flipIxnX ">
         <h3 class="userRankingName" style="margin: 0 0 10px 0; !important">{{item.user}}</h3>
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
         <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
         <span class="badge" style="color: white; margin-top:3%; background-color: {{item.class}} !important;">{{$index + 1}}</span>
+
       </div>
     </div>
-
   </ion-content>
 </ion-view>
-
-<!--   oro: #ffd700 plata: #c0c0c0 bronce: #8c7853 ---->

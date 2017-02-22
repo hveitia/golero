@@ -3,19 +3,19 @@
     <div class="list list-inset" style="width: 90%; background: darkblue;">
       <label class="item item-input" style="background: darkblue; border: none;">
           <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
-          <input type="text" class="loginInput" placeholder="Nombre" data-ng-model="data.username">
+          <input type="text" class="loginInput" placeholder="Nombre" data-ng-model="data.username" maxlength="30">
         </label>
       <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
           <i class="icon ion-ios-email placeholder-icon" style="position: absolute;"></i>
-          <input type="email" class="loginInput" placeholder="Email" data-ng-model="data.email">
+          <input type="email" class="loginInput" placeholder="Email" data-ng-model="data.email" maxlength="60">
         </label>
       <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
           <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
-          <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password">
+          <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password" maxlength="30">
         </label>
       <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
           <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
-          <input type="password" class="loginInput" placeholder="Confirmar Contraseña" data-ng-model="data.passwordConfirm">
+          <input type="password" class="loginInput" placeholder="Confirmar Contraseña" data-ng-model="data.passwordConfirm" maxlength="30">
         </label>
     </div>
     <div class="row">
@@ -25,16 +25,16 @@
       <button class="button button-block buttonCenter" data-ng-click="backButtonClick()">Atrás</button>
     </div>
   </ion-content>
-  <ion-content class="ion-content" data-ng-show="showView == 'HOME'">
+  <ion-content class="ion-content imageLogin" data-ng-show="showView == 'HOME'">
     <h1 class="fontCustom">Quiniela</h1>
     <div class="list list-inset" style="width: 90%; background: darkblue;">
       <label class="item item-input" style="background: darkblue; border: none;">
         <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
-        <input type="text" class="loginInput" placeholder="Usuario" data-ng-model="data.username">
+        <input type="text" class="loginInput" placeholder="Usuario" data-ng-model="data.username" maxlength="30">
       </label>
       <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
         <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
-        <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password">
+        <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password" maxlength="30">
       </label>
     </div>
     <div class="row">
@@ -55,6 +55,4 @@
       <button class="button button-block buttonCenter" data-ng-click="backButtonClick()">Ir al Inicio</button>
     </div>
   </ion-content>
-
-
 </ion-view>
