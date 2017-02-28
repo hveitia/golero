@@ -1,20 +1,20 @@
 <ion-view view-title="{{title}}" name="login-view">
-  <ion-content class="ion-content" data-ng-show="showView == 'REG'">
-    <div class="list list-inset" style="width: 90%; background: darkblue;">
-      <label class="item item-input" style="background: darkblue; border: none;">
-          <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
+  <ion-content class="ion-content imageLogin" data-ng-show="showView == 'REG'">
+    <div class="list list-inset" style="background-color: transparent;">
+      <h1 class="fontCustom">GOLERO</h1>
+      <div class="row">
+        <h4 style="margin-left:auto;margin-right:auto; color: white;">Crear Nueva Cuenta</h4>
+      </div>
+      <label class="item item-input loginControl">
           <input type="text" class="loginInput" placeholder="Nombre" data-ng-model="data.username" maxlength="30">
-        </label>
-      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
-          <i class="icon ion-ios-email placeholder-icon" style="position: absolute;"></i>
+        </label><br/>
+      <label class="item item-input loginControl">
           <input type="email" class="loginInput" placeholder="Email" data-ng-model="data.email" maxlength="60">
-        </label>
-      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
-          <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+        </label><br/>
+      <label class="item item-input loginControl">
           <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password" maxlength="30">
-        </label>
-      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
-          <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+        </label><br/>
+      <label class="item item-input loginControl">
           <input type="password" class="loginInput" placeholder="Confirmar Contraseña" data-ng-model="data.passwordConfirm" maxlength="30">
         </label>
     </div>
@@ -26,28 +26,40 @@
     </div>
   </ion-content>
   <ion-content class="ion-content imageLogin" data-ng-show="showView == 'HOME'">
-    <h1 class="fontCustom">Quiniela</h1>
-    <div class="list list-inset" style="width: 90%; background: darkblue;">
-      <label class="item item-input" style="background: darkblue; border: none;">
-        <i class="icon ion-person placeholder-icon" style="position: absolute;"></i>
+
+    <div class="list list-inset" style="background-color: transparent;">
+      <div class="row">
+        <div class="col col-33 col-offset-33" style="text-align:center;">
+          <i class="fa fa-futbol-o fa-4x" aria-hidden="true"></i>
+        </div>
+      </div>
+      <h1 class="fontCustom">GOLERO</h1>
+      <br/><br/>
+      <br/>
+      <label class="item item-input loginControl">
         <input type="text" class="loginInput" placeholder="Usuario" data-ng-model="data.username" maxlength="30">
       </label>
-      <label class="item item-input" style="background: darkblue; border: none; margin-top:20px;">
-        <i class="icon ion-locked placeholder-icon" style="position: absolute;"></i>
+      <br/>
+      <label class="item item-input loginControl">
         <input type="password" class="loginInput" placeholder="Contraseña" data-ng-model="data.password" maxlength="30">
       </label>
     </div>
+    <br/>
     <div class="row">
       <button class="button button-block buttonCenter" data-ng-click="login()">Entrar</button>
     </div>
+    <br/>
     <div class="row">
-      <button class="button button-block buttonCenter" data-ng-click="creatAccountButtonClick()">Crear Cuenta</button>
+      <h5 style="margin-left:auto;margin-right:auto; color: white;">Primera vez en golero?</h5>
+    </div>
+    <div class="row">
+      <button class="button button-block buttonCenter buttonRegister" data-ng-click="creatAccountButtonClick()">Crear Cuenta</button>
     </div>
   </ion-content>
-  <ion-content class="ion-content" data-ng-show="showView == 'SUCCESS'">
+  <ion-content class="ion-content imageLogin" data-ng-show="showView == 'SUCCESS'">
     <h1 class="fontCustom">Registro Exitoso</h1>
     <div class="card">
-      <div class="item item-text-wrap" style="background-color: darkblue; color: white; text-align: center;">
+      <div class="item item-text-wrap" style="text-align: center;">
         Bienvenido a la Quiniela. Ahora podrás demostrar que eres quien más conoce de fútbol. Por favor active su usuario desde su email y comienza desde ya a optar por los premios.
       </div>
     </div>

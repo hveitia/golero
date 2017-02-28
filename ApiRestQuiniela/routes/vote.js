@@ -13,6 +13,12 @@ router.route('/vote')
   .get(middleware.ensureAuthenticated, voteController.findAll)
   .post(middleware.ensureAuthenticated, voteController.add);
 
+
+router.route('/vote/:id')
+    .put(middleware.ensureAuthenticated, voteController.update)
+    .options(middleware.ensureAuthenticated, voteController.options)
+    .delete(middleware.ensureAuthenticated, voteController.delete);
+
 router.route('/voteByUser')
     .get(middleware.ensureAuthenticated, voteController.getVotesByOwnUser);
 

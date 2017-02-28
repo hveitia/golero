@@ -24,6 +24,15 @@ exports = module.exports = function(app, mongoose) {
     },
     favoriteTeam:{
       type: String
+    },
+    registerDate:{
+      type: Date
+    },
+    lastLogon:{
+      type: Date
+    },
+    role:{
+      type: Number
     }
 
   });

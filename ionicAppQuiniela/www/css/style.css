@@ -1,13 +1,27 @@
+.spinner svg {
+  width: 60px;
+  height: 50px;
+  stroke: darkblue;
+  fill: darkblue;
+}
+
+.centerWithAuto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .imageLogin {
-  background-image: url("../img/cover.jpeg");
+  /*background-image: url("../img/cover.jpg");
   background-size: cover;
-  background-position: center;
-  margin: auto;
-  z-index: 2;
+  background-position: center;*/
+  background-color: darkblue;
 }
 
 .fontCustom {
-  font-family: 'GarciaRegular'; //'FyodorBold';
+  font-family: 'SportingGrotesqueGras'; //'PumpkinRegular';
+  //'PumpkinRegular';
+  //'JelleeBold';
+  //'FloridaProjectPhaseOne'; //'BaraliktoRegular'; //'GarciaRegular'; //'FyodorBold';
   font-weight: normal;
   font-style: normal;
 }
@@ -22,10 +36,18 @@ naranja #e85b01*/
 
 h1.fontCustom {
   text-align: center;
-  color: #f99c00;
+  color: white;
+  /*rgb(53, 104, 153)#398046*/
+  ;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 15px !important;
+  text-shadow: 2px 2px 3px #000;
+}
+
+h1.viewTitle {
+  color: white !important;
 }
 
 .background.scroll-content {
@@ -44,13 +66,8 @@ img.pronosticarList {
   padding: 0 !important;
 }
 
-.bar-header, .dashboard-main-container {
-  background: darkblue !important;
-  color: white;
-}
-
 .dashboard-main-container {
-  max-height: 70px !important;
+  max-height: 100px !important;
 }
 
 ion-content {
@@ -62,25 +79,29 @@ ion-content {
   padding-bottom: 5px;
 }
 
+.avatar-conatainer {
+  margin-top: 15%;
+}
+
 .dashboard-main-container .avatar-conatainer img {
   border: none;
   border-radius: 100%;
 }
 
-.loginInput {
-  border: none !important;
-  border-bottom: 1px solid white !important;
-  background: darkblue !important;
-  color: white !important;
-  padding-left: 20px !important;
-}
-
 .buttonCenter {
-  background-color: #f99c00 !important;
+  background-color: royalblue;
+  /*rgb(53, 104, 153)#398046*/
+  !important;
   width: 90% !important;
   margin-left: auto;
   margin-right: auto;
   color: white;
+  border-radius: 0;
+}
+
+.buttonRegister {
+  background-color: transparent !important;
+  border: solid white 1px;
 }
 
 .imagenGrayScale {
@@ -104,8 +125,35 @@ ion-content {
 }
 
 .favoriteTeamDash {
+  clear: both;
   width: 13%;
   position: absolute;
-  top: 125%;
+  top: 160px;
   left: 31%;
+}
+
+.bar-header {
+  /*background: #4F88A0 rgb(53, 104, 153)  !important;*/
+  background: darkblue !important;
+  color: white;
+}
+
+.dashboard-main-container {
+  background: darkblue !important;
+}
+
+.loginControl {
+  /*opacity: 0.5;
+  background-color: black;
+  width: 92% !important;
+  border: none;*/
+  width: 92% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.loginInput {
+  border: none !important;
+  color: black !important;
+  padding-left: 10px !important;
 }

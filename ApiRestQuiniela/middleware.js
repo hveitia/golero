@@ -21,3 +21,28 @@ exports.ensureAuthenticated = function(req, res, next) {
    req.user = payload.sub;
    next();
   };
+
+exports.ensureAuthenticatedAdmin = function(req, res, next) {
+   if(!req.headers.authorization) {
+      return res
+          .status(403)
+          .send({message: "Error: Access Denied"});
+   }
+
+   var token = req.headers.authorization.split(" ")[1];
+   var payload = jwt.decode(token, config.TOKEN_SECRET);
+
+   if(payload.exp <= moment().unix()) {
+      return res
+          .status(401)
+          .send({message: "The token expires"});
+   }
+
+   req.user = payload.sub;
+   if(req.user.role != 0){
+      return res
+          .status(403)
+          .send({message: "Error: Not Allowed"});
+   }
+   next();
+};

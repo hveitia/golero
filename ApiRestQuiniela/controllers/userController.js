@@ -65,7 +65,7 @@ exports.add = function(req, res) {
 
       USERMODEL.findOne({
         email: req.body.email
-      }, function(err, userEmail) {
+      }, function (err, userEmail) {
         if (err) {
           res.send(500, err.message);
         }
@@ -73,7 +73,7 @@ exports.add = function(req, res) {
 
           var md5sum = crypto.createHash('md5');
           md5sum.update(req.body.user);
-          var registerHash= md5sum.digest('hex');
+          var registerHash = md5sum.digest('hex');
 
           var obj = new USERMODEL({
             user: req.body.user,
@@ -81,11 +81,13 @@ exports.add = function(req, res) {
             email: req.body.email,
             points: 0,
             state: 'CREATED',
-            registerHash:registerHash,
+            registerHash: registerHash,
             avatar: 'user.png',
-            favoriteTeam: 'noteam.png'
+            favoriteTeam: 'noteam.png',
+            registerDate: new Date(),
+            role: req.body.role
           });
-          obj.save(function(err, result) {
+          obj.save(function (err, result) {
             if (err) return res.send(500, err.message);
 
             sendRegistrationConfirmation(result._doc);
@@ -239,7 +241,7 @@ sendRegistrationConfirmation = function (obj) {
     }
     else {
 
-      file = file.replace('[[USER]]', obj.user).replace('[[URL]]', 'http://localhost:3000/api/userActivation/' + obj.registerHash);
+      file = file.replace('[[USER]]', obj.user).replace('[[URL]]', utils.url() + 'userActivation/' + obj.registerHash);
 
       var transporter = nodemailer.createTransport({
         service: 'Gmail',

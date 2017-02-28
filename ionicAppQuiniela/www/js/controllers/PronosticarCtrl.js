@@ -1,87 +1,90 @@
 angular.module('QuinielaIonicApp')
-  .controller('PronosticarCtrl', function($scope, $http, $q, Game, Vote, $stateParams, $ionicPopup, $state, DatabaseService) {
+  .controller('PronosticarCtrl', function($scope, $http, $ionicScrollDelegate,
+    Game, Vote, $ionicPopup, DatabaseService, StorageService) {
 
     $scope.loadGame = function() {
       $scope.gameToVoteList = [];
       $scope.gameToVoteListByDate = [];
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        Game.getGameToVote(res.data.token).success(function(data) {
 
-            $scope.gameToVoteList = data;
-            $scope.fechaName = '';
-            for (var i = 0; i < $scope.gameToVoteList.length; i++) {
-              if ($scope.canShowGame($scope.gameToVoteList[i]._id)) {
-                if ($scope.gameToVoteList[i].especialDate) {
-                  $scope.gameToVoteList[i].date = $scope.gameToVoteList[i].especialDate;
-                } else {
-                  $scope.gameToVoteList[i].date = $scope.gameToVoteList[i].workingDay.date;
-                }
+      Game.getGameToVote().success(function(data) {
 
+          $scope.gameToVoteList = data;
+          $scope.fechaName = '';
+          for (var i = 0; i < $scope.gameToVoteList.length; i++) {
+            if ($scope.canShowGame($scope.gameToVoteList[i]._id)) {
+              if ($scope.gameToVoteList[i].especialDate) {
+                $scope.gameToVoteList[i].date = $scope.gameToVoteList[i].especialDate;
               } else {
-                $scope.gameToVoteList.splice(i, 1);
-                i--;
+                $scope.gameToVoteList[i].date = $scope.gameToVoteList[i].workingDay.date;
               }
-            }
 
-            for (var i = 0; i < $scope.gameToVoteList.length; i++) {
-              if (i + 1 < $scope.gameToVoteList.length) {
-                if ($scope.gameToVoteList[i].workingDay.name != $scope.gameToVoteList[i + 1].workingDay.name) {
-                  $scope.gameToVoteList[i + 1].showDivid = true;
-                }
+            } else {
+              $scope.gameToVoteList.splice(i, 1);
+              i--;
+            }
+          }
+
+          for (var i = 0; i < $scope.gameToVoteList.length; i++) {
+            if (i + 1 < $scope.gameToVoteList.length) {
+              if ($scope.gameToVoteList[i].workingDay.name != $scope.gameToVoteList[i + 1].workingDay.name) {
+                $scope.gameToVoteList[i + 1].showDivid = true;
               }
             }
-            $scope.gameToVoteList[0].showDivid = true;
-          })
-          .error(function(err) {
-            $scope.gameToVoteList = [];
-            console.log(err);
-          });
-      });
+          }
+          $scope.gameToVoteList[0].showDivid = true;
+          $scope.loading = false;
+        })
+        .error(function(err) {
+          $scope.gameToVoteList = [];
+          console.log(err);
+        });
+
     };
 
     $scope.addVote = function(game, voteValue) {
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        $http({
-            method: 'POST',
-            url: urlApi + 'vote',
-            headers: {
-              'Authorization': 'Bearer ' + res.data.token,
-              'Content-Type': 'application/json'
-            },
-            data: {
-              "valueVote": voteValue,
-              "game": game._id
+      $scope.loading = true;
+
+      $http({
+          method: 'POST',
+          url: urlApi + 'vote',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          },
+          data: {
+            "valueVote": voteValue,
+            "game": game._id
+          }
+        }).success(function(response) {
+          /*for (var i = 0; i < $scope.gameToVoteList.length; i++) {
+            if ($scope.gameToVoteList[i]._id == game._id) {
+              $scope.gameToVoteList.splice(i, 1);
+              break;
             }
-          }).success(function(response) {
-            for (var i = 0; i < $scope.gameToVoteList.length; i++) {
-              if ($scope.gameToVoteList[i]._id == game._id) {
-                $scope.gameToVoteList.splice(i, 1);
-                break;
-              }
-            }
-          })
-          .error(function(err) {
-            console.log(err);
-          });
-      });
+          }
+          $scope.loading = false;*/
+          $scope.init();
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+
     };
 
     $scope.loadVotesByUser = function() {
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        Vote.getVoteByUser(res.data.token).success(function(data) {
-            $scope.voteList = data;
+      $scope.loading = true;
 
-            $scope.loadGame();
+      Vote.getVoteByUser().success(function(data) {
+          $scope.voteList = data;
 
-          })
-          .error(function(err) {
+          $scope.loadGame();
 
-            console.log(err);
-          });
-      });
+        })
+        .error(function(err) {
+
+          console.log(err);
+        });
+
     };
 
     $scope.canShowGame = function(idGame) {
@@ -93,34 +96,24 @@ angular.module('QuinielaIonicApp')
       return true;
     };
 
-    $scope.loadAllWorkingDay = function() {
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        Game.getAllWorkingDay(res.data.token).success(function(data) {
-            $scope.workingDayList = data;
-          })
-          .error(function(err) {
-            $scope.workingDayList = [];
-            console.log(err);
-          });
-      });
-    };
-
     $scope.buttonIKnowClick = function() {
+      StorageService.setItem('showTipsHowToVote', true);
       $scope.showTipsHowToVote = false;
     };
-    $scope.$on('$ionicView.enter', function() {
 
+    $scope.init = function() {
+      $scope.loading = false;
       $scope.gameToVoteList = [];
       $scope.gameToVoteListByDate = [];
       $scope.voteList = [];
-      $scope.gameVotedList = [];
-      $scope.workingDayList = [];
-
-      $scope.showTipsHowToVote = true;
-
+      $ionicScrollDelegate.scrollTop();
+      $scope.showTipsHowToVote = StorageService.getItem('showTipsHowToVote') == null;;
       $scope.loadVotesByUser();
-      $scope.loadAllWorkingDay();
+    };
+
+    $scope.$on('$ionicView.enter', function() {
+
+      $scope.init();
     });
 
   })

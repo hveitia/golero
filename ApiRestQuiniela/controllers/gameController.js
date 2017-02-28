@@ -122,12 +122,12 @@ exports.update = function(req, res) {
             switch (list[i].valueVote) {
               case "1":
               {
-                value = (list[i].game.goalsLocalTeam < list[i].game.goalsVisitorTeam) ? 3 : -1;
+                value = (list[i].game.goalsLocalTeam > list[i].game.goalsVisitorTeam) ? 3 : -1;
               }
                 break;
               case "2":
               {
-                value=(list[i].game.goalsLocalTeam > list[i].game.goalsVisitorTeam) ? 3 : -1;
+                value=(list[i].game.goalsLocalTeam < list[i].game.goalsVisitorTeam) ? 3 : -1;
               }
                 break;
               default:
@@ -140,30 +140,13 @@ exports.update = function(req, res) {
             if(list[i].user.points < 0) list[i].user.points = 0;
             list[i].user.save(function (err, result) {
               if (err) return res.send(500, err.message);
-
-              res.status(200).send('ok');
             });
           }
+          res.status(200).send('ok');
         });
       });
     });
   });
-};
-
-calculatePoints = function(vote, game){
-
-  switch(vote.valueVote){
-    case 1:{
-      return game.goalsLocalTeam < game.goalsVisitorTeam;
-    }break;
-    case 2:{
-      return game.goalsLocalTeam > game.goalsVisitorTeam;
-    }break;
-    default: {
-      return game.goalsLocalTeam == game.goalsVisitorTeam;
-    }
-  }
-
 };
 
 exports.addSpecialDate = function(req, res) {

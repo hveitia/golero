@@ -1,4 +1,27 @@
 angular.module('QuinielaIonicApp.Services', [])
+
+  .constant('storageKey', 'storage_')
+
+  .factory('StorageService', ['$window', 'storageKey', function($window, storageKey) {
+
+    var storageService = {};
+
+    var getStorageKey = function(key) {
+      return storageKey + key;
+    };
+
+    storageService.setItem = function(key, object) {
+      $window.localStorage.setItem(getStorageKey(key), angular.toJson(object));
+    };
+
+    storageService.getItem = function(key) {
+      var jsonObject = $window.localStorage.getItem(getStorageKey(key));
+      return jsonObject ? angular.fromJson(jsonObject) : null;
+    };
+
+    return storageService;
+  }])
+
   .factory('DatabaseService', ['$q', function($q) {
     var _db;
 
@@ -12,8 +35,8 @@ angular.module('QuinielaIonicApp.Services', [])
 
     function initDB() {
       // Creates the database or opens if it already exists
-      //PouchDB.plugin(PouchAdapterCordovaSqlite);
-      /*_db = new PouchDB('appData.db', {
+      /*PouchDB.plugin(PouchAdapterCordovaSqlite);
+      _db = new PouchDB('appData.db', {
         adapter: 'cordova-sqlite',
         location: 'default',
         revs_limit: 1,
@@ -45,25 +68,25 @@ angular.module('QuinielaIonicApp.Services', [])
     }
   }])
 
-  .factory('RankinService', ['$http', '$q', function($http, $q) {
+  .factory('RankinService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
-      getRanking: function(token) {
+      getRanking: function() {
         return $http({
           method: 'GET',
           url: urlApi + 'userRanking',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
       },
-      getRankingPosition: function(token) {
+      getRankingPosition: function() {
         return $http({
           method: 'GET',
           url: urlApi + 'userRankingPosition',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
@@ -71,35 +94,35 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Game', ['$http', '$q', function($http, $q) {
+  .factory('Game', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
-      getAllWorkingDay: function(token) {
+      getAllWorkingDay: function() {
         return $http({
           method: 'GET',
           url: urlApi + 'workingDay',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
       },
-      getAllGames: function(token) {
+      getAllGames: function() {
         return $http({
           method: 'GET',
           url: urlApi + 'game',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
       },
-      getGameToVote: function(token) {
+      getGameToVote: function() {
         return $http({
           method: 'GET',
           url: urlApi + 'gameToVoteByDate',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
@@ -107,32 +130,52 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Vote', ['$http', '$q', function($http, $q) {
+  .factory('Vote', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
-      getVoteByUser: function(token) {
+      getVoteByUser: function() {
 
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUser',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });
-
+      },
+      getVoteByUserAny: function(user) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/voteByUserAny/' + user,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+      deleteVote: function(vote) {
+        return $http({
+          method: 'DELETE',
+          url: urlApi + '/vote/' + vote,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
       }
     };
   }])
-  .factory('UserService', ['$http', '$q', function($http, $q) {
+
+  .factory('UserService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
-      getUser: function(token) {
+      getUser: function() {
         return $http({
           method: 'GET',
           url: urlApi + '/getUser',
           headers: {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
           }
         });

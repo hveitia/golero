@@ -1,7 +1,8 @@
 angular.module('QuinielaIonicApp')
 
 
-  .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5, DatabaseService) {
+  .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5,
+    StorageService) {
 
 
 
@@ -21,15 +22,11 @@ angular.module('QuinielaIonicApp')
               });
 
             } else {
-              var objDatosUsuario = {
-                "token": response.token,
-                "userName": $scope.data.username
-              };
-              DatabaseService.initDB();
-              DatabaseService.addData("userData", objDatosUsuario);
+              StorageService.setItem('token', response.token);
+              StorageService.setItem('user', $scope.data.username);
+              StorageService.setItem('password', $scope.data.password);
               $state.go('tab.dash');
             }
-
           })
           .error(function(err) {
             console.log(err);
@@ -74,7 +71,7 @@ angular.module('QuinielaIonicApp')
         } else {
           var alertPopup = $ionicPopup.alert({
             title: 'Campos vacíos!',
-            template: 'Por favor chequear que no existen campos vacíos.'
+            template: 'Por favor chequear que no existen campos vacíos. Además que el email esté correcto.'
           });
         }
       }
@@ -105,21 +102,21 @@ angular.module('QuinielaIonicApp')
       return true;
     };
 
-    $scope.cerrarSesion = function() {
-      DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
-        DatabaseService.deleteData(res);
-      });
-    };
 
     $scope.$on('$ionicView.enter', function() {
 
-      $scope.data = {};
-      $scope.showView = 'HOME';
-      $scope.title = '';
-
-      $scope.cerrarSesion();
-
+      var user = StorageService.getItem('user');
+      var pass = StorageService.getItem('password');
+      if (user != null && pass != null) {
+        $scope.data = {};
+        $scope.data.username = user;
+        $scope.data.password = pass;
+        $scope.login();
+      } else {
+        $scope.data = {};
+        $scope.showView = 'HOME';
+        $scope.title = '';
+      }
     });
 
   });

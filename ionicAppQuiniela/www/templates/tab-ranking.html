@@ -1,10 +1,17 @@
 <!--   oro: #ffd700 plata: #c0c0c0 bronce: #8c7853 ---->
 <ion-view view-title="Rankin">
+  <div class="bar bar-header bar-light">
+    <h1 class="title viewTitle">Ranking</h1>
+  </div>
   <ion-content>
-    <div class="list  animated bounceInDown">
+
+    <div class="list  animated bounceInDown" style="margin-top: 17%;">
+      <div class="row">
+        <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
+      </div>
       <div class="item item-remove-animate  chat-item item-avatar " ng-repeat="item in rankinList track by $index" style="background-color: {{item.backGroundClass}} !important;">
 
-        <img ng-src="./img/avatars/{{item.avatar}}" class="animated flipIxnX ">
+        <img ng-src="./img/avatars/{{item.avatar}}" class="animated flipIxnX" data-ng-click="openModal(item)">
         <h3 class="userRankingName" style="margin: 0 0 10px 0; !important">{{item.user}}</h3>
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
         <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
@@ -13,4 +20,30 @@
       </div>
     </div>
   </ion-content>
+  <script id="view-votes-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title" style="color:white;">Pronósticos de {{userName}}</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
+      </ion-header-bar>
+      <ion-content style="text-align:center;">
+        <div class="item itemPronosicar" ng-repeat="item in gameVotedList">
+          <div class="item item-divider" data-ng-show="item.showDivid">
+            Fecha {{item.workingDay.name}} - {{item.date | date: "dd-MM-yyyy"}}
+          </div>
+          <div class="row" style="text-align: center">
+            <div class="col">
+              <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}}" data-ng-click="updateVote(item,'1')">
+            </div>
+            <div class="col">
+              <i class="{{item.tiedClass}}" aria-hidden="true" style="color: darkblue; margin-top: 10px;" data-ng-click="updateVote(item,'0')"></i>
+            </div>
+            <div class="col">
+              <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}}" data-ng-click="updateVote(item,'2')">
+            </div>
+          </div>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
 </ion-view>

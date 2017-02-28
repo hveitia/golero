@@ -16,5 +16,7 @@ exports.canVoteGame = function(game) {
 
 };
 
-exports.modoSend = function(){return true};
+exports.modoSend = function(){return true;};
+
+exports.url = function(){ return 'http://192.168.1.2:3000/api/';};
 
