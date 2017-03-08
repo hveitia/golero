@@ -1,10 +1,13 @@
 var mongoose = require('mongoose');
+var forEachAsync = require('forEachAsync').forEachAsync;
 var GAMEMODEL = mongoose.model('GAMEMODEL');
 var TEAMMODEL = mongoose.model('TEAMMODEL');
 var WORKINGDAYMODEL = mongoose.model('WORKINGDAYMODEL');
 var USERMODEL = mongoose.model('USERMODEL');
 var VOTEMODEL = mongoose.model('VOTEMODEL');
 var utils = require('../utils/utils.js');
+
+
 
 
 
@@ -107,41 +110,72 @@ exports.update = function(req, res) {
 
       VOTEMODEL.find({game: req.params.id}, function (err, voteList) {
 
-        USERMODEL.populate(voteList, {path: "user"}, function (err, list) {
+        USERMODEL.populate(voteList, {path: "user"}, function (err, user) {
 
           if (err) res.send(500, err.message);
 
         });
-        GAMEMODEL.populate(voteList,{path: "game"},function(err, list){
+        GAMEMODEL.populate(voteList, {path: "game"}, function (err, list) {
 
           if (err) res.send(500, err.message);
 
-          for(var i=0;i<list.length;i++) {
+          /*for(var i=0;i<voteList.length;i++) {
+
+           var value = -1;
+           switch (voteList[i].valueVote) {
+           case "1":
+           {
+           value = (voteList[i].game.goalsLocalTeam > voteList[i].game.goalsVisitorTeam) ? 3 : -1;
+           }
+           break;
+           case "2":
+           {
+           value=(voteList[i].game.goalsLocalTeam < voteList[i].game.goalsVisitorTeam) ? 3 : -1;
+           }
+           break;
+           default:
+           {
+           value =(voteList[i].game.goalsLocalTeam == voteList[i].game.goalsVisitorTeam) ? 3 : -1;
+           }
+           }
+
+           voteList[i].user.points += 0;//value;
+           if(voteList[i].user.points < 0) voteList[i].user.points = 0;
+           voteList[i].user.save(function (err, result) {
+           if (err) return res.send(500, err.message);
+           });
+           }*/
+
+          forEachAsync(voteList, function (next, element, index, array) {
 
             var value = -1;
-            switch (list[i].valueVote) {
+            switch (element.valueVote) {
               case "1":
               {
-                value = (list[i].game.goalsLocalTeam > list[i].game.goalsVisitorTeam) ? 3 : -1;
+                value = (element.game.goalsLocalTeam > element.game.goalsVisitorTeam) ? 3 : -1;
               }
                 break;
               case "2":
               {
-                value=(list[i].game.goalsLocalTeam < list[i].game.goalsVisitorTeam) ? 3 : -1;
+                value = (element.game.goalsLocalTeam < element.game.goalsVisitorTeam) ? 3 : -1;
               }
                 break;
               default:
               {
-                value =(list[i].game.goalsLocalTeam == list[i].game.goalsVisitorTeam) ? 3 : -1;
+                value = (element.game.goalsLocalTeam == element.game.goalsVisitorTeam) ? 3 : -1;
               }
             }
 
-            list[i].user.points += value;
-            if(list[i].user.points < 0) list[i].user.points = 0;
-            list[i].user.save(function (err, result) {
+            element.user.points += value;
+            if (element.user.points < 0) element.user.points = 0;
+
+            element.user.save(function (err, result) {
               if (err) return res.send(500, err.message);
             });
-          }
+
+          }).then(function () {
+            console.log('All requests have finished');
+          });
           res.status(200).send('ok');
         });
       });

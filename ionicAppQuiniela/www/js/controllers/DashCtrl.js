@@ -130,6 +130,10 @@ angular.module('QuinielaIonicApp')
 
     };
 
+    $scope.onSwipeLeft = function() {
+      $state.go('tab.pronosticar');
+    };
+
     $scope.$on('$ionicView.enter', function() {
       $scope.showNavBar = true;
       $scope.voteList = [];

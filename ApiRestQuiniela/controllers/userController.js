@@ -24,7 +24,10 @@ exports.findAll = function(req, res) {
 
 exports.userRanking = function(req, res) {
 
-  USERMODEL.find({state: 'ACTIVE'}, null, {sort: {'points': -1}}, function(err, result) {
+  USERMODEL.find({state: 'ACTIVE'})
+      .sort({'points': -1})
+      .limit(200)
+      .exec(function(err, result) {
 
     if (err) {
       res.send(500, err.message);
@@ -46,7 +49,6 @@ exports.userRankingPosition = function(req, res) {
       if(result[i]._doc._id == req.user){
         res.status(200).jsonp({'pos':i+1,'points':result[i].points}) ;
       }
-
     }
 
   });
@@ -164,34 +166,6 @@ exports.editAvatar = function(req, res) {
 
 };
 
-exports.editPoints = function(user, points) {
-
-  USERMODEL.findOne({
-    _id: user
-  }, function (err, user) {
-    if (err) {
-      res.send(500, err.message);
-    }
-
-    if (user) {
-
-      user.points = user.points + points;
-
-      if (user.points < 0)user.points = 0;
-
-      user.save(function (err, result) {
-        if (err) return res.send(500, err.message);
-
-        res.status(200).send('ok');
-      });
-
-    } else {
-      res.send(500, 'User not found');
-    }
-  });
-
-};
-
 exports.getUser = function(req, res){
 
   USERMODEL.findOne({_id: req.user},function(err, result) {
@@ -254,7 +228,7 @@ sendRegistrationConfirmation = function (obj) {
       var mailOptions = {
         from: 'deportesquiniela@gmail.com', // sender address
         to: obj.email, // list of receivers
-        subject: 'Email From REST API..', // Subject line
+        subject: 'Golero.. Activación de Cuenta..', // Subject line
         html: file//'localhost:3000/api/userActivation/' + obj.registerHash
       };
 

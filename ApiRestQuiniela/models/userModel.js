@@ -32,7 +32,7 @@ exports = module.exports = function(app, mongoose) {
       type: Date
     },
     role:{
-      type: Number
+      type: String
     }
 
   });

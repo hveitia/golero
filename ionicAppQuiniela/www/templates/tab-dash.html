@@ -19,9 +19,14 @@
         <div class="col col" style="border-right: 1px solid;" data-ng-click="goToRanking()">
           <i class="fa fa-list" aria-hidden="true" style="margin-right: 5px;"></i> Ranking {{rankingPosition}}
         </div>
+        <div class="col col" style="border-left: 1px solid; border-right: 1px solid;" data-ng-click="goToMyVotes()">
+
+          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{voteList.length}}
+
+        </div>
         <div class="col col" style="border-left: 1px solid;" data-ng-click="goToMyVotes()">
 
-          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>Pronosticados {{voteList.length}}
+          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Total {{voteList.length}}
 
         </div>
       </div>

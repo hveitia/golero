@@ -4,11 +4,13 @@ angular.module('QuinielaApp')
     function($scope, $http, $q, HandleDataService, $window) {
 
 
-      $scope.votesNextDate = 0;
-      $scope.gamesToUpdate = 0;
-      $scope.isLogued = false;
+
 
       $scope.pageload = function() {
+
+        $scope.votesNextDate = 0;
+        $scope.gamesToUpdate = 0;
+        $scope.isLogued = false;
 
         if (!GetLocalStorage('isLogued')) {
           $window.location = 'login.html';
@@ -99,6 +101,7 @@ angular.module('QuinielaApp')
         };
         HandleDataService.updateGame(obj).success(function(data) {
             $('#modalUpdateGame').modal('hide')
+            $scope.pageload();
           })
           .error(function(err) {
             alert(err);
