@@ -119,33 +119,6 @@ exports.update = function(req, res) {
 
           if (err) res.send(500, err.message);
 
-          /*for(var i=0;i<voteList.length;i++) {
-
-           var value = -1;
-           switch (voteList[i].valueVote) {
-           case "1":
-           {
-           value = (voteList[i].game.goalsLocalTeam > voteList[i].game.goalsVisitorTeam) ? 3 : -1;
-           }
-           break;
-           case "2":
-           {
-           value=(voteList[i].game.goalsLocalTeam < voteList[i].game.goalsVisitorTeam) ? 3 : -1;
-           }
-           break;
-           default:
-           {
-           value =(voteList[i].game.goalsLocalTeam == voteList[i].game.goalsVisitorTeam) ? 3 : -1;
-           }
-           }
-
-           voteList[i].user.points += 0;//value;
-           if(voteList[i].user.points < 0) voteList[i].user.points = 0;
-           voteList[i].user.save(function (err, result) {
-           if (err) return res.send(500, err.message);
-           });
-           }*/
-
           forEachAsync(voteList, function (next, element, index, array) {
 
             var value = -1;
@@ -171,6 +144,8 @@ exports.update = function(req, res) {
 
             element.user.save(function (err, result) {
               if (err) return res.send(500, err.message);
+
+              next();
             });
 
           }).then(function () {

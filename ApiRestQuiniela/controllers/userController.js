@@ -114,6 +114,55 @@ exports.add = function(req, res) {
 
 };
 
+exports.register = function(req,res) {
+
+  var obj = new USERMODEL({
+    user: '',
+    pass: req.body.pass,
+    email: '',
+    points: 0,
+    state: 'CREATED',
+    registerHash: req.body.pass,
+    avatar: 'user.png',
+    favoriteTeam: 'noteam.png',
+    registerDate: new Date(),
+    role: 'USER'
+  });
+  obj.save(function (err, result) {
+    if (err) return res.send(500, err.message);
+
+    res.status(200).jsonp(result);
+  });
+};
+
+exports.editName = function(req, res) {
+
+  USERMODEL.findOne({
+    pass: req.body.uuid
+  }, function(err, user) {
+    if (err) {
+      res.send(500, err.message);
+    }
+
+    if (user) {
+
+      user.user = req.body.user;
+      user.state = 'ACTIVE';
+      user.registerHash = '';
+
+      user.save(function (err, result) {
+        if (err) return res.send(500, err.message);
+
+        res.status(200).send('ok');
+      });
+
+    } else {
+      res.send(500, 'User not found');
+    }
+  });
+
+};
+
 exports.editFavoriteTeam = function(req, res) {
 
   USERMODEL.findOne({

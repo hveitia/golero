@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Services', 'angular-md5'])
+angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Services', 'angular-md5', 'ngCordova'])
 
   .run(function($ionicPlatform) {
 
@@ -29,6 +29,11 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+
+
+
+
 
     });
   })

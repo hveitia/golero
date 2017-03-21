@@ -13,11 +13,17 @@ router.route('/user')
   .get(middleware.ensureAuthenticated, userController.findAll)
   .post(userController.add);
 
+router.route('/register')
+    .post(userController.register);
+
 router.route('/editFavoriteTeam')
     .put(middleware.ensureAuthenticated, userController.editFavoriteTeam);
 
 router.route('/editAvatar')
     .put(middleware.ensureAuthenticated, userController.editAvatar);
+
+router.route('/editName')
+    .put(userController.editName);
 
 router.route('/userRanking')
     .get(middleware.ensureAuthenticated, userController.userRanking);

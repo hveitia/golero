@@ -34,6 +34,19 @@ angular.module('QuinielaIonicApp')
       $scope.modalAvatar.hide();
     };
 
+    $ionicModal.fromTemplateUrl('roler-user-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modalRoler = modal;
+    });
+    $scope.openModalRoler = function() {
+      $scope.modalRoler.show();
+    };
+    $scope.closeModalRoler = function() {
+      $scope.modalRoler.hide();
+    };
+
     $scope.goToRanking = function() {
       $state.go('tab.ranking');
     };
@@ -53,10 +66,15 @@ angular.module('QuinielaIonicApp')
         });
     };
 
-    $scope.loadUserData = function() {
+    $scope.loadUserData = function(roler) {
 
       UserService.getUser().success(function(data) {
           $scope.user = data;
+          if (roler) {
+            $scope.user.favoriteTeam = teamRoler;
+            $scope.user.avatar = avatarRoler;
+          }
+
         })
         .error(function(err) {
           console.log(err);
@@ -76,7 +94,7 @@ angular.module('QuinielaIonicApp')
 
     };
 
-    $scope.editFAvoriteTeam = function(team) {
+    $scope.editFAvoriteTeam = function(team, enroler) {
 
       $http({
           method: 'PUT',
@@ -89,15 +107,28 @@ angular.module('QuinielaIonicApp')
             "team": team
           }
         }).success(function(response) {
-          $scope.user.favoriteTeam = team;
-          $scope.modal.hide();
+
+          if (enroler) {
+            StorageService.setItem('showRolerWizard', false);
+            teamRoler = team;
+            $scope.voteList = [];
+            $scope.loadUserData(true);
+            $scope.loadVotesByUser();
+            $scope.loadRankingPosition();
+            $scope.closeModalRoler();
+
+          } else {
+            $scope.user.favoriteTeam = team;
+            $scope.modal.hide();
+          }
+
         })
         .error(function(err) {
           console.log(err);
         });
 
     };
-    $scope.editAvatar = function(avatar) {
+    $scope.editAvatar = function(avatar, enroler) {
 
       $http({
           method: 'PUT',
@@ -110,8 +141,50 @@ angular.module('QuinielaIonicApp')
             "avatar": avatar
           }
         }).success(function(response) {
-          $scope.user.avatar = avatar;
-          $scope.modalAvatar.hide();
+
+          if (enroler) {
+            $scope.enroler = 'team';
+            $scope.modalEnrolerTitle = 'Equipo Favorito';
+            avatarRoler = avatar;
+          } else {
+            $scope.user.avatar = avatar;
+            $scope.modalAvatar.hide();
+          }
+
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+
+    };
+
+    $scope.editName = function() {
+
+      $http({
+          method: 'PUT',
+          url: urlApi + 'editName',
+          data: {
+            "user": $scope.data.newName,
+            "uuid": StorageService.getItem('password')
+          }
+        }).success(function(response) {
+
+          $http.post(urlApi + 'authenticate', {
+              "user": $scope.data.newName,
+              "pass": StorageService.getItem('password')
+            })
+            .success(function(response) {
+
+              StorageService.setItem('token', response.token);
+              StorageService.setItem('user', $scope.data.newName);
+
+              $scope.enroler = 'avatar';
+              $scope.modalEnrolerTitle = 'Avatar';
+            })
+            .error(function(err) {
+              console.log(err);
+            });
+
         })
         .error(function(err) {
           console.log(err);
@@ -136,9 +209,21 @@ angular.module('QuinielaIonicApp')
 
     $scope.$on('$ionicView.enter', function() {
       $scope.showNavBar = true;
-      $scope.voteList = [];
-      $scope.loadUserData();
-      $scope.loadVotesByUser();
-      $scope.loadRankingPosition();
+
+      $scope.data = {};
+      if (StorageService.getItem('showRolerWizard')) {
+        var teamRoler = '';
+        var avatarRoler = '';
+        $scope.openModalRoler();
+        $scope.enroler = 'name';
+        $scope.modalEnrolerTitle = 'Nombre';
+
+      } else {
+        $scope.voteList = [];
+        $scope.loadUserData();
+        $scope.loadVotesByUser();
+        $scope.loadRankingPosition();
+      }
+
     });
   })

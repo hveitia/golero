@@ -32,9 +32,7 @@
       </div>
 
       <br/>
-      <div class="row" data-ng-click="cerrarSesion()">
-        <span>cerrar session</span>
-      </div>
+
 
     </div>
   </ion-content>
@@ -95,6 +93,68 @@
           <div class="col-30"><img ng-src="./img/avatars/10.png" style="width:80%;" data-ng-click="editAvatar('10.png')"></div>
           <div class="col-30"><img ng-src="./img/avatars/11.png" style="width:80%;" data-ng-click="editAvatar('11.png')"></div>
           <div class="col-30"><img ng-src="./img/avatars/12.png" style="width:80%;" data-ng-click="editAvatar('12.png')"></div>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <script id="roler-user-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title" style="color:white;">{{modalEnrolerTitle}}</h1>
+      </ion-header-bar>
+      <ion-content style="text-align:center;">
+        <div class="card" data-ng-show="enroler == 'name'">
+          <div class="item item-text-wrap">
+            <label class="item item-input">
+              <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName">
+            </label>
+            <button class="button icon-right
+             ion-android-checkbox-outline button-full button-balanced" data-ng-click="editName()">Aceptar</button>
+          </div>
+        </div>
+        <div data-ng-show="enroler == 'avatar'">
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/1.png" style="width:80%;" data-ng-click="editAvatar('1.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/2.png" style="width:80%;" data-ng-click="editAvatar('2.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/3.png" style="width:80%;" data-ng-click="editAvatar('3.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/4.png" style="width:80%;" data-ng-click="editAvatar('4.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/5.png" style="width:80%;" data-ng-click="editAvatar('5.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/6.png" style="width:80%;" data-ng-click="editAvatar('6.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/7.png" style="width:80%;" data-ng-click="editAvatar('7.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/8.png" style="width:80%;" data-ng-click="editAvatar('8.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/9.png" style="width:80%;" data-ng-click="editAvatar('9.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/10.png" style="width:80%;" data-ng-click="editAvatar('10.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/11.png" style="width:80%;" data-ng-click="editAvatar('11.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/12.png" style="width:80%;" data-ng-click="editAvatar('12.png', true)"></div>
+          </div>
+        </div>
+        <div data-ng-show="enroler == 'team'">
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/logos/barcelona.png" style="width:80%;" data-ng-click="editFAvoriteTeam('barcelona.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/clanjuvenil.png" style="width:80%;" data-ng-click="editFAvoriteTeam('clanjuvenil.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/cuenca.png" style="width:80%;" data-ng-click="editFAvoriteTeam('cuenca.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/logos/delfin.png" style="width:80%;" data-ng-click="editFAvoriteTeam('delfin.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/emelec.png" style="width:80%;" data-ng-click="editFAvoriteTeam('emelec.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/famarilla.png" style="width:80%;" data-ng-click="editFAvoriteTeam('famarilla.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/logos/independiente.png" style="width:80%;" data-ng-click="editFAvoriteTeam('independiente.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/liga.png" style="width:80%;" data-ng-click="editFAvoriteTeam('liga.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/macara.png" style="width:80%;" data-ng-click="editFAvoriteTeam('macara.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/logos/nacional.png" style="width:80%;" data-ng-click="editFAvoriteTeam('nacional.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/river.png" style="width:80%;" data-ng-click="editFAvoriteTeam('river.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/logos/ucatolica.png" style="width:80%;" data-ng-click="editFAvoriteTeam('ucatolica.png', true)"></div>
+          </div>
         </div>
       </ion-content>
     </ion-modal-view>

@@ -1,5 +1,5 @@
-//var urlApi = 'http://192.168.1.2:3000/api/';
-var urlApi = 'http://localhost:3000/api/';
+var urlApi = 'http://192.168.1.2:3000/api/';
+//var urlApi = 'http://localhost:3000/api/';
 
 
 var returnApiCodes = {

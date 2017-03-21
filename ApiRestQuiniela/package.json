@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "fs": "0.0.1-security",
-    "nodemailer": "^3.1.1"
+    "nodemailer": "^3.1.1",
+    "random-js": "^1.0.8"
   }
 }

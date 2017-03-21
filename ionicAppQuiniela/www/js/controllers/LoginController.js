@@ -2,7 +2,7 @@ angular.module('QuinielaIonicApp')
 
 
   .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5,
-    StorageService) {
+    StorageService, $cordovaDevice) {
 
 
 
@@ -11,7 +11,7 @@ angular.module('QuinielaIonicApp')
       if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
         $http.post(urlApi + 'authenticate', {
             "user": $scope.data.username,
-            "pass": md5.createHash($scope.data.password || '')
+            "pass": $scope.data.password
           })
           .success(function(response) {
 
@@ -40,7 +40,7 @@ angular.module('QuinielaIonicApp')
     }
 
     $scope.addUser = function() {
-      if ($scope.data.password != $scope.data.passwordConfirm) {
+      if (!$scope.data.password) {
         var alertPopup = $ionicPopup.alert({
           title: 'Contraseña incorrecta!',
           template: 'Por favor chequear que coincidan la contraseña y la confirmación.'
@@ -60,6 +60,8 @@ angular.module('QuinielaIonicApp')
                   template: returnApiCodes[response.message]
                 });
               } else {
+
+                StorageService.setItem('registred', true);
                 $scope.showView = 'SUCCESS';
                 $scope.title = '';
               }
@@ -75,6 +77,24 @@ angular.module('QuinielaIonicApp')
           });
         }
       }
+    };
+
+    $scope.addUserUUDI = function(uuid) {
+
+      $http.post(urlApi + 'register', {
+          "pass": uuid
+        })
+        .success(function(response) {
+
+          StorageService.setItem('password', uuid);
+          StorageService.setItem('registred', true);
+          StorageService.setItem('showRolerWizard', true);
+          $state.go('tab.dash');
+
+        })
+        .error(function(err) {
+          console.log(err);
+        });
     };
 
     $scope.creatAccountButtonClick = function() {
@@ -102,21 +122,35 @@ angular.module('QuinielaIonicApp')
       return true;
     };
 
+    document.addEventListener("deviceready", function() {
+
+      var registred = StorageService.getItem('registred');
+      if (!registred) {
+        $scope.addUserUUDI($cordovaDevice.getUUID());
+      }
+
+
+    }, false);
 
     $scope.$on('$ionicView.enter', function() {
 
       var user = StorageService.getItem('user');
       var pass = StorageService.getItem('password');
-      if (user != null && pass != null) {
-        $scope.data = {};
+      var registred = StorageService.getItem('registred');
+
+      $scope.data = {};
+
+      if (registred) {
+
         $scope.data.username = user;
         $scope.data.password = pass;
         $scope.login();
-      } else {
-        $scope.data = {};
-        $scope.showView = 'HOME';
-        $scope.title = '';
+
       }
+      /*else {
+             $scope.addUserUUDI(StorageService.getItem('uuid'));
+
+           }*/
     });
 
   });
