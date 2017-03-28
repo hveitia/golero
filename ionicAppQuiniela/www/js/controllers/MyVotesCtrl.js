@@ -54,7 +54,7 @@ angular.module('QuinielaIonicApp')
 
           for (var i = 0; i < data.length; i++) {
             for (var j = 0; j < $scope.voteList.length; j++) {
-              if ($scope.voteList[j].game == data[i]._id && data[i].state == 'SCHEDULED') {
+              if ($scope.voteList[j].game == data[i]._id && data[i].state == 'SCHEDULED' && canShowVote(data[i])) {
 
                 if (data[i].especialDate) {
                   data[i].date = data[i].especialDate;

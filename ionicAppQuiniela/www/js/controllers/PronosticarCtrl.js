@@ -31,7 +31,8 @@ angular.module('QuinielaIonicApp')
               }
             }
           }
-          $scope.gameToVoteList[0].showDivid = true;
+          if ($scope.gameToVoteList.length > 0)
+            $scope.gameToVoteList[0].showDivid = true;
           $scope.loading = false;
         })
         .error(function(err) {

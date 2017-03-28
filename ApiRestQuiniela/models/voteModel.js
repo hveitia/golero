@@ -13,6 +13,9 @@ exports = module.exports = function(app, mongoose) {
     game: {
       type: mongoose.Schema.ObjectId,
       ref: 'GAMEMODEL'
+    },
+    date: {
+      type: Date
     }
 
 

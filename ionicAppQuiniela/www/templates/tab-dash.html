@@ -21,7 +21,7 @@
         </div>
         <div class="col col" style="border-left: 1px solid; border-right: 1px solid;" data-ng-click="goToMyVotes()">
 
-          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{voteList.length}}
+          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{activeVotes}}
 
         </div>
         <div class="col col" style="border-left: 1px solid;" data-ng-click="goToMyVotes()">
@@ -103,6 +103,9 @@
         <h1 class="title" style="color:white;">{{modalEnrolerTitle}}</h1>
       </ion-header-bar>
       <ion-content style="text-align:center;">
+        <div class="row">
+          <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
+        </div>
         <div class="card" data-ng-show="enroler == 'name'">
           <div class="item item-text-wrap">
             <label class="item item-input">

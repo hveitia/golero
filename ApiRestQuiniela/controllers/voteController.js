@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var VOTEMODEL = mongoose.model('VOTEMODEL');
+var GAMEMODEL = mongoose.model('GAMEMODEL');
+var WORKINGDAYMODEL = mongoose.model('WORKINGDAYMODEL');
+var utils = require('../utils/utils.js');
 
 exports.findAll = function(req, res) {
 
@@ -13,18 +16,25 @@ exports.findAll = function(req, res) {
 
 exports.add = function(req, res) {
 
-  var obj = new VOTEMODEL({
-    valueVote: req.body.valueVote,
-    user: req.user,
-    game: req.body.game
+  GAMEMODEL.findById(req.body.game, function(err, result) {
+    WORKINGDAYMODEL.populate(result, {
+      path: "workingDay"
+    }, function (err, workingDay) {
+      if (err) res.send(500, err.message);
 
+      var obj = new VOTEMODEL({
+        valueVote: req.body.valueVote,
+        user: req.user,
+        game: req.body.game,
+        date: (workingDay.especialDate) ? workingDay.especialDate : workingDay.workingDay.date
+
+      });
+      obj.save(function (err, result) {
+        if (err) return res.send(500, err.message);
+        res.status(200).jsonp(result);
+      });
+    });
   });
-
-  obj.save(function(err, result) {
-    if (err) return res.send(500, err.message);
-    res.status(200).jsonp(result);
-  });
-
 };
 
 exports.update = function(req, res) {
@@ -40,6 +50,22 @@ exports.update = function(req, res) {
 
   });
 
+};
+
+exports.getVotesActiveByOwnUser = function(req,res) {
+
+  VOTEMODEL.find({user: req.user}, function (err, result) {
+    if (err) res.send(500, err.message);
+
+    var cant = 0;
+
+    for(var i=0;i<result.length;i++) {
+      if (utils.isActiveVote(result[i].date))
+        cant++;
+    }
+
+    res.status(200).jsonp(cant);
+  });
 };
 
 exports.getVotesByOwnUser = function(req,res) {

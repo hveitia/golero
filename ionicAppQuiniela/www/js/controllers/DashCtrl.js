@@ -1,6 +1,6 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function($scope, $state, $ionicModal, $http, $q,
+  .controller('DashCtrl', function($scope, $state, $ionicModal, $ionicPopup, $http, $q,
     Vote, DatabaseService, RankinService, UserService, StorageService) {
 
     $ionicModal.fromTemplateUrl('select-team-modal.html', {
@@ -65,6 +65,15 @@ angular.module('QuinielaIonicApp')
           console.log(err);
         });
     };
+    $scope.loadactiveVotesByUser = function() {
+
+      Vote.getActiveVotesByUser().success(function(data) {
+          $scope.activeVotes = data;
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+    };
 
     $scope.loadUserData = function(roler) {
 
@@ -116,6 +125,7 @@ angular.module('QuinielaIonicApp')
             $scope.loadVotesByUser();
             $scope.loadRankingPosition();
             $scope.closeModalRoler();
+            $scope.loadactiveVotesByUser();
 
           } else {
             $scope.user.favoriteTeam = team;
@@ -159,7 +169,7 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.editName = function() {
-
+      $scope.loading = true;
       $http({
           method: 'PUT',
           url: urlApi + 'editName',
@@ -168,23 +178,29 @@ angular.module('QuinielaIonicApp')
             "uuid": StorageService.getItem('password')
           }
         }).success(function(response) {
-
-          $http.post(urlApi + 'authenticate', {
-              "user": $scope.data.newName,
-              "pass": StorageService.getItem('password')
-            })
-            .success(function(response) {
-
-              StorageService.setItem('token', response.token);
-              StorageService.setItem('user', $scope.data.newName);
-
-              $scope.enroler = 'avatar';
-              $scope.modalEnrolerTitle = 'Avatar';
-            })
-            .error(function(err) {
-              console.log(err);
+          if (response.message) {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Error!',
+              template: returnApiCodes[response.message]
             });
+            $scope.loading = false;
+          } else {
+            $http.post(urlApi + 'authenticate', {
+                "user": $scope.data.newName,
+                "pass": StorageService.getItem('password')
+              })
+              .success(function(response) {
+                $scope.loading = false;
+                StorageService.setItem('token', response.token);
+                StorageService.setItem('user', $scope.data.newName);
+                $scope.enroler = 'avatar';
+                $scope.modalEnrolerTitle = 'Avatar';
 
+              })
+              .error(function(err) {
+                console.log(err);
+              });
+          }
         })
         .error(function(err) {
           console.log(err);
@@ -209,11 +225,13 @@ angular.module('QuinielaIonicApp')
 
     $scope.$on('$ionicView.enter', function() {
       $scope.showNavBar = true;
-
       $scope.data = {};
+      $scope.activeVotes = 0;
+
       if (StorageService.getItem('showRolerWizard')) {
         var teamRoler = '';
         var avatarRoler = '';
+        $scope.loading = false;
         $scope.openModalRoler();
         $scope.enroler = 'name';
         $scope.modalEnrolerTitle = 'Nombre';
@@ -223,6 +241,7 @@ angular.module('QuinielaIonicApp')
         $scope.loadUserData();
         $scope.loadVotesByUser();
         $scope.loadRankingPosition();
+        $scope.loadactiveVotesByUser();
       }
 
     });

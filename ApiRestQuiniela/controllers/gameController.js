@@ -168,7 +168,17 @@ exports.addSpecialDate = function(req, res) {
 
       if (err) return res.send(500, err.message);
 
-      res.status(200).jsonp(result);
+      VOTEMODEL.find({game: req.params.id}, function(err, result){
+
+        if (err) return res.send(500, err.message);
+
+        for(var i = 0; i < result.length; i++) {
+
+          result[i].date = req.body.especialDate;
+
+        }
+        res.status(200).jsonp('OK');
+      });
     });
   });
 };

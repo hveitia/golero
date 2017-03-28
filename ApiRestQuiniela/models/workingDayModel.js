@@ -12,7 +12,7 @@ exports = module.exports = function(app, mongoose) {
     season: {
       type: mongoose.Schema.ObjectId,
       ref: "SEASONMODEL"
-    },
+    }
   });
 
   mongoose.model('WORKINGDAYMODEL', workingDaySchema);

@@ -138,29 +138,42 @@ exports.register = function(req,res) {
 exports.editName = function(req, res) {
 
   USERMODEL.findOne({
-    pass: req.body.uuid
+    user: req.body.user
   }, function(err, user) {
     if (err) {
       res.send(500, err.message);
     }
-
     if (user) {
-
-      user.user = req.body.user;
-      user.state = 'ACTIVE';
-      user.registerHash = '';
-
-      user.save(function (err, result) {
-        if (err) return res.send(500, err.message);
-
-        res.status(200).send('ok');
+      res.json({
+        success: false,
+        message: '0001'
       });
-
     } else {
-      res.send(500, 'User not found');
+      USERMODEL.findOne({
+        pass: req.body.uuid
+      }, function (err, user) {
+        if (err) {
+          res.send(500, err.message);
+        }
+
+        if (user) {
+
+          user.user = req.body.user;
+          user.state = 'ACTIVE';
+          user.registerHash = '';
+
+          user.save(function (err, result) {
+            if (err) return res.send(500, err.message);
+
+            res.status(200).send('ok');
+          });
+
+        } else {
+          res.send(500, 'User not found');
+        }
+      });
     }
   });
-
 };
 
 exports.editFavoriteTeam = function(req, res) {

@@ -71,17 +71,19 @@ angular.module('QuinielaApp')
     };
 
     $scope.addGame = function() {
-      $http.post(urlApi + 'game', {
-          "workingDay": $scope.workinDaySelected._id,
-          "localTeam": $scope.teamLocal._id,
-          "visitorTeam": $scope.teamVisitor._id
-        })
-        .success(function(response) {
+      var obj = {
+        "workinDaySelected": $scope.workinDaySelected._id,
+        "teamLocal": $scope.teamLocal._id,
+        "teamVisitor": $scope.teamVisitor._id
+      };
+      HandleDataService.addGame(obj).success(function(data) {
           $scope.loadGames();
         })
         .error(function(err) {
+          alert(err);
           console.log(err);
         });
+
     };
 
     $scope.addGameSpecialDate = function() {

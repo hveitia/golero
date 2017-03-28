@@ -16,6 +16,23 @@ exports.canVoteGame = function(game) {
 
 };
 
+exports.isActiveVote = function(date) {
+  var now = new Date();
+  var gameDate= new Date(date);
+
+  now.setHours(0, 0, 0, 0);
+  gameDate.setHours(0, 0, 0, 0);
+  if(!date)
+  {
+    return false;
+  }
+  if (gameDate > now) {
+    return true;
+  }
+  return false;
+
+};
+
 exports.modoSend = function(){return true;};
 
 exports.url = function(){ return 'http://192.168.1.2:3000/api/';};

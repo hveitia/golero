@@ -134,7 +134,6 @@ angular.module('QuinielaIonicApp.Services', [])
 
     return {
       getVoteByUser: function() {
-
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUser',
@@ -148,6 +147,16 @@ angular.module('QuinielaIonicApp.Services', [])
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUserAny/' + user,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+      getActiveVotesByUser: function() {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/votesActiveByUser',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'

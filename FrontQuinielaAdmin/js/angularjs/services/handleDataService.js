@@ -87,7 +87,22 @@
               'Content-Type': 'application/json'
             }
           });
+        },
 
+        addGame: function(obj) {
+          return $http({
+            method: 'POST',
+            url: urlApi + 'game',
+            data: {
+              "workingDay": obj.workinDaySelected,
+              "localTeam": obj.teamLocal,
+              "visitorTeam": obj.teamVisitor
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
         },
         updateGameSpecialDate: function(game) {
           return $http({
