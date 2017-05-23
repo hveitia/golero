@@ -11,7 +11,7 @@ mongoose = require('mongoose');
 var dbName = 'apiRestQuinielaDB';
 
 //PORT LISTEN
-var port = 3000;
+var port = 80;
 
 /* ---------- CONFIGS ---------- */
 
