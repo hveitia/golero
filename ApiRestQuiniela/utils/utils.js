@@ -1,10 +1,9 @@
 exports.canVoteGame = function(game) {
   var now = new Date();
   var gameDate;
-  if(game.especialDate){
+  if (game.especialDate) {
     gameDate = new Date(game.especialDate);
-  }
-  else {
+  } else {
     gameDate = new Date(game.workingDay.date);
   }
   now.setHours(0, 0, 0, 0);
@@ -18,12 +17,11 @@ exports.canVoteGame = function(game) {
 
 exports.isActiveVote = function(date) {
   var now = new Date();
-  var gameDate= new Date(date);
+  var gameDate = new Date(date);
 
   now.setHours(0, 0, 0, 0);
   gameDate.setHours(0, 0, 0, 0);
-  if(!date)
-  {
+  if (!date) {
     return false;
   }
   if (gameDate > now) {
@@ -33,7 +31,10 @@ exports.isActiveVote = function(date) {
 
 };
 
-exports.modoSend = function(){return true;};
+exports.modoSend = function() {
+  return true;
+};
 
-exports.url = function(){ return 'http://192.168.1.2:3000/api/';};
-
+exports.url = function() {
+  return 'http://localhost:80/api/';
+};
