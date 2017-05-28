@@ -104,6 +104,23 @@
             }
           });
         },
+
+        addWorkingDay: function(obj) {
+          return $http({
+            method: 'POST',
+            url: urlApi + 'workingDay',
+            data: {
+              "date": obj.workinDayDate,
+              "season": obj.seasonSelected._id,
+              "name": obj.workinDayName
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+
         updateGameSpecialDate: function(game) {
           return $http({
             method: 'PUT',

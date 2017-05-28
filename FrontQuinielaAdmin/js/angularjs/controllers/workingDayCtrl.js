@@ -41,18 +41,18 @@ angular.module('QuinielaApp')
 
       $scope.addWorkingDay = function() {
 
-        $http.post(urlApi + 'workingDay', {
-            "date": $scope.workinDayDate,
-            "season": $scope.seasonSelected._id,
-            "name": $scope.workinDayName
-          })
-          .success(function(response) {
+        var obj = {
+          "date": $scope.workinDayDate,
+          "season": $scope.seasonSelected._id,
+          "name": $scope.workinDayName
+        };
+
+        HandleDataService.addWorkingDay(obj).success(function(data) {
             $scope.loadWorkingDays();
           })
           .error(function(err) {
             console.log(err);
           });
-
       };
 
       $scope.pageload();

@@ -13,7 +13,7 @@ angular.module('QuinielaAppLogin', ['ngRoute', 'angular-md5'])
 
         $http.post(urlApi + 'authenticate', {
             "user": $scope.data.username,
-            "pass": md5.createHash($scope.data.password || '')
+            "pass": $scope.data.password //md5.createHash($scope.data.password || '')
           })
           .success(function(response) {
 
