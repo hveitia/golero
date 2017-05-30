@@ -13,7 +13,7 @@ var gameController = require('../controllers/gameController');
 
 router.route('/game')
   .get(middleware.ensureAuthenticated,gameController.findAll)
-  .post(middleware.ensureAuthenticatedAdmin,gameController.add);
+  .post(middleware.ensureAuthenticated,gameController.add);
 //.post(gameController.add);
 
 router.route('/game/:workingDay')

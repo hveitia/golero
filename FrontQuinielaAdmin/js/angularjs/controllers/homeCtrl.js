@@ -54,6 +54,23 @@ angular.module('QuinielaApp')
           });
       };
 
+      $scope.showGamesToUpdate = function() {
+        $scope.gameList = [];
+
+        $scope.gameList = $scope.gamesToUpdateList;
+
+        for (var i = 0; i < $scope.gameList.length; i++) {
+
+          $scope.gameList[i].date = ($scope.gameList[i].especialDate) ? $scope.gameList[i].especialDate : $scope.gameList[i].workingDay.date;
+
+          if (isGameToUpdate($scope.gameList[i])) {
+            $scope.gameList[i].toUpdate = true;
+          } else {
+            $scope.gameList[i].toUpdate = false;
+          }
+        }
+      };
+
       $scope.loadWorkingDays = function() {
         HandleDataService.getAllWorkingDays().success(function(data) {
             $scope.workinDayList = data;
@@ -68,11 +85,13 @@ angular.module('QuinielaApp')
       };
 
       $scope.loadGamesToUpdate = function() {
+        $scope.gamesToUpdateList = [];
         HandleDataService.getGameByState('SCHEDULED').success(function(data) {
 
             for (var i = 0; i < data.length; i++) {
               if (isGameToUpdate(data[i])) {
                 $scope.gamesToUpdate++;
+                $scope.gamesToUpdateList.push(data[i]);
               }
             }
 
