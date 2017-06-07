@@ -3,9 +3,6 @@ angular.module('QuinielaApp')
   .controller('HomeCtrl', ['$scope', '$http', '$q', 'HandleDataService', '$window',
     function($scope, $http, $q, HandleDataService, $window) {
 
-
-
-
       $scope.pageload = function() {
 
         $scope.votesNextDate = 0;
@@ -120,7 +117,7 @@ angular.module('QuinielaApp')
         };
         HandleDataService.updateGame(obj).success(function(data) {
             $('#modalUpdateGame').modal('hide')
-            $scope.pageload();
+            $scope.loadGames();
           })
           .error(function(err) {
             alert(err);

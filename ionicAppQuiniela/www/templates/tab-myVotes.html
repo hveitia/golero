@@ -16,7 +16,7 @@
       </div>
       <div class="item itemPronosicar" ng-repeat="item in gameVotedList">
         <div class="item item-divider" data-ng-show="item.showDivid">
-          Fecha {{item.workingDay.name}} {{item.date | date: "dd/MM/yyyy"}}
+          <span>Jornada - {{item.workingDay.name}}</span><span class="pull-right"> {{item.date | date: "dd/MM/yyyy"}}</span>
         </div>
         <div class="row" style="text-align: center" on-swipe-left="onHold()">
           <div class="col" data-ng-show='deleting'>

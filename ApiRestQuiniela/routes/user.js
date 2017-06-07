@@ -13,6 +13,11 @@ router.route('/user')
   .get(middleware.ensureAuthenticated, userController.findAll)
   .post(userController.add);
 
+router.route('/user/:id')
+    //.put(middleware.ensureAuthenticated, voteController.update)
+    .options(middleware.ensureAuthenticated, userController.options)
+    .delete(middleware.ensureAuthenticated, userController.delete);
+
 router.route('/register')
     .post(userController.register);
 
@@ -39,8 +44,6 @@ router.route('/authenticate')
 
 router.route('/userActivation/:hash')
     .get(userController.confirmRegistration);
-
-
 
 
 module.exports = router;

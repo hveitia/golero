@@ -5,7 +5,18 @@ angular.module('QuinielaApp')
 
       $scope.pageload = function() {
 
+        $scope.loadRegisteredUsers();
 
+      };
+
+      $scope.loadRegisteredUsers = function() {
+        HandleDataService.getRegisteredUsers().success(function(data) {
+            $scope.registeredUsers = data;
+          })
+          .error(function(err) {
+            $scope.registeredUsers = [];
+            console.log(err);
+          });
       };
 
       $scope.pageload();

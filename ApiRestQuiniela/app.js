@@ -11,7 +11,7 @@ mongoose = require('mongoose');
 var dbName = 'apiRestQuinielaDB';
 
 //PORT LISTEN
-var port = 80;
+var port = 3000;
 
 /* ---------- CONFIGS ---------- */
 
@@ -38,6 +38,7 @@ var routesSeason = require('./routes/season');
 var routesGame = require('./routes/game');
 var routesVote = require('./routes/vote');
 var routesWorkingDay = require('./routes/workingDay');
+var routesLog = require('./routes/log');
 
 var routesTest = require('./routes/test');
 
@@ -48,7 +49,11 @@ app.use('/api', routesSeason);
 app.use('/api', routesGame);
 app.use('/api', routesVote);
 app.use('/api', routesWorkingDay);
+app.use('/api', routesLog);
+
 app.use('/api', routesTest);
+
+
 
 
 

@@ -65,6 +65,7 @@ angular.module('QuinielaIonicApp')
           console.log(err);
         });
     };
+
     $scope.loadactiveVotesByUser = function() {
 
       Vote.getActiveVotesByUser().success(function(data) {
@@ -138,6 +139,7 @@ angular.module('QuinielaIonicApp')
         });
 
     };
+
     $scope.editAvatar = function(avatar, enroler) {
 
       $http({

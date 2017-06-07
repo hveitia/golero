@@ -311,3 +311,28 @@ sendRegistrationConfirmation = function (obj) {
 
 
 };
+
+
+//OPTIONS Allow CORS to DELETE
+exports.options = function(req, res, next) {
+
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+
+  next();
+};
+
+exports.delete = function(req, res){
+
+  USERMODEL.findById(req.params.id, function(err, user) {
+
+    user.remove(function(err) {
+
+      if(err) return res.status(500).send(err.message);
+
+      res.status(200).jsonp('OK');
+    })
+  });
+
+};

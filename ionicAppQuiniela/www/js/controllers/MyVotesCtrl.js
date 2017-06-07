@@ -1,8 +1,8 @@
 angular.module('QuinielaIonicApp')
-  .controller('MyVotesCtrl', function($scope, $http, $ionicScrollDelegate,
-    Game, Vote, DatabaseService, StorageService) {
+  .controller('MyVotesCtrl', function($scope, $http, $ionicScrollDelegate, Game, Vote, DatabaseService, StorageService) {
 
     $scope.loadVotesByUser = function() {
+
       $scope.loading = true;
 
       Vote.getVoteByUser().success(function(data) {
@@ -15,7 +15,6 @@ angular.module('QuinielaIonicApp')
 
           console.log(err);
         });
-
     };
 
     $scope.updateVote = function(game, voteValue) {

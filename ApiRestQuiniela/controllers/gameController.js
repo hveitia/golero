@@ -7,8 +7,7 @@ var USERMODEL = mongoose.model('USERMODEL');
 var VOTEMODEL = mongoose.model('VOTEMODEL');
 var utils = require('../utils/utils.js');
 
-
-
+var logController = require('./logController.js');
 
 
 exports.findAll = function(req, res) {
@@ -92,7 +91,12 @@ exports.add = function(req, res) {
   });
 
   obj.save(function(err, result) {
-    if (err) return res.send(500, err.message);
+    if (err) {
+      logController.saveLog(req.user,'POST',new Date().toString('dd/MM/yyyy HH:mm:ss'),'Game Saved FAILED '+ err.message,'gameController','add');
+      return res.send(500, err.message);
+    }
+
+    logController.saveLog(req.user,'POST',new Date().toString('dd/MM/yyyy HH:mm:ss'),'Game Saved OK','gameController','add');
     res.status(200).jsonp(result);
   });
 };
@@ -105,19 +109,26 @@ exports.update = function(req, res) {
     result.goalsVisitorTeam = req.body.goalsVisitorTeam;
     result.state = 'UPDATED';
 
-
+    logController.saveLog(req.user,'PUT',new Date().toString('dd/MM/yyyy HH:mm:ss'),'Init Update Game','gameController','update');
     result.save(function (err) {
 
       VOTEMODEL.find({game: req.params.id}, function (err, voteList) {
 
         USERMODEL.populate(voteList, {path: "user"}, function (err, user) {
 
-          if (err) res.send(500, err.message);
+          if (err)
+          {
+            logController.saveLog(req.user,'PUT',new Date().toString('dd/MM/yyyy HH:mm:ss'),'Populating UserModel ' + err.messag,'gameController','update');
+            res.send(500, err.message);
+          }
 
         });
         GAMEMODEL.populate(voteList, {path: "game"}, function (err, list) {
 
-          if (err) res.send(500, err.message);
+          if (err) {
+            logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Populating GameModel ' + err.messag, 'gameController', 'update');
+            res.send(500, err.message);
+          }
 
           forEachAsync(voteList, function (next, element, index, array) {
 
@@ -143,9 +154,14 @@ exports.update = function(req, res) {
             if (element.user.points < 0) element.user.points = 0;
 
             element.user.save(function (err, result) {
-              if (err) return res.send(500, err.message);
+              if (err) {
+                logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Saving new user points ' + err.messag, 'gameController', 'update');
+                return res.send(500, err.message);
+              }
 
+              logController.saveLog(req.user,'PUT',new Date().toString('dd/MM/yyyy HH:mm:ss'), 'New Points Saved', 'gameController','update');
               next();
+
             });
 
           }).then(function () {

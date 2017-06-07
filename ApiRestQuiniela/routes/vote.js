@@ -24,6 +24,8 @@ router.route('/voteByUser')
 router.route('/votesActiveByUser')
     .get(middleware.ensureAuthenticated, voteController.getVotesActiveByOwnUser);
 
+router.route('/votesTodayByUser')
+    .get(middleware.ensureAuthenticated, voteController.getVotesTodayByOwnUser);
 
 router.route('/voteByUserAny/:user')
     .get(middleware.ensureAuthenticated, voteController.getVotesByUser);
