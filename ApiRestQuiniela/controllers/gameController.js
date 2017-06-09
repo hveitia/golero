@@ -32,6 +32,27 @@ exports.findAll = function(req, res) {
   });
 };
 
+exports.findById = function(req, res) {
+  GAMEMODEL.findById(req.params.id, function(err, result) {
+    TEAMMODEL.populate(result, {
+      path: "localTeam"
+    }, function(err, localTeam) {
+      if (err) res.send(500, err.message);
+    });
+    TEAMMODEL.populate(result, {
+      path: "visitorTeam"
+    }, function(err, visitorTeam) {
+      if (err) res.send(500, err.message);
+    });
+    WORKINGDAYMODEL.populate(result, {
+      path: "workingDay"
+    }, function(err, workingDay) {
+      if (err) res.send(500, err.message);
+      res.status(200).jsonp(workingDay);
+    });
+  });
+};
+
 exports.findByWorkingDay = function(req, res) {
   GAMEMODEL.find({
     workingDay: req.params.workingDay

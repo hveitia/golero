@@ -23,6 +23,16 @@
             }
           });
         },
+        getVotes: function() {
+          return $http({
+            method: 'GET',
+            url: urlApi + 'vote',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
         getAllTeams: function() {
           return $http({
             method: 'GET',
@@ -57,6 +67,16 @@
           return $http({
             method: 'GET',
             url: urlApi + 'game/' + workingDay,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+        getGamesById: function(id) {
+          return $http({
+            method: 'GET',
+            url: urlApi + 'game/' + id,
             headers: {
               'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
               'Content-Type': 'application/json'

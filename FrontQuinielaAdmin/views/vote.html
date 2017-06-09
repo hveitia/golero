@@ -1,4 +1,23 @@
 <div class="col-lg-12">
   <h1 class="page-header">Votes List</h1>
-
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Value</th>
+        <th>Local</th>
+        <th>Visitor</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="vote in voteList">
+        <td>{{vote.user.user}}</td>
+        <td>{{vote.valueVote}}</td>
+        <td>{{vote.game.localTeam.name}}</td>
+        <td>{{vote.game.visitorTeam.name}}</td>
+        <td>{{vote.date | date}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
