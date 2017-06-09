@@ -30,10 +30,27 @@
 
         </div>
       </div>
-
       <br/>
-
-
+      <div class="card">
+        <div class="item item-text-wrap" data-ng-show='todayVoteList.length > 0'>
+          ¡Hoy se juegan {{todayVoteList.length}} partidos!
+          <button class="button icon-right ion-eye button-full button-balanced">Ver mis pronósticos</button>
+        </div>
+        <div class="item item-text-wrap" data-ng-show='todayVoteList.length == 0'>
+          Noy hay partidos programados para hoy.
+          <button class="button icon-right ion-stats-bars button-full button-balanced" data-ng-click="goToPronosticar()">Pronosticar</button>
+        </div>
+      </div>
+      <!-- Promociones e informaciones
+      <div class="row">
+        <div class="col backgroundPromotion">
+        </div>
+        <div class="col col-75">
+          <h2>Pretty Hate Machine</h2>
+          <p>Nine Inch Nails</p>
+        </div>
+      </div>
+      Promociones e informaciones -->
     </div>
   </ion-content>
   <script id="select-team-modal.html" type="text/ng-template">

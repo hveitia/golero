@@ -163,6 +163,16 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+      getTodayVotesByUser: function() {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/votesTodayByUser',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
       deleteVote: function(vote) {
         return $http({
           method: 'DELETE',

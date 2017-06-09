@@ -55,6 +55,20 @@ angular.module('QuinielaIonicApp')
       $state.go('tab.myVotes');
     };
 
+    $scope.goToPronosticar = function() {
+      $state.go('tab.pronosticar');
+    };
+
+    $scope.loadTodayVotes = function() {
+
+      Vote.getTodayVotesByUser().success(function(data) {
+          $scope.todayVoteList = data;
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+    };
+
     $scope.loadVotesByUser = function() {
 
       $scope.userName = StorageService.getItem('user');
@@ -240,10 +254,12 @@ angular.module('QuinielaIonicApp')
 
       } else {
         $scope.voteList = [];
+        $scope.todayVoteList = [];
         $scope.loadUserData();
         $scope.loadVotesByUser();
         $scope.loadRankingPosition();
         $scope.loadactiveVotesByUser();
+        $scope.loadTodayVotes();
       }
 
     });

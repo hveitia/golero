@@ -13,6 +13,16 @@
             }
           });
         },
+        getLogs: function() {
+          return $http({
+            method: 'GET',
+            url: urlApi + 'log',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
         getAllTeams: function() {
           return $http({
             method: 'GET',
@@ -133,9 +143,18 @@
               'Content-Type': 'application/json'
             }
           });
+        },
 
+        deleteUser: function(user) {
+          return $http({
+            method: 'DELETE',
+            url: urlApi + 'user/' + user,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
         }
-
         //////////////////////////////////////////////
       }
     }]);

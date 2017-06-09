@@ -126,7 +126,7 @@ angular.module('QuinielaIonicApp')
 
       var registred = StorageService.getItem('registred');
       if (!registred) {
-        //$scope.addUserUUDI($cordovaDevice.getUUID());
+        $scope.addUserUUDI($cordovaDevice.getUUID());
       }
 
 
@@ -147,7 +147,7 @@ angular.module('QuinielaIonicApp')
         $scope.login();
 
       } else {
-        $scope.addUserUUDI('uuid');
+        //$scope.addUserUUDI('uuid');
       }
     });
 

@@ -2,15 +2,20 @@ var mongoose = require('mongoose');
 var VOTEMODEL = mongoose.model('VOTEMODEL');
 var GAMEMODEL = mongoose.model('GAMEMODEL');
 var WORKINGDAYMODEL = mongoose.model('WORKINGDAYMODEL');
+var USERMODEL = mongoose.model('USERMODEL');
 var utils = require('../utils/utils.js');
 
 exports.findAll = function(req, res) {
 
   VOTEMODEL.find(function(err, result) {
+    USERMODEL.populate(result,{path:"user"},function(err, user){
+      if (err) res.send(500, err.message);
+    });
+    GAMEMODEL.populate(result,{path:"game"},function(err, game){
+      if (err) res.send(500, err.message);
 
-    if (err) res.send(500, err.message);
-
-    res.status(200).jsonp(result);
+      res.status(200).jsonp(game);
+    });
   });
 };
 

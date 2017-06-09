@@ -13,23 +13,26 @@ var gameController = require('../controllers/gameController');
 
 
 router.route('/game')
-  .get(middleware.ensureAuthenticated,gameController.findAll)
-  .post(middleware.ensureAuthenticated,gameController.add);
+    .get(middleware.ensureAuthenticated, gameController.findAll)
+    .post(middleware.ensureAuthenticated, gameController.add);
 //.post(gameController.add);
 
 router.route('/game/:workingDay')
-  .get(middleware.ensureAuthenticated,gameController.findByWorkingDay);
+    .get(middleware.ensureAuthenticated, gameController.findByWorkingDay);
 
 router.route('/gameState/:state')
-  .get(middleware.ensureAuthenticated,gameController.findByState);
+    .get(middleware.ensureAuthenticated, gameController.findByState);
 
 router.route('/gameUpdate/:id')
-  .put(middleware.ensureAuthenticated,gameController.update);
+    .put(middleware.ensureAuthenticated, gameController.update)
+    .options(middleware.ensureAuthenticated, gameController.options)
+    .delete(middleware.ensureAuthenticated, gameController.delete);
+
 
 router.route('/gameUpdateSpecialDate/:id')
-    .put(middleware.ensureAuthenticated,gameController.addSpecialDate);
+    .put(middleware.ensureAuthenticated, gameController.addSpecialDate);
 
 router.route('/gameToVoteByDate')
-  .get(middleware.ensureAuthenticated,gameController.gameToVoteByDate);
+    .get(middleware.ensureAuthenticated, gameController.gameToVoteByDate);
 
 module.exports = router;

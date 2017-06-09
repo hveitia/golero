@@ -19,6 +19,27 @@ angular.module('QuinielaApp')
           });
       };
 
+      $scope.deleteUserClick = function(user) {
+        $scope.idDelete = user._id;
+      };
+
+      $scope.canceldeleteUser = function() {
+        $scope.idDelete = '';
+      };
+
+      $scope.deleteUser = function() {
+
+        if ($scope.idDelete != '') {
+          HandleDataService.deleteUser($scope.idDelete).success(function(data) {
+              $scope.pageload();
+            })
+            .error(function(err) {
+
+              console.log(err);
+            });
+        }
+      };
+
       $scope.pageload();
 
     }
