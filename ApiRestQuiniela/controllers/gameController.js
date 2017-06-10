@@ -201,20 +201,23 @@ exports.addSpecialDate = function(req, res) {
 
     result.especialDate = req.body.especialDate;
 
-    result.save(function(err) {
+    result.save(function(err, obj) {
 
       if (err) return res.send(500, err.message);
 
-      VOTEMODEL.find({game: req.params.id}, function(err, result){
+      VOTEMODEL.find({game: req.params.id}, function(err, voteList){
 
         if (err) return res.send(500, err.message);
 
-        for(var i = 0; i < result.length; i++) {
+        forEachAsync(voteList, function (next, element, index, array) {
 
-          result[i].date = req.body.especialDate;
+          element.date = req.body.especialDate;
 
-        }
-        res.status(200).jsonp('OK');
+        }).then(function () {
+          console.log('All requests have finished');
+        });
+        res.status(200).send('ok');
+
       });
     });
   });

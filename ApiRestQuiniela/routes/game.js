@@ -17,7 +17,7 @@ router.route('/game')
     .post(middleware.ensureAuthenticated, gameController.add);
 //.post(gameController.add);
 
-router.route('/game/:id')
+router.route('/gameById/:id')
     .get(middleware.ensureAuthenticated, gameController.findById);
 
 router.route('/game/:workingDay')
