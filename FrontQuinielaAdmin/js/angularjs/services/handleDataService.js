@@ -174,6 +174,17 @@
               'Content-Type': 'application/json'
             }
           });
+        },
+
+        deleteGame: function(game) {
+          return $http({
+            method: 'DELETE',
+            url: urlApi + 'deleteGame/' + game,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
         }
         //////////////////////////////////////////////
       }

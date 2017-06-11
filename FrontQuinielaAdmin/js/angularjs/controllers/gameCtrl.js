@@ -120,6 +120,26 @@ angular.module('QuinielaApp')
       $scope.specialDate = new Date(item.workingDay.date);
 
     };
+      $scope.deleteGameClick = function(game) {
+        $scope.idDelete = game._id;
+      };
+
+      $scope.canceldeleteGame = function() {
+        $scope.idDelete = '';
+      };
+
+      $scope.deleteGame = function() {
+
+        if ($scope.idDelete != '') {
+          HandleDataService.deleteGame($scope.idDelete).success(function(data) {
+            $scope.pageload();
+          })
+              .error(function(err) {
+
+                console.log(err);
+              });
+        }
+      };
 
     $scope.pageload();
 

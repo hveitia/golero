@@ -79,7 +79,7 @@ exports.getVotesTodayByOwnUser = function(req,res) {
     var resul = [];
 
     for(var i=0;i<result.length;i++) {
-      if (utils.isVoteToday(result[i].date))
+      //if (utils.isVoteToday(result[i].date))
         resul.push(result[i]);
     }
 

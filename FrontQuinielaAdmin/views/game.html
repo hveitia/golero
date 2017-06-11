@@ -49,6 +49,7 @@
           <td>{{g.goalsVisitorTeam}}</td>
           <td>
             <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;"></i>
+            <i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteGameClick(g)" style="cursor:pointer;"></i>
             <span class="label label-success" data-ng-show="g.state == 'UPDATED'">UPDATED</span>
             <span class="label label-warning" data-ng-show="g.state == 'SCHEDULED'">SCHEDULED</span>
             <span class="label label-danger" data-ng-show="g.state == 'SCHEDULED' && g.toUpdate">
@@ -74,8 +75,8 @@
             <form>
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="recipient-name" class="control-label">Special Date</label>
-                  <input type="date" class="form-control" data-ng-model="specialDate">
+                  <label for="specialDateInput" class="control-label">Special Date</label>
+                  <input id="specialDateInput" type="date" class="form-control" data-ng-model="specialDate">
                 </div>
               </div>
             </form>
@@ -89,4 +90,23 @@
     </div>
   </div>
   <!-- Modal Edit - SpecialDate -->
+  <!--Modal Delete -->
+  <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Delete</h4>
+        </div>
+        <div class="modal-body">
+          Sure you want to delete the selected record?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteGame()">NO</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteGame()">YES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Delete -->
 </div>
