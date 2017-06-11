@@ -13,10 +13,14 @@ var dbName = 'apiRestQuinielaDB';
 //PORT LISTEN
 var port = 80;
 
+//var dbLocation = 'ec2-52-35-13-146.us-west-2.compute.amazonaws.com';
+var dbLocation = 'localhost';
+
+
 /* ---------- CONFIGS ---------- */
 
 // Connection to DB
-mongoose.connect('mongodb://localhost/' + dbName, function(err, res) {
+mongoose.connect('mongodb://'+dbLocation+'/' + dbName, function(err, res) {
   if (err) throw err;
   console.log('Connected to Database ' + dbName);
 });

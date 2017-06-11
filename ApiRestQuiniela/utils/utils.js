@@ -40,7 +40,7 @@ exports.isVoteToday = function(date) {
   if (!date) {
     return false;
   }
-  if (gameDate == now) {
+  if (gameDate.getTime() == now.getTime()) {
     return true;
   }
   return false;
