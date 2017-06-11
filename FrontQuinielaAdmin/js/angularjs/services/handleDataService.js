@@ -76,7 +76,7 @@
         getGamesById: function(id) {
           return $http({
             method: 'GET',
-            url: urlApi + 'game/' + id,
+            url: urlApi + 'gameById/' + id,
             headers: {
               'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
               'Content-Type': 'application/json'

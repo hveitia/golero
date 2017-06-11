@@ -31,6 +31,9 @@ router.route('/gameUpdate/:id')
     .options(middleware.ensureAuthenticated, gameController.options)
     .delete(middleware.ensureAuthenticated, gameController.delete);
 
+router.route('/deleteGame/:id')
+    .options(middleware.ensureAuthenticated, gameController.options)
+    .delete(middleware.ensureAuthenticated, gameController.delete);
 
 router.route('/gameUpdateSpecialDate/:id')
     .put(middleware.ensureAuthenticated, gameController.addSpecialDate);
