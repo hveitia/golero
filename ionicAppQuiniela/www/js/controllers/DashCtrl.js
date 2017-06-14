@@ -3,6 +3,8 @@ angular.module('QuinielaIonicApp')
   .controller('DashCtrl', function($scope, $state, $ionicModal, $ionicPopup, $http, $q,
     Vote, DatabaseService, RankinService, UserService, StorageService) {
 
+    // --------- Modals zone  --------------
+
     $ionicModal.fromTemplateUrl('select-team-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -46,6 +48,9 @@ angular.module('QuinielaIonicApp')
     $scope.closeModalRoler = function() {
       $scope.modalRoler.hide();
     };
+
+
+    // --------- Modals zone  --------------
 
     $scope.goToRanking = function() {
       $state.go('tab.ranking');
