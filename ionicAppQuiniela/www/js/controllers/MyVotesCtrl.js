@@ -60,7 +60,6 @@ angular.module('QuinielaIonicApp')
                 } else {
                   data[i].date = data[i].workingDay.date;
                 }
-
                 if ($scope.voteList[j].valueVote == '1') {
                   data[i].localTeamClass = 'animated zoomIn pronosticarList';
                   data[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
@@ -141,11 +140,9 @@ angular.module('QuinielaIonicApp')
       $ionicScrollDelegate.scrollTop();
       $scope.loadVotesByUser();
     };
+
     $scope.$on('$ionicView.enter', function() {
       $scope.init();
     });
 
-
-
-
-  })
+  });

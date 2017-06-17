@@ -24,7 +24,7 @@
           <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{activeVotes}}
 
         </div>
-        <div class="col col" style="border-left: 1px solid;" data-ng-click="goToMyVotes()">
+        <div class="col col" style="border-left: 1px solid;" data-ng-click="showAllVotes()">
 
           <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Total {{voteList.length}}
 
@@ -34,7 +34,7 @@
       <div class="card">
         <div class="item item-text-wrap" data-ng-show='todayVoteList.length > 0'>
           ¡Hoy se juegan {{todayVoteList.length}} partidos!
-          <button class="button icon-right ion-eye button-full button-balanced">Ver mis pronósticos</button>
+          <button class="button icon-right ion-eye button-full button-balanced" data-ng-click="showTodayVote()">Ver mis pronósticos</button>
         </div>
         <div class="item item-text-wrap" data-ng-show='todayVoteList.length == 0'>
           Noy hay partidos programados para hoy.
@@ -179,26 +179,27 @@
       </ion-content>
     </ion-modal-view>
   </script>
-  <script id="view-today-votes-modal.html" type="text/ng-template">
+  <script id="view-votes-modal.html" type="text/ng-template">
     <ion-modal-view>
       <ion-header-bar>
-        <h1 class="title" style="color:white;">Partidos de hoy</h1>
+        <h1 class="title" style="color:white;">{{viewVotesHeader}}</h1>
+        <button class="button button-clear button-primary" ng-click="modalViewVotes.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
       </ion-header-bar>
       <ion-content>
         <div class="row" style="text-align:center;">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
-        <div class="item itemPronosicar" data-ng-repeat="item in todayVoteList track by $index">
+        <div class="item itemPronosicar" data-ng-repeat="item in gameToday track by $index" data-ng-show='!loading'>
 
           <div class="row " style="text-align: center ">
             <div class="col ">
-              <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.localTeam.logo}} ">
+              <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}} ">
             </div>
             <div class="col ">
-              <i class="fa fa-handshake-o fa-2x animated zoomIn " aria-hidden="true " style="color: darkblue; margin-top: 10px;"></i>
+              <i class="{{item.tiedClass}}" aria-hidden="true " style="color: darkblue; margin-top: 10px;"></i>
             </div>
             <div class="col ">
-              <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.visitorTeam.logo}} ">
+              <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}} ">
             </div>
           </div>
         </div>

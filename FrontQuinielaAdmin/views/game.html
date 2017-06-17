@@ -49,6 +49,7 @@
           <td>{{g.goalsVisitorTeam}}</td>
           <td>
             <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;"></i>
+            <i class="fa fa-calendar-check-o" title="Set State Updated" style="cursor:pointer;" ng-click="setStateUpdated(g)"></i>
             <i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteGameClick(g)" style="cursor:pointer;"></i>
             <span class="label label-success" data-ng-show="g.state == 'UPDATED'">UPDATED</span>
             <span class="label label-warning" data-ng-show="g.state == 'SCHEDULED'">SCHEDULED</span>

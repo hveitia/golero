@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var service = require('../service');
 var USERMODEL = mongoose.model('USERMODEL');
 
+
 exports.authenticate = function (req, res) {
 
     var text = 'User: ' + req.body.user + ' Pass: ' + req.body.pass;
@@ -21,7 +22,7 @@ exports.authenticate = function (req, res) {
             });
         } else {
             if (user.state != 'ACTIVE') {
-                +
+
                     logController.saveLog(req.body.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), text + ' 0004', 'authenticationController', 'authenticate');
                 res.json({
                     success: false,

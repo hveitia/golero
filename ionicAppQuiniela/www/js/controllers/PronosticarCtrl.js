@@ -57,13 +57,6 @@ angular.module('QuinielaIonicApp')
             "game": game._id
           }
         }).success(function(response) {
-          /*for (var i = 0; i < $scope.gameToVoteList.length; i++) {
-            if ($scope.gameToVoteList[i]._id == game._id) {
-              $scope.gameToVoteList.splice(i, 1);
-              break;
-            }
-          }
-          $scope.loading = false;*/
           $scope.init();
         })
         .error(function(err) {

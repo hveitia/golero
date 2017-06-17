@@ -1,10 +1,6 @@
 angular.module('QuinielaIonicApp')
-
-
   .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5,
     StorageService, $cordovaDevice) {
-
-
 
     $scope.login = function() {
 
@@ -37,7 +33,7 @@ angular.module('QuinielaIonicApp')
           template: 'Verifique que no existen campos vacíos.'
         });
       }
-    }
+    };
 
     $scope.addUser = function() {
       if (!$scope.data.password) {
@@ -133,6 +129,7 @@ angular.module('QuinielaIonicApp')
     }, false);
 
     $scope.$on('$ionicView.enter', function() {
+
 
       var user = StorageService.getItem('user');
       var pass = StorageService.getItem('password');

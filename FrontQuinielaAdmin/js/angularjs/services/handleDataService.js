@@ -119,6 +119,20 @@
           });
         },
 
+        setStateUpdated: function(game) {
+          return $http({
+            method: 'PUT',
+            url: urlApi + 'setUpdateState/' + game._id,
+            data: {
+
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+
         addGame: function(obj) {
           return $http({
             method: 'POST',

@@ -14,7 +14,7 @@
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
       </div>
       <div class="item itemPronosicar" ng-repeat="item in gameVotedList track by $index">
-        <!-- Promociones e informaciones -->
+        <!-- Promociones e informaciones
         <div class="row" data-ng-show="item.showDivid && $index > 0">
           <div class="col backgroundPromotion">
           </div>
@@ -23,7 +23,7 @@
             <p>Texto de la publicidad</p>
           </div>
         </div>
-        <!-- Promociones e informaciones -->
+        Promociones e informaciones -->
         <div class="item item-divider" data-ng-show="item.showDivid">
           <span>Jornada - {{item.workingDay.name}}</span><span class="pull-right"> {{item.date | date: "dd/MM/yyyy"}}</span>
         </div>

@@ -7,7 +7,7 @@ var USERMODEL = mongoose.model('USERMODEL');
 var VOTEMODEL = mongoose.model('VOTEMODEL');
 var utils = require('../utils/utils.js');
 
-var logController = require('./logController.js');
+var logController = require('./logController');
 
 
 exports.findAll = function (req, res) {
@@ -33,6 +33,7 @@ exports.findAll = function (req, res) {
 };
 
 exports.findById = function (req, res) {
+
     GAMEMODEL.findById(req.params.id, function (err, result) {
         TEAMMODEL.populate(result, {
             path: "localTeam"
@@ -52,6 +53,41 @@ exports.findById = function (req, res) {
         });
     });
 };
+
+exports.findByIdMany = function (req, res) {
+
+    var idList = req.body.idList;
+
+    var response =[];
+
+    forEachAsync(idList, function (next, element, index, array) {
+
+        GAMEMODEL.findById(element, function (err, result) {
+            TEAMMODEL.populate(result, {
+                path: "localTeam"
+            }, function (err, localTeam) {
+                if (err) res.send(500, err.message);
+            });
+            TEAMMODEL.populate(result, {
+                path: "visitorTeam"
+            }, function (err, visitorTeam) {
+                if (err) res.send(500, err.message);
+            });
+            WORKINGDAYMODEL.populate(result, {
+                path: "workingDay"
+            }, function (err, workingDay) {
+                if (err) res.send(500, err.message);
+                response.push(workingDay);
+                next();
+            });
+        });
+
+    }).then(function () {
+        res.status(200).jsonp(response);
+    });
+
+};
+
 
 exports.findByWorkingDay = function (req, res) {
     GAMEMODEL.find({
@@ -119,6 +155,40 @@ exports.add = function (req, res) {
 
         logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Game Saved OK', 'gameController', 'add');
         res.status(200).jsonp(result);
+    });
+};
+
+exports.setUpdateState = function (req, res) {
+
+    GAMEMODEL.findById(req.params.id, function (err, result) {
+
+        result.state = 'UPDATED';
+
+        result.save(function (err) {
+
+            if (err)res.send(500, err.message);
+
+            res.status(200).send('ok');
+
+        });
+    });
+
+};
+
+exports.simpleUpdate = function (req, res) {
+
+    GAMEMODEL.findById(req.params.id, function (err, result) {
+
+        result.goalsLocalTeam = req.body.goalsLocalTeam;
+        result.goalsVisitorTeam = req.body.goalsVisitorTeam;
+        result.state = 'UPDATED';
+
+        result.save(function (err) {
+
+            if (err)res.send(500, err.message);
+
+            res.status(200).send('ok');
+        });
     });
 };
 

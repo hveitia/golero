@@ -9,13 +9,16 @@ var gameModel = require('../models/gameModel')(app, mongoose);
 var voteModel = require('../models/voteModel')(app, mongoose);
 var logModel = require('../models/logModel')(app, mongoose);
 
+
 var gameController = require('../controllers/gameController');
 
 
 router.route('/game')
     .get(middleware.ensureAuthenticated, gameController.findAll)
     .post(middleware.ensureAuthenticated, gameController.add);
-//.post(gameController.add);
+
+router.route('/findByIdMany')
+    .post(middleware.ensureAuthenticated, gameController.findByIdMany);
 
 router.route('/gameById/:id')
     .get(middleware.ensureAuthenticated, gameController.findById);
@@ -30,6 +33,13 @@ router.route('/gameUpdate/:id')
     .put(middleware.ensureAuthenticated, gameController.update)
     .options(middleware.ensureAuthenticated, gameController.options)
     .delete(middleware.ensureAuthenticated, gameController.delete);
+
+router.route('/setUpdateState/:id')
+    .options(middleware.ensureAuthenticated, gameController.options)
+    .put(middleware.ensureAuthenticated, gameController.setUpdateState);
+
+router.route('/simpleUpdate/:id')
+    .put(middleware.ensureAuthenticated, gameController.simpleUpdate);
 
 router.route('/deleteGame/:id')
     .options(middleware.ensureAuthenticated, gameController.options)

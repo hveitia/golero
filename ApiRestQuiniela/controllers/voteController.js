@@ -73,24 +73,6 @@ exports.getVotesActiveByOwnUser = function (req, res) {
 
 exports.getVotesTodayByOwnUser = function (req, res) {
 
-   /* VOTEMODEL.find({user: req.user}, function (err, result) {
-        if (err) res.send(500, err.message);
-        GAMEMODEL.populate(result, {path: "game"}, function (err, user) {
-
-            if (err)res.send(500, err.message);
-
-            var resul = [];
-
-            for (var i = 0; i < result.length; i++) {
-                if (utils.isVoteToday(result[i].date))
-                    resul.push(result[i]);
-            }
-
-            res.status(200).jsonp(resul);
-
-        });
-    });*/
-
     VOTEMODEL.find({user: req.user})
         .populate({
             path: 'game',

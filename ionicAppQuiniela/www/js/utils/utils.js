@@ -25,7 +25,8 @@ canVoteGame = function(game) {
 
 canShowVote = function(game) {
   var now = new Date();
-  var gameDate = new Date(game.workingDay.date);
+  var date = (EsNuloVacio(game.especialDate)) ? game.workingDay.date : game.especialDate;
+  var gameDate = new Date(date);
   now.setHours(0, 0, 0, 0);
   gameDate.setHours(0, 0, 0, 0);
   if (gameDate > now) {
@@ -34,3 +35,10 @@ canShowVote = function(game) {
   return false;
 
 };
+
+EsNuloVacio = function(value) {
+  if (value === null || value === undefined || value === '')
+    return true;
+  else
+    return false;
+}

@@ -107,6 +107,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+
       getAllGames: function() {
         return $http({
           method: 'GET',
@@ -117,6 +118,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+
       getGameToVote: function() {
         return $http({
           method: 'GET',
@@ -126,8 +128,33 @@ angular.module('QuinielaIonicApp.Services', [])
             'Content-Type': 'application/json'
           }
         });
+      },
+      findGameByIdMany: function (idList) {
+        return $http({
+          method: 'POST',
+          url: urlApi + '/findByIdMany',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          },
+          data: {
+            "idList": idList
+
+          }
+        });
+      },
+      getGameById: function (idGame) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/gameById/' + idGame,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
       }
     };
+
   }])
 
   .factory('Vote', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
@@ -201,4 +228,4 @@ angular.module('QuinielaIonicApp.Services', [])
 
       }
     };
-  }])
+  }]);

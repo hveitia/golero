@@ -6,7 +6,7 @@ exports.saveLog = function(user, method, date, logText, controller, action) {
     USERMODEL.findOne({_id: user},function(err, result) {
 
         if (err) {
-            res.send(500, err.message);
+
         }
 
         var objLog = new LOGMODEL({
