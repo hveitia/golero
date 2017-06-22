@@ -43,17 +43,19 @@ var routesGame = require('./routes/game');
 var routesVote = require('./routes/vote');
 var routesWorkingDay = require('./routes/workingDay');
 var routesLog = require('./routes/log');
+var routesConfigs = require('./routes/configs');
 
 var routesTest = require('./routes/test');
 
 app.use('/api', routesIndex);
+app.use('/api', routesGame);
 app.use('/api', routesUser);
 app.use('/api', routesTeam);
 app.use('/api', routesSeason);
-app.use('/api', routesGame);
 app.use('/api', routesVote);
 app.use('/api', routesWorkingDay);
 app.use('/api', routesLog);
+app.use('/api', routesConfigs);
 
 app.use('/api', routesTest);
 

@@ -15,8 +15,30 @@ angular.module('QuinielaApp')
           $scope.loadRegisteredUsers();
           $scope.loadWorkingDays();
           $scope.loadGamesToUpdate();
+          $scope.loadConfigs();
         }
 
+      };
+
+      $scope.changeLogControl = function () {
+
+        $scope.configs.saveLogs = $scope.toggleValue;
+        HandleDataService.updateSaveLogs($scope.configs).success(function (data) {
+
+        }).error(function(err){
+          console.log(err.message);
+        });
+
+      };
+
+      $scope.loadConfigs = function () {
+        HandleDataService.getConfigs().success(function (data) {
+            $scope.configs = data[0];
+          $scope.toggleValue = $scope.configs.saveLogs;
+        }).error(function(err){
+
+          console.log(err.message);
+        });
       };
 
       $scope.loadRegisteredUsers = function() {

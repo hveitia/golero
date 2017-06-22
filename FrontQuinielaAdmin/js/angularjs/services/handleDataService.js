@@ -23,6 +23,16 @@
             }
           });
         },
+        getConfigs: function() {
+          return $http({
+            method: 'GET',
+            url: urlApi + 'loadConfigs',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
         getVotes: function() {
           return $http({
             method: 'GET',
@@ -111,6 +121,20 @@
             data: {
               "goalsLocalTeam": game.goalsLocalTeam,
               "goalsVisitorTeam": game.goalsVisitorTeam
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+
+        updateSaveLogs: function(config) {
+          return $http({
+            method: 'PUT',
+            url: urlApi + 'configsUpdateSaveLog/' + config._id,
+            data: {
+              "saveLogs": config.saveLogs
             },
             headers: {
               'Authorization': 'Bearer ' + GetLocalStorage('userToken'),

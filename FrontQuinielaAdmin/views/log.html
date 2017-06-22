@@ -1,0 +1,45 @@
+<div class="col-lg-12">
+  <h1 class="page-header">Logs List</h1>
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Text</th>
+        <th>Controller</th>
+        <th>Action</th>
+        <th>Method</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="log in logsList">
+        <td>{{log.user}}</td>
+        <td>{{log.logText}}</td>
+        <td>{{log.controller}}</td>
+        <td>{{log.action}}</td>
+        <td>{{log.method}}</td>
+        <td>{{log.date | date}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--Modal Delete -->
+  <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Delete</h4>
+        </div>
+        <div class="modal-body">
+          Sure you want to delete the selected record?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteUser()">NO</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteUser()">YES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Delete -->
+</div>

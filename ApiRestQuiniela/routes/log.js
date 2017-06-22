@@ -4,7 +4,6 @@ var app = express();
 var mongoose = require('mongoose');
 var middleware = require('../middleware');
 
-//var logModel = require('../models/logModel')(app, mongoose);
 var logController = require('../controllers/logController');
 
 

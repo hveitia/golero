@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.myapp841401" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Golero</name>
-  <description>An awesome Ionic/Cordova app.</description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+  <description>Ataja todos los balones que puedas y demuestra que eres quien más sabe de la liga.</description>
+  <author email="hveitia86@gmail.com" href="#">Golero Team</author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
@@ -45,6 +45,7 @@
     <icon src="resources/ios/icon/icon-small@2x.png" width="58" height="58"/>
     <icon src="resources/ios/icon/icon-small@3x.png" width="87" height="87"/>
   </platform>
+  <preference name="orientation" value="portrait"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
