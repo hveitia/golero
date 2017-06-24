@@ -1,7 +1,7 @@
 angular.module('QuinielaIonicApp')
 
   .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q,
-                                    Vote, Game,DatabaseService, RankinService, UserService, StorageService) {
+                                    Vote, Game, DatabaseService, RankinService, UserService, StorageService) {
 
     // --------- Modals zone  --------------
 
@@ -53,7 +53,7 @@ angular.module('QuinielaIonicApp')
     $scope.openModalViewVotes = function () {
       $scope.modalViewVotes.show();
     };
-    $scope.closeModalViewVotes  = function () {
+    $scope.closeModalViewVotes = function () {
       $scope.modalViewVotes.hide();
     };
 
@@ -89,6 +89,7 @@ angular.module('QuinielaIonicApp')
       $scope.viewVotesHeader = 'Mis pronósticos para hoy';
       $scope.openModalViewVotes();
       $scope.loading = true;
+      $scope.gameToday =[];
       var idList = [];
       for (var i = 0; i < $scope.todayVoteList.length; i++) {
         idList.push($scope.todayVoteList[i].game._id);
@@ -97,65 +98,17 @@ angular.module('QuinielaIonicApp')
       Game.findGameByIdMany(idList).success(function (data) {
         $scope.gameToday = data;
 
-        for(var i=0;i<$scope.gameToday.length;i++){
-            for(var j=0;j<$scope.todayVoteList.length;j++){
+        for (var i = 0; i < $scope.gameToday.length; i++) {
+          for (var j = 0; j < $scope.todayVoteList.length; j++) {
 
-              if($scope.gameToday[i]._id == $scope.todayVoteList[j].game._id){
+            if ($scope.gameToday[i]._id == $scope.todayVoteList[j].game._id) {
 
-                if ($scope.todayVoteList[j].valueVote == '1') {
-                  $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList';
-                  $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
-                  $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
-                } else {
-                  if ($scope.todayVoteList[j].valueVote == '2') {
-                    $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
-                    $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList';
-                    $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
-                  } else {
-                    $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
-                    $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
-                    $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn';
-                  }
-                }
-
-              }
-
-
-            }
-        }
-
-        $scope.loading = false;
-
-      }).error(function (err) {
-        console.log(err);
-      });
-
-    };
-
-    $scope.showAllVotes = function () {
-
-      $scope.viewVotesHeader = 'Todos mis pronósticos';
-      $scope.openModalViewVotes();
-      $scope.loading = true;
-      var idList = [];
-      for (var i = 0; i < $scope.voteList.length; i++) {
-        idList.push($scope.voteList[i].game);
-      }
-
-      Game.findGameByIdMany(idList).success(function (data) {
-        $scope.gameToday = data;
-
-        for(var i=0;i<$scope.gameToday.length;i++){
-          for(var j=0;j<$scope.voteList.length;j++){
-
-            if($scope.gameToday[i]._id == $scope.voteList[j].game){
-
-              if ($scope.voteList[j].valueVote == '1') {
+              if ($scope.todayVoteList[j].valueVote == '1') {
                 $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList';
                 $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
                 $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
               } else {
-                if ($scope.voteList[j].valueVote == '2') {
+                if ($scope.todayVoteList[j].valueVote == '2') {
                   $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
                   $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList';
                   $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
@@ -178,7 +131,61 @@ angular.module('QuinielaIonicApp')
         console.log(err);
       });
 
+    };
 
+    $scope.showAllVotes = function () {
+
+      $scope.viewVotesHeader = 'Todos mis pronósticos';
+      $scope.openModalViewVotes();
+      $scope.loading = true;
+      $scope.gameToday =[];
+      var idList = [];
+      for (var i = 0; i < $scope.voteList.length; i++) {
+        idList.push($scope.voteList[i].game);
+      }
+
+      Game.findGameByIdMany(idList).success(function (data) {
+        $scope.gameToday = data;
+
+
+        for(var i=0; i < $scope.gameToday.length; i++){
+          if(EsNuloVacio($scope.gameToday[i])){
+            $scope.gameToday.splice(i,1);
+            i--;
+          }
+        }
+
+        for (var i = 0; i < $scope.gameToday.length; i++) {
+          for (var j = 0; j < $scope.voteList.length; j++) {
+
+            if (!EsNuloVacio($scope.gameToday[i]) && !EsNuloVacio($scope.voteList[j])) {
+              if ($scope.gameToday[i]._id == $scope.voteList[j].game) {
+
+                if ($scope.voteList[j].valueVote == '1') {
+                  $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList';
+                  $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                  $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
+                } else {
+                  if ($scope.voteList[j].valueVote == '2') {
+                    $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                    $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList';
+                    $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn imagenGrayScale';
+                  } else {
+                    $scope.gameToday[i].localTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                    $scope.gameToday[i].visitoTeamClass = 'animated zoomIn pronosticarList imagenGrayScale';
+                    $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn';
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        $scope.loading = false;
+
+      }).error(function (err) {
+        console.log(err);
+      });
 
 
     };

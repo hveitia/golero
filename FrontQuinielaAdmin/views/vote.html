@@ -1,3 +1,5 @@
+
+
 <div class="col-lg-12">
   <h1 class="page-header">Votes List</h1>
   <table class="table table-bordered table-hover table-striped">
@@ -8,6 +10,7 @@
         <th>Local</th>
         <th>Visitor</th>
         <th>Date</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +20,28 @@
         <td>{{vote.game.localTeam.name}}</td>
         <td>{{vote.game.visitorTeam.name}}</td>
         <td>{{vote.date | date}}</td>
+        <td><i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteVoteClick(vote)" style="cursor:pointer;"></i></td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<!--Modal Delete -->
+<div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete</h4>
+      </div>
+      <div class="modal-body">
+        Sure you want to delete the selected record?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteVote()">NO</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteVote()">YES</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete -->

@@ -26,7 +26,17 @@ angular.module('QuinielaIonicApp')
       window.socialmessage.send(message);
     };
 
+    $scope.showComoJugarClick = function () {
+      $scope.showComoJugar = !$scope.showComoJugar;
+    };
+
+    $scope.showComoPronosticarClick = function () {
+      $scope.showComoPronosticar = !$scope.showComoPronosticar;
+    };
+
     $scope.$on('$ionicView.enter', function() {
       $scope.loadUserData();
+      $scope.showComoJugar = false;
+      $scope.showComoPronosticar = false;
     });
   });

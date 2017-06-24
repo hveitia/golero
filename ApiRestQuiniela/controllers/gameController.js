@@ -58,36 +58,25 @@ exports.findByIdMany = function (req, res) {
 
     var idList = req.body.idList;
 
-    var response =[];
+    var response = [];
 
     forEachAsync(idList, function (next, element, index, array) {
 
-        GAMEMODEL.findById(element, function (err, result) {
-            TEAMMODEL.populate(result, {
-                path: "localTeam"
-            }, function (err, localTeam) {
+        GAMEMODEL.findById(element)
+            .populate('localTeam')
+            .populate('visitorTeam')
+            .populate('workingDay')
+            .exec(function (err, result) {
                 if (err) res.send(500, err.message);
-            });
-            TEAMMODEL.populate(result, {
-                path: "visitorTeam"
-            }, function (err, visitorTeam) {
-                if (err) res.send(500, err.message);
-            });
-            WORKINGDAYMODEL.populate(result, {
-                path: "workingDay"
-            }, function (err, workingDay) {
-                if (err) res.send(500, err.message);
-                response.push(workingDay);
+                response.push(result);
                 next();
             });
-        });
 
     }).then(function () {
         res.status(200).jsonp(response);
     });
 
 };
-
 
 exports.findByWorkingDay = function (req, res) {
     GAMEMODEL.find({

@@ -5,20 +5,20 @@
   <ion-content>
 
     <div class="card" style="margin-top: 20%;">
-      <div class="item item-divider">
+      <div class="item item-divider" data-ng-click="showComoJugarClick()">
         ¿Como jugar?
       </div>
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap" data-ng-show="showComoJugar">
         La esencia de “Golero” es atrapar la mayor cantidad de balones posible por temporada, pero; ¿como atraparlos? Por cada partido usted debe pronosticar si gana el local, visitante o si termina
         en empate, si acierta atrapa 3 balones pero si falla pierde
         1 de los que ya ha atrapado. ¡Eso es todo! ¡Buena suerte!
       </div>
     </div>
     <div class="card">
-      <div class="item item-divider">
+      <div class="item item-divider" data-ng-click="showComoPronosticarClick()">
         ¿Como pronosticar?
       </div>
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap" data-ng-show="showComoPronosticar">
         Para pronosticar se muestran todos los partidos calendarizados de las próximas jornadas, y usted podrá pronosticar máximo con un día de diferencia por lo que no podrá pronosticar los partidos
         el mismo día que se juegan.
       </div>

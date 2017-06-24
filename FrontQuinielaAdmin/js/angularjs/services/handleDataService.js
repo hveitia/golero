@@ -214,6 +214,17 @@
           });
         },
 
+        deleteVote: function(vote) {
+          return $http({
+            method: 'DELETE',
+            url: urlApi + 'vote/' + vote,
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+
         deleteGame: function(game) {
           return $http({
             method: 'DELETE',

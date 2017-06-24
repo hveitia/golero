@@ -5,7 +5,7 @@
   </div>
   <ion-content>
 
-    <div class="list  animated bounceInDown" style="margin-top: 17%;">
+    <div class="list  animated bounceInDown" style="margin-top: 15%;">
       <div class="row">
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
       </div>
@@ -15,7 +15,10 @@
         <h3 class="userRankingName" style="margin: 0 0 10px 0; !important">{{item.user}}</h3>
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
         <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
-        <span class="badge" style="color: white; margin-top:3%; background-color: {{item.class}} !important;">{{$index + 1}}</span>
+        <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index <= 2">
+          <i class="fa fa-trophy fa-lg" aria-hidden="true"></i>
+        </span>
+        <span class="badge" style="color: white; margin-top:3%; background-color: {{item.class}} !important;" data-ng-show="$index > 2">{{$index + 1}}</span>
 
       </div>
     </div>
