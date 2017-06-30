@@ -4,11 +4,12 @@ var app = express();
 var mongoose = require('mongoose');
 var middleware = require('../middleware');
 
-var workingDayModel = require('../models/workingDayModel')(app, mongoose);
+
 var gameModel = require('../models/gameModel')(app, mongoose);
 var voteModel = require('../models/voteModel')(app, mongoose);
 var logModel = require('../models/logModel')(app, mongoose);
 var configsModel = require('../models/configsModel')(app, mongoose);
+
 
 
 var gameController = require('../controllers/gameController');

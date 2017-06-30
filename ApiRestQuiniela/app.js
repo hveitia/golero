@@ -51,9 +51,9 @@ app.use('/api', routesIndex);
 app.use('/api', routesGame);
 app.use('/api', routesUser);
 app.use('/api', routesTeam);
-app.use('/api', routesSeason);
 app.use('/api', routesVote);
 app.use('/api', routesWorkingDay);
+app.use('/api', routesSeason);
 app.use('/api', routesLog);
 app.use('/api', routesConfigs);
 

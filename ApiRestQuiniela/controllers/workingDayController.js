@@ -45,7 +45,8 @@ exports.add = function(req, res) {
   var obj = new WORKINGDAYMODEL({
     date: req.body.date,
     season: req.body.season,
-    name: req.body.name
+    name: req.body.name,
+    active:true
 
   });
 

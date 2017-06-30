@@ -93,6 +93,20 @@
             }
           });
         },
+        findGameByIdMany: function (idList) {
+          return $http({
+            method: 'POST',
+            url: urlApi + 'findByIdMany',
+            data: {
+              "idList": idList
+
+            },
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
         getGameByState: function(state) {
           return $http({
             method: 'GET',
@@ -103,10 +117,25 @@
             }
           });
         },
+
         getAllSeansons: function() {
           return $http({
             method: 'GET',
             url: urlApi + 'season',
+            headers: {
+              'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+              'Content-Type': 'application/json'
+            }
+          });
+        },
+
+        activateUnactivateSeason: function(season) {
+          return $http({
+            method: 'PUT',
+            url: urlApi + 'activateUnactivateSeason/' + season._id,
+            data: {
+              "active": season.active
+            },
             headers: {
               'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
               'Content-Type': 'application/json'

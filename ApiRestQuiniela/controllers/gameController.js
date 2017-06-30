@@ -12,70 +12,45 @@ var logController = require('./logController');
 
 exports.findAll = function (req, res) {
 
-    GAMEMODEL.find(function (err, result) {
-        TEAMMODEL.populate(result, {
-            path: "localTeam"
-        }, function (err, localTeam) {
+    GAMEMODEL.find()
+        .populate('localTeam')
+        .populate('visitorTeam')
+        .populate('workingDay')
+        .exec(function (err,result) {
+
             if (err) res.send(500, err.message);
+            var output = result.filter(function(x){return x != null && x.workingDay.active == true});
+            res.status(200).jsonp(output);
+
         });
-        TEAMMODEL.populate(result, {
-            path: "visitorTeam"
-        }, function (err, visitorTeam) {
-            if (err) res.send(500, err.message);
-        });
-        WORKINGDAYMODEL.populate(result, {
-            path: "workingDay"
-        }, function (err, workingDay) {
-            if (err) res.send(500, err.message);
-            res.status(200).jsonp(workingDay);
-        });
-    });
 };
 
 exports.findById = function (req, res) {
 
-    GAMEMODEL.findById(req.params.id, function (err, result) {
-        TEAMMODEL.populate(result, {
-            path: "localTeam"
-        }, function (err, localTeam) {
+    GAMEMODEL.findById(req.params.id)
+        .populate('localTeam')
+        .populate('visitorTeam')
+        .populate('workingDay')
+        .exec(function (err,result) {
+
             if (err) res.send(500, err.message);
+            var output = result.filter(function(x){return x != null && x.workingDay.active == true});
+            res.status(200).jsonp(output);
+
         });
-        TEAMMODEL.populate(result, {
-            path: "visitorTeam"
-        }, function (err, visitorTeam) {
-            if (err) res.send(500, err.message);
-        });
-        WORKINGDAYMODEL.populate(result, {
-            path: "workingDay"
-        }, function (err, workingDay) {
-            if (err) res.send(500, err.message);
-            res.status(200).jsonp(workingDay);
-        });
-    });
 };
 
 exports.findByIdMany = function (req, res) {
 
-    var idList = req.body.idList;
-
-    var response = [];
-
-    forEachAsync(idList, function (next, element, index, array) {
-
-        GAMEMODEL.findById(element)
-            .populate('localTeam')
-            .populate('visitorTeam')
-            .populate('workingDay')
-            .exec(function (err, result) {
-                if (err) res.send(500, err.message);
-                response.push(result);
-                next();
-            });
-
-    }).then(function () {
-        res.status(200).jsonp(response);
-    });
-
+    GAMEMODEL.find({_id:{ "$in" : req.body.idList}})
+        .populate('localTeam')
+        .populate('visitorTeam')
+        .populate('workingDay')
+        .exec(function (err, result) {
+            if (err) res.send(500, err.message);
+            var response = result.filter(function(x){return  x != null && x.workingDay.active == true});
+            res.status(200).jsonp(response);
+        });
 };
 
 exports.findByWorkingDay = function (req, res) {
@@ -286,7 +261,7 @@ exports.addSpecialDate = function (req, res) {
 exports.gameToVoteByDate = function (req, res) {
 
     var listGames = [];
-    GAMEMODEL.find(function (err, result) {
+    /*GAMEMODEL.find(function (err, result) {
         TEAMMODEL.populate(result, {
             path: "localTeam"
         }, function (err, localTeam) {
@@ -313,7 +288,19 @@ exports.gameToVoteByDate = function (req, res) {
             res.status(200).jsonp(listGames);
 
         });
-    });
+    });*/
+
+    GAMEMODEL.find()
+        .populate('localTeam')
+        .populate('visitorTeam')
+        .populate('workingDay')
+        .exec(function (err,result) {
+
+            if (err) res.send(500, err.message);
+            var output = result.filter(function(x){return x != null && utils.canVoteGame(x)});
+            res.status(200).jsonp(output);
+
+        });
 };
 
 //OPTIONS Allow CORS to DELETE

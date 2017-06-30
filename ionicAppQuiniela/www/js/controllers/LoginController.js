@@ -4,9 +4,9 @@ angular.module('QuinielaIonicApp')
 
     $scope.login = function() {
 
-      //$scope.data = {};
-      //$scope.data.username = 'Los4';
-      //$scope.data.password = '327ED387-D95B-4226-884D-74D4CC23FF1E';
+      $scope.data = {};
+      $scope.data.username = 'Los4';
+      $scope.data.password = '327ED387-D95B-4226-884D-74D4CC23FF1E';
 
       if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
 
@@ -136,8 +136,8 @@ angular.module('QuinielaIonicApp')
     $scope.$on('$ionicView.enter', function() {
 
 
-     //$scope.login();
-      var user = StorageService.getItem('user');
+     $scope.login();
+    /*  var user = StorageService.getItem('user');
       var pass = StorageService.getItem('password');
       var registred = StorageService.getItem('registred');
 
@@ -152,7 +152,7 @@ angular.module('QuinielaIonicApp')
       } else {
         //$scope.addUserUUDI('uuid');
       }
-
+*/
 
     });
 

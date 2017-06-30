@@ -35,7 +35,7 @@
         <div class="item item-divider" data-ng-show="item.showDivid">
           <span>Jornada - {{item.workingDay.name}}</span><span class="pull-right"> {{item.date | date: "dd/MM/yyyy"}}</span>
         </div>
-        <div class="row" style="text-align: center" on-swipe-left="onHold()">
+        <div class="row" style="text-align: center">
           <div class="col" data-ng-show='deleting'>
             <i class="fa fa-minus-circle fa-2x animated zoomIn" data-ng-click='deleteVote(item)' aria-hidden="true" style="color: red; margin-top: 5px;"></i>
           </div>

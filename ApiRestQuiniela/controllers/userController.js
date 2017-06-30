@@ -277,18 +277,19 @@ sendRegistrationConfirmation = function (obj) {
     }
     else {
 
-      file = file.replace('[[USER]]', obj.user).replace('[[URL]]', utils.url() + 'userActivation/' + obj.registerHash);
+      //file = file.replace('[[USER]]', obj.user).replace('[[URL]]', utils.url() + 'userActivation/' + obj.registerHash);
+      file = file.replace('[[USER]]', obj.user).replace('[[URL]]', obj.registerHash.substring(obj.registerHash.length - 6));
 
       var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-          user: 'deportesquiniela@gmail.com', // Your email id
+          user: 'goleroapp@gmail.com', // Your email id
           pass: 'vicoc123*' // Your password
         }
       });
 
       var mailOptions = {
-        from: 'deportesquiniela@gmail.com', // sender address
+        from: 'goleroapp@gmail.com', // sender address
         to: obj.email, // list of receivers
         subject: 'Golero.. Activación de Cuenta..', // Subject line
         html: file//'localhost:3000/api/userActivation/' + obj.registerHash

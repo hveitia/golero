@@ -11,12 +11,29 @@ angular.module('QuinielaApp')
 
             $scope.loadVotes = function () {
 
+                var idList = [];
                 HandleDataService.getVotes().success(function (data) {
                     $scope.voteList = data;
 
                     for (var i = 0; i < $scope.voteList.length; i++) {
-                        $scope.getGameById($scope.voteList[i].game, $scope.voteList[i]);
+
+                        idList.push($scope.voteList[i].game)
                     }
+
+                    HandleDataService.findGameByIdMany(idList).success(function (data) {
+
+                        for(var i=0;i<data.length;i++){
+                            for(var j=0;j<$scope.voteList.length;j++){
+                                if($scope.voteList[j].game == data[i]._id){
+                                    $scope.voteList[j].game = data[i];
+                                }
+                            }
+                        }
+
+                    }).error(function (err) {
+                        console.log(err);
+                    })
+
 
                 }).error(function (err) {
                     $scope.voteList = [];

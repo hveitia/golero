@@ -89,7 +89,7 @@ angular.module('QuinielaIonicApp')
       $scope.viewVotesHeader = 'Mis pronósticos para hoy';
       $scope.openModalViewVotes();
       $scope.loading = true;
-      $scope.gameToday =[];
+      $scope.gameToday = [];
       var idList = [];
       for (var i = 0; i < $scope.todayVoteList.length; i++) {
         idList.push($scope.todayVoteList[i].game._id);
@@ -118,10 +118,8 @@ angular.module('QuinielaIonicApp')
                   $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn';
                 }
               }
-
+              $scope.gameToday[i].backGroundClass = $scope.getBackgroundVotesList($scope.todayVoteList[j], $scope.gameToday[i]);
             }
-
-
           }
         }
 
@@ -133,12 +131,45 @@ angular.module('QuinielaIonicApp')
 
     };
 
+    $scope.getBackgroundVotesList = function (vote, game) {
+
+      var acierto = '#e6ffe6';
+      var noAcierto = '#ffe6e6';
+      var blanco = '#fff';
+
+      if(game.state != "UPDATED"){
+        return blanco;
+      }
+
+
+      switch (vote.valueVote) {
+        case '1':
+        {
+          if (game.goalsLocalTeam > game.goalsVisitorTeam)
+            return acierto;
+          return noAcierto;
+        }
+        case '2':
+        {
+          if (game.goalsLocalTeam < game.goalsVisitorTeam)
+            return acierto;
+          return noAcierto;
+        }
+        case '0':
+        {
+          if (game.goalsLocalTeam == game.goalsVisitorTeam)
+            return acierto;
+          return noAcierto;
+        }
+      }
+    };
+
     $scope.showAllVotes = function () {
 
       $scope.viewVotesHeader = 'Todos mis pronósticos';
       $scope.openModalViewVotes();
       $scope.loading = true;
-      $scope.gameToday =[];
+      $scope.gameToday = [];
       var idList = [];
       for (var i = 0; i < $scope.voteList.length; i++) {
         idList.push($scope.voteList[i].game);
@@ -148,11 +179,21 @@ angular.module('QuinielaIonicApp')
         $scope.gameToday = data;
 
 
-        for(var i=0; i < $scope.gameToday.length; i++){
-          if(EsNuloVacio($scope.gameToday[i])){
-            $scope.gameToday.splice(i,1);
+        for (var i = 0; i < $scope.gameToday.length; i++) {
+          if (EsNuloVacio($scope.gameToday[i])) {
+            $scope.gameToday.splice(i, 1);
             i--;
           }
+          else {
+            if (i + 1 < $scope.gameToday.length) {
+              if ($scope.gameToday[i].workingDay.name != $scope.gameToday[i + 1].workingDay.name) {
+                $scope.gameToday[i + 1].showDivid = true;
+              }
+            }
+          }
+        }
+        if ($scope.gameToday.length > 0) {
+          $scope.gameToday[0].showDivid = true;
         }
 
         for (var i = 0; i < $scope.gameToday.length; i++) {
@@ -176,6 +217,7 @@ angular.module('QuinielaIonicApp')
                     $scope.gameToday[i].tiedClass = 'fa fa-handshake-o fa-2x animated zoomIn';
                   }
                 }
+                $scope.gameToday[i].backGroundClass = $scope.getBackgroundVotesList($scope.voteList[j], $scope.gameToday[i]);
               }
             }
           }

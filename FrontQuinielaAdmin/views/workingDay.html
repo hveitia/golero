@@ -29,14 +29,16 @@
           <th>Season</th>
           <th>Name</th>
           <th>Date</th>
+          <th>Active</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="w in workinDayList">
-          <th>{{w.season.name}}</th>
-          <th>{{w.name}}</th>
-          <th>{{w.date | date}}</th>
+          <td>{{w.season.name}}</td>
+          <td>{{w.name}}</td>
+          <td>{{w.date | date}}</td>
+          <td>{{w.active}}</td>
           <td>
             <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;"></i>
             <i class="fa fa-fw fa-trash" title="Delete" style="cursor:pointer;"></i>
