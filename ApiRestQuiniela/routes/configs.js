@@ -7,8 +7,8 @@ var middleware = require('../middleware');
 var configsController = require('../controllers/configsController');
 
 
-/*router.route('/saveObjConfigs')
-    .get(configsController.saveObjConfigs);*/
+router.route('/saveObjConfigs')
+    .get(configsController.saveObjConfigs);
 
 
 router.route('/loadConfigs')

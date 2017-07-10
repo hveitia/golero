@@ -21,9 +21,10 @@ $dark:                            #444 !default;
 /*-===========================ion-tabs ======================================-*/
 
 ion-tabs .tab-item {
-  background: #FFFFFF;
-  border-top: 3px solid #FFFFFF;
-  color: #d3dae2 !important;
+  background: #190855;
+  /*border-top: 3px solid #FFFFFF;*/
+  padding-top: 1px;
+  color: white !important;
 }
 
 ion-tabs .tab-item .icon {
@@ -34,8 +35,8 @@ ion-tabs .tab-item .icon {
 ion-tabs .tab-item.tab-item-active {
   /*color: #1568ff !important;
   border-top: 4px solid #1568ff;*/
-  color: darkblue !important;
-  border-top: 4px solid darkblue;
+  color: #ea905d !important;
+  /*border-top: 4px solid darkblue;*/
 }
 
 
@@ -4992,8 +4993,8 @@ a.subdued:last-child {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   border-color: #b2b2b2;
-  background-color: #f8f8f8;
-  background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+  /*background-color: #f8f8f8;
+  background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);*/
   color: #444;
   position: absolute;
   bottom: 0;
@@ -5004,6 +5005,7 @@ a.subdued:last-child {
   border-top-width: 1px;
   background-size: 0;
   line-height: 49px;
+  background: #190855;
 }
 
 .tabs .tab-item .badge {

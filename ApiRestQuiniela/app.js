@@ -44,6 +44,7 @@ var routesVote = require('./routes/vote');
 var routesWorkingDay = require('./routes/workingDay');
 var routesLog = require('./routes/log');
 var routesConfigs = require('./routes/configs');
+var routesTexts = require('./routes/texts');
 
 var routesTest = require('./routes/test');
 
@@ -56,6 +57,7 @@ app.use('/api', routesWorkingDay);
 app.use('/api', routesSeason);
 app.use('/api', routesLog);
 app.use('/api', routesConfigs);
+app.use('/api', routesTexts);
 
 app.use('/api', routesTest);
 

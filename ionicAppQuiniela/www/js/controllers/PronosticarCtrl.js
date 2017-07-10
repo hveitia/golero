@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('PronosticarCtrl', function($scope, $http, $ionicScrollDelegate,
+  .controller('PronosticarCtrl', function($scope, $http, $ionicScrollDelegate, $state, $ionicPlatform,
     Game, Vote, $ionicPopup, DatabaseService, StorageService) {
 
     $scope.loadGame = function() {
@@ -110,4 +110,8 @@ angular.module('QuinielaIonicApp')
       $scope.init();
     });
 
-  })
+    $ionicPlatform.on('resume', function(){
+      $state.go('tab.dash');
+    });
+
+  });

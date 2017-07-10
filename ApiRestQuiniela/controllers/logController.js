@@ -7,7 +7,7 @@ exports.saveLog = function (user, method, date, logText, controller, action) {
 
     CONFIGSMODEL.find(function (err, result) {
 
-        if (result[0].saveLogs) {
+        if (result &&  result.length > 0 && result[0].saveLogs != undefined) {
 
             USERMODEL.findOne({_id: user}, function (err, result) {
 

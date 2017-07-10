@@ -1,5 +1,14 @@
-//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
-var urlApi = 'http://localhost:3000/api/';
+//todo: comprobar si existe email y/o usuario
+//todo: look and feel enrolamiento
+//todo: textos en el cliente
+//todo: cambiar la vista de ayuda
+//todo: gestionar reversos
+//todo: poner logs en los emails
+//todo: refactor al handledataService -- prioridad baja --
+
+
+var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+//var urlApi = 'http://localhost:3000/api/';
 
 
 var returnApiCodes = {

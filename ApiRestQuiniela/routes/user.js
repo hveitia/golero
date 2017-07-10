@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var middleware = require('../middleware');
 
 var userModel = require('../models/userModel')(app, mongoose);
+var logModel = require('../models/logModel')(app, mongoose);
+var configsModel = require('../models/configsModel')(app, mongoose);
 
 var userController = require('../controllers/userController');
 var authController = require('../controllers/authenticationController');
@@ -26,6 +28,9 @@ router.route('/editFavoriteTeam')
 
 router.route('/editAvatar')
     .put(middleware.ensureAuthenticated, userController.editAvatar);
+
+router.route('/activateAccount')
+    .put(middleware.ensureAuthenticated, userController.activateAccount);
 
 router.route('/editName')
     .put(userController.editName);

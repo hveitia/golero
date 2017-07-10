@@ -8,8 +8,8 @@ var logController = require('../controllers/logController');
 
 
 router.route('/log')
-    //.get(middleware.ensureAuthenticated, logController.findAll);
-.get(logController.findAll);
+    .get(middleware.ensureAuthenticated, logController.findAll);
+
 
 
 module.exports = router;

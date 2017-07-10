@@ -1,7 +1,7 @@
 angular.module('QuinielaIonicApp')
 
 
-  .controller('AccountCtrl', function($scope, $stateParams, UserService, DatabaseService) {
+  .controller('AccountCtrl', function($scope, $state, $stateParams, $ionicPlatform, UserService, DatabaseService) {
 
 
 
@@ -27,16 +27,19 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.showComoJugarClick = function () {
-      $scope.showComoJugar = !$scope.showComoJugar;
+
     };
 
     $scope.showComoPronosticarClick = function () {
-      $scope.showComoPronosticar = !$scope.showComoPronosticar;
+
     };
 
     $scope.$on('$ionicView.enter', function() {
       $scope.loadUserData();
-      $scope.showComoJugar = false;
-      $scope.showComoPronosticar = false;
+
+    });
+
+    $ionicPlatform.on('resume', function(){
+      $state.go('tab.dash');
     });
   });

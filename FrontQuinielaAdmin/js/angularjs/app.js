@@ -35,6 +35,10 @@
           templateUrl: "views/log.html",
           controller: "LogCtrl"
         })
+          .when("/texts", {
+          templateUrl: "views/texts.html",
+          controller: "TextsCtrl"
+        })
         .otherwise({
           reditrectTo: "/"
         });

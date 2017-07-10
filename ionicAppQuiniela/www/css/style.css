@@ -1,8 +1,8 @@
 .spinner svg {
   width: 60px;
   height: 50px;
-  stroke: darkblue;
-  fill: darkblue;
+  stroke: #190855;
+  fill: #190855;
 }
 
 .centerWithAuto {
@@ -14,7 +14,7 @@
   /*background-image: url("../img/cover.jpg");
   background-size: cover;
   background-position: center;*/
-  background-color: darkblue;
+  background-color: #69015a;
 }
 
 .backgroundPromotion {
@@ -84,7 +84,7 @@ ion-content {
 }
 
 .avatar-conatainer {
-  margin-top: 15%;
+  margin-top: 16%;
 }
 
 .dashboard-main-container .avatar-conatainer img {
@@ -132,18 +132,18 @@ ion-content {
   clear: both;
   width: 13%;
   position: absolute;
-  top: 160px;
+  top: 150px;
   left: 31%;
 }
 
 .bar-header {
   /*background: #4F88A0 rgb(53, 104, 153)  !important;*/
-  background: darkblue !important;
+  background: #190855 !important;
   color: white;
 }
 
 .dashboard-main-container {
-  background: darkblue !important;
+  background: #190855 !important;
 }
 
 .loginControl {

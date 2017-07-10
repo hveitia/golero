@@ -3,10 +3,18 @@
   <div class="bar bar-header bar-light">
     <h1 class="title viewTitle">Ranking</h1>
   </div>
-  <ion-content>
-
-    <div class="list  animated bounceInUp" style="margin-top: 15%;">
-      <div class="row">
+  <ion-content style="background: ghostwhite;">
+    <div class="bar bar-header item-input-inset" style="margin-top: 11%; height: 60px;">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Buscar Usuario">
+      </label>
+      <button class="button button-clear" style="color: white">
+        <strong>Buscar</strong>
+      </button>
+    </div>
+    <div class="list  animated bounceInUp" >
+      <div class="row" style="padding-top: 0;">
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
       </div>
       <div class="item item-remove-animate  chat-item item-avatar " ng-repeat="item in rankinList track by $index" style="background-color: {{item.backGroundClass}} !important;">
@@ -18,7 +26,7 @@
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
         <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
         <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index <= 2">
-          <i class="fa fa-trophy fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-trophy fa-lg" aria-hidden="true" style="font-size: 1.8em;"></i>
         </span>
         <span class="badge" style="color: white; margin-top:3%; background-color: {{item.class}} !important;" data-ng-show="$index > 2">{{$index + 1}}</span>
 
@@ -32,7 +40,7 @@
         <button class="button button-clear button-primary" ng-click="modal.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
       </ion-header-bar>
       <ion-content style="text-align:center;">
-        <div class="row">
+        <div class="row" style="padding-top: 0px;">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
         <div class="card" style="margin-top: 8%;" data-ng-show="gameVotedList.length <= 0 && !loading">
@@ -43,16 +51,20 @@
             En este momento no hay pronósticos disponibles.
           </div>
         </div>
-        <div class="item itemPronosicar" ng-repeat="item in gameVotedList" style="background-color: {{item.backGroundClass}} !important;">
-          <div class="item item-divider" data-ng-show="item.showDivid">
-            Fecha {{item.workingDay.name}} - {{item.date | date: "dd-MM-yyyy"}}
+        <div class="item itemPronosicar" ng-repeat="item in gameVotedList" ><!--style="border: none !important;"-->
+          <div class="item item-divider" data-ng-show="item.showDivid" style="background: #ea905d; color: white !important;">
+            <strong>Fecha - {{item.workingDay.name}}</strong> <!--- {{item.date | date: "dd-MM-yyyy"}}-->
           </div>
-          <div class="row" style="text-align: center">
+          <div class="row" style="text-align: center;"><!--border-top: 10px solid {{item.backGroundClass}};-->
             <div class="col">
               <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}}">
             </div>
             <div class="col">
-              <i class="{{item.tiedClass}}" aria-hidden="true" style="color: darkblue; margin-top: 10px;"></i>
+
+              <i class="{{item.tiedClass}}" aria-hidden="true" style="color: #190855"></i>
+
+              <div class="col" style="color: {{item.backGroundClass}} !important;"><strong>{{item.goalsLocalTeam}} - {{item.goalsVisitorTeam}}</strong></div>
+
             </div>
             <div class="col">
               <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}}">

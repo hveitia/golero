@@ -1,7 +1,7 @@
 <ion-view view-title="La Quiniela">
-  <ion-content>
+  <ion-content style="background: ghostwhite;">
     <div class="bar bar-header bar-light">
-      <h1 class="title viewTitle">Home</h1>
+      <h1 class="title viewTitle">{{userName}}</h1>
     </div>
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
@@ -11,36 +11,76 @@
 
       </div>
       <img ng-src="./img/logos/{{user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
+
       <div class="box box-blue">
-        <h5>{{userName}}</h5>
+
         <p><strong style="font-size:25px;"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i> {{points}}</strong></p>
       </div>
-      <div class="row" style="color:black">
-        <div class="col col" style="border-right: 1px solid;" data-ng-click="goToRanking()">
-          <i class="fa fa-list" aria-hidden="true" style="margin-right: 5px;"></i> Ranking {{rankingPosition}}
+
+      <div class="list">
+
+        <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
+          <strong>Mis estadísticas</strong>
         </div>
-        <div class="col col" style="border-left: 1px solid; border-right: 1px solid;" data-ng-click="goToMyVotes()">
 
-          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{activeVotes}}
+        <div class="item">
+          <div class="row">
 
-        </div>
-        <div class="col col" style="border-left: 1px solid;" data-ng-click="showAllVotes()">
+            <div class="col">
+              <button class="button icon-left ion-trophy button-block" data-ng-click="goToRanking()" style="background: #190855; color: white;">Ranking {{rankingPosition}}</button>
 
-          <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Total {{voteList.length}}
+            </div>
+            <!--<div class="col" style="" data-ng-click="goToMyVotes()">
 
+              <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{activeVotes}}
+
+            </div>-->
+            <div class="col">
+              <button class="button icon-right ion-more button-block" data-ng-click="showAllVotes()" style="background: #190855; color: white;">Pronósticos {{voteList.length}}</button>
+
+            </div>
+
+          </div>
         </div>
       </div>
-      <br/>
-      <div class="card">
-        <div class="item item-text-wrap" data-ng-show='todayVoteList.length > 0'>
-          ¡Hoy se juegan {{todayVoteList.length}} partidos!
-          <button class="button icon-right ion-eye button-full button-balanced" data-ng-click="showTodayVote()">Ver mis pronósticos</button>
+
+
+      <div class="list" data-ng-show="user.state == 'ACTIVE'">
+        <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
+          <strong data-ng-show='todayVoteList.length > 0'>¡Hoy se juegan {{todayVoteList.length}} partidos!</strong>
+          <strong data-ng-show='todayVoteList.length == 0'>Noy hay partidos programados para hoy.</strong>
         </div>
-        <div class="item item-text-wrap" data-ng-show='todayVoteList.length == 0'>
-          Noy hay partidos programados para hoy.
-          <button class="button icon-right ion-stats-bars button-full button-balanced" data-ng-click="goToPronosticar()">Pronosticar</button>
+        <div class="item">
+          <button class="button icon-right ion-eye button-block"
+                  data-ng-click="showTodayVote()"
+                  style="background: #190855; color: white;"
+                  data-ng-show='todayVoteList.length > 0'>
+            Ver mis pronósticos</button>
+          <button class="button icon-right ion-stats-bars button-full button-balanced"
+                  data-ng-click="goToPronosticar()"
+                  style="background: #190855; color: white;"
+                  data-ng-show='todayVoteList.length == 0'>
+            Pronosticar</button>
         </div>
       </div>
+
+      <div class="list" data-ng-show="user.state != 'ACTIVE'">
+        <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
+          <strong>Su cuenta está inactiva ingresa el texto recibido en su email para activarla.</strong>
+        </div>
+        <div class="item">
+          <input type="text" class="text-center"
+                 placeholder="Texto de activación"
+                 data-ng-model="data.activationText"
+                 maxlength="6" style="margin-left: auto; margin-right: auto;">
+          <button class="button icon-right ion-toggle-filled button-full button-balanced"
+                  data-ng-click="activateAccount()"
+                  style="background: #190855; color: white;">
+            Activar Cuenta</button>
+        </div>
+      </div>
+
+
       <!-- Promociones e informaciones
       <div class="row">
         <div class="col backgroundPromotion">
@@ -123,15 +163,33 @@
         <div class="row">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
-        <div class="card" data-ng-show="enroler == 'name'">
-          <div class="item item-text-wrap">
-            <label class="item item-input">
-              <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName">
-            </label>
-            <button class="button icon-right
-             ion-android-checkbox-outline button-full button-balanced" data-ng-click="editName()">Aceptar</button>
-          </div>
+
+
+        <div class="list" data-ng-show="enroler == 'name'">
+          <label class="item item-input item-floating-label">
+            <span class="input-label text-left">Nombre</span>
+            <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName" maxlength="40">
+          </label>
+          <button class="button button-positive icon-right button-full ion-help">
+            Comprobar disponibilidad
+          </button>
+          <label class="item item-input item-floating-label" style="margin-top: 5%;">
+            <span class="input-label text-left">Email</span>
+            <input type="email" placeholder="Inserte su email" data-ng-model="data.newEmail" maxlength="40">
+          </label>
+          <button class="button button-positive icon-right button-full ion-help">
+            Por qué ingresar mi email
+          </button>
+          <ion-list>
+            <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%;">Acepto Términos y Condiciones.</ion-checkbox>
+          </ion-list>
+          <button class="button button-positive icon-right button-full ion-ios-book-outline" data-ng-click="showTerminos()">
+            Ver Términos y condiciones de uso
+          </button>
+          <button class="button icon-right ion-android-checkbox-outline button-full button-balanced" data-ng-click="editName()" style="margin-top: 15%;">Aceptar</button>
         </div>
+
+
         <div data-ng-show="enroler == 'avatar'">
           <div class="row" style="margin-top:30px;">
             <div class="col-30"><img ng-src="./img/avatars/1.png" style="width:80%;" data-ng-click="editAvatar('1.png', true)"></div>
@@ -185,21 +243,24 @@
         <h1 class="title" style="color:white;">{{viewVotesHeader}}</h1>
         <button class="button button-clear button-primary" ng-click="modalViewVotes.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
       </ion-header-bar>
-      <ion-content>
-        <div class="row" style="text-align:center;">
+      <ion-content style="text-align:center;">
+        <div class="row" style="padding-top: 0px;">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
 
-        <div class="item itemPronosicar" data-ng-repeat="item in gameToday track by $index" data-ng-show='!loading' style="background-color: {{item.backGroundClass}} !important;">
-          <div class="item item-divider" data-ng-show="item.showDivid">
-            <span>Jornada - {{item.workingDay.name}}</span><span class="pull-right"> {{item.date | date: "dd/MM/yyyy"}}</span>
+        <div class="item itemPronosicar" data-ng-repeat="item in gameToday track by $index" data-ng-show='!loading'>
+
+          <div class="item item-divider" data-ng-show="item.showDivid" style="background: #ea905d; color: white !important;">
+            <strong>Fecha - {{item.workingDay.name}}</strong><!--</span><span class="pull-right"> {{item.date | date: "dd/MM/yyyy"}}</span>-->
           </div>
           <div class="row " style="text-align: center ">
             <div class="col ">
               <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}} ">
             </div>
             <div class="col ">
-              <i class="{{item.tiedClass}}" aria-hidden="true " style="color: darkblue; margin-top: 10px;"></i>
+              <i class="{{item.tiedClass}}" aria-hidden="true " style="color: darkblue;"></i>
+
+              <div class="col" style="color: {{item.backGroundClass}} !important;"><strong>{{item.goalsLocalTeam}} - {{item.goalsVisitorTeam}}</strong></div>
             </div>
             <div class="col ">
               <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}} ">

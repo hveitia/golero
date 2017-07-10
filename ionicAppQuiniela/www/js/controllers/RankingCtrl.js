@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicScrollDelegate,
+  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicScrollDelegate, $state, $ionicPlatform,
                                        RankinService, DatabaseService, Vote, Game, StorageService) {
 
     $ionicModal.fromTemplateUrl('view-votes-modal.html', {
@@ -98,8 +98,14 @@ angular.module('QuinielaIonicApp')
 
     $scope.getBackgroundVotesList = function (vote, game) {
 
-      var acierto = '#e6ffe6';
-      var noAcierto = '#ffe6e6';
+      //var acierto = '#190855';//azul
+      //var noAcierto = '#ea905d';//naranja
+
+      //var acierto = 'white';
+      //var noAcierto = 'white';
+
+      var acierto = 'green';
+      var noAcierto = 'red';
 
       switch (vote.valueVote) {
         case '1':
@@ -141,7 +147,7 @@ angular.module('QuinielaIonicApp')
               $scope.rankinList[i].class = '#8c7853 ';
               break;
             default:
-              $scope.rankinList[i].class = 'darkblue';
+              $scope.rankinList[i].class = '#190855';
           }
 
           if ($scope.rankinList[i].user == StorageService.getItem('user')) {
@@ -165,6 +171,10 @@ angular.module('QuinielaIonicApp')
       $scope.voteList = [];
       $scope.gameVotedList = [];
       $scope.loadRanking();
+    });
+
+    $ionicPlatform.on('resume', function(){
+      $state.go('tab.dash');
     });
 
   });

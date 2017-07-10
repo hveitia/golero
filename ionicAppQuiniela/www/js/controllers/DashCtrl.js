@@ -1,6 +1,6 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q,
+  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform,
                                     Vote, Game, DatabaseService, RankinService, UserService, StorageService) {
 
     // --------- Modals zone  --------------
@@ -133,11 +133,11 @@ angular.module('QuinielaIonicApp')
 
     $scope.getBackgroundVotesList = function (vote, game) {
 
-      var acierto = '#e6ffe6';
-      var noAcierto = '#ffe6e6';
+      var acierto = 'green';
+      var noAcierto = 'red';
       var blanco = '#fff';
 
-      if(game.state != "UPDATED"){
+      if (game.state != "UPDATED") {
         return blanco;
       }
 
@@ -314,6 +314,7 @@ angular.module('QuinielaIonicApp')
           $scope.loadRankingPosition();
           $scope.closeModalRoler();
           $scope.loadactiveVotesByUser();
+          $scope.loadTodayVotes();
 
         } else {
           $scope.user.favoriteTeam = team;
@@ -364,11 +365,12 @@ angular.module('QuinielaIonicApp')
         url: urlApi + 'editName',
         data: {
           "user": $scope.data.newName,
+          "email": $scope.data.newEmail,
           "uuid": StorageService.getItem('password')
         }
       }).success(function (response) {
         if (response.message) {
-          var alertPopup = $ionicPopup.alert({
+          $ionicPopup.alert({
             title: 'Error!',
             template: returnApiCodes[response.message]
           });
@@ -397,19 +399,54 @@ angular.module('QuinielaIonicApp')
 
     };
 
-    $scope.cerrarSesion = function () {
+    $scope.activateAccount = function () {
 
-      StorageService.setItem('usuario', null);
-      StorageService.setItem('password', null);
-      StorageService.setItem('token', null);
-      StorageService.setItem('showTipsHowToVote', null);
-      StorageService.setItem('showTipsHowToEdit', null);
-      $state.go('login');
+      if (!EsNuloVacio($scope.data.activationText)) {
+        UserService.activateAccount($scope.data.activationText).success(function (data) {
 
+          if (data == 'ok') {
+
+            $ionicPopup.alert({
+              title: '¡Felicidades!',
+              template: 'Su cuenta se ha activado correctamente.'
+            });
+
+            $scope.voteList = [];
+            $scope.todayVoteList = [];
+            $scope.loadUserData();
+            $scope.loadVotesByUser();
+            $scope.loadRankingPosition();
+            $scope.loadactiveVotesByUser();
+            $scope.loadTodayVotes();
+          }
+
+        }).error(function (err) {
+          console.log(err);
+          if (err == '404') {
+            $ionicPopup.alert({
+              title: 'Error!',
+              template: 'El texto ingresado no coincide con el texto enviado. Por favor verifique.'
+            });
+          }
+        });
+      }
+      else {
+        $ionicPopup.alert({
+          title: 'Error!',
+          template: 'Por favor rellene el campo Texto de activación.'
+        });
+      }
     };
 
     $scope.onSwipeLeft = function () {
       $state.go('tab.pronosticar');
+    };
+
+    $scope.showTerminos = function () {
+      $ionicPopup.alert({
+        title: 'Términos y Condiciones de uso.',
+        template: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non neque ac nisl vulputate sodales. Nulla ac consequat erat. Cras molestie eu neque porta laoreet. In accumsan vehicula est ut cursus. Suspendisse aliquet tincidunt nunc, sed tempus lacus consectetur vel. Vivamus mollis commodo arcu nec tempor. Morbi quis accumsan nulla, vel facilisis nibh. Praesent bibendum massa sapien, nec pellentesque lacus euismod sed. Quisque aliquet ante ex, eu ullamcorper justo facilisis at. Vestibulum libero lacus, ultricies vitae blandit quis, cursus quis augue. Phasellus tempus velit id diam rutrum vestibulum. Cras eget nunc sit amet sem ullamcorper tristique.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non neque ac nisl vulputate sodales. Nulla ac consequat erat. Cras molestie eu neque porta laoreet. In accumsan vehicula est ut cursus. Suspendisse aliquet tincidunt nunc, sed tempus lacus consectetur vel. Vivamus mollis commodo arcu nec tempor. Morbi quis accumsan nulla, vel facilisis nibh. Praesent bibendum massa sapien, nec pellentesque lacus euismod sed. Quisque aliquet ante ex, eu ullamcorper justo facilisis at. Vestibulum libero lacus, ultricies vitae blandit quis, cursus quis augue. Phasellus tempus velit id diam rutrum vestibulum. Cras eget nunc sit amet sem ullamcorper tristique.'
+      });
     };
 
     $scope.$on('$ionicView.enter', function () {
@@ -423,7 +460,8 @@ angular.module('QuinielaIonicApp')
         $scope.loading = false;
         $scope.openModalRoler();
         $scope.enroler = 'name';
-        $scope.modalEnrolerTitle = 'Nombre';
+        $scope.modalEnrolerTitle = 'Nombre - Email';
+        $scope.data.terminosLeidos = true;
 
       } else {
         $scope.voteList = [];
@@ -435,5 +473,9 @@ angular.module('QuinielaIonicApp')
         $scope.loadTodayVotes();
       }
 
+    });
+
+    $ionicPlatform.on('resume', function () {
+      $state.go('tab.dash');
     });
   });

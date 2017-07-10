@@ -213,6 +213,22 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
+  .factory('Text', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+
+    return {
+      getTexts: function() {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getTexts',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+    };
+  }])
+
   .factory('UserService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
@@ -226,6 +242,19 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
 
+      },
+      activateAccount: function(registerHash){
+        return $http({
+          method: 'PUT',
+          url: urlApi + 'activateAccount',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          },
+          data: {
+            "registerHash": registerHash
+          }
+        });
       }
     };
   }]);

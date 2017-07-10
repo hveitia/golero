@@ -205,7 +205,7 @@ exports.update = function (req, res) {
                         }
 
                         element.user.points += value;
-                        if (element.user.points < 0) element.user.points = 0;
+                        if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
 
                         element.user.save(function (err, result) {
                             if (err) {
@@ -259,36 +259,6 @@ exports.addSpecialDate = function (req, res) {
 };
 
 exports.gameToVoteByDate = function (req, res) {
-
-    var listGames = [];
-    /*GAMEMODEL.find(function (err, result) {
-        TEAMMODEL.populate(result, {
-            path: "localTeam"
-        }, function (err, localTeam) {
-            if (err) res.send(500, err.message);
-        });
-        TEAMMODEL.populate(result, {
-            path: "visitorTeam"
-        }, function (err, visitorTeam) {
-            if (err) res.send(500, err.message);
-        });
-        WORKINGDAYMODEL.populate(result, {
-            path: "workingDay"
-        }, function (err, workingDay) {
-            if (err) res.send(500, err.message);
-
-            for (var i = 0; i < result.length; i++) {
-
-                if (utils.canVoteGame(result[i])) {
-
-                    listGames.push(result[i]);
-                }
-            }
-
-            res.status(200).jsonp(listGames);
-
-        });
-    });*/
 
     GAMEMODEL.find()
         .populate('localTeam')

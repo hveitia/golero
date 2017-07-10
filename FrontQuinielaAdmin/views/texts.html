@@ -1,0 +1,61 @@
+<div class="col-lg-12">
+    <h1 class="page-header">Texts List</h1>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-4" style="padding-left: 0;">
+                <input placeholder="Key" type="text" class="form-control" data-ng-model="key"/>
+            </div>
+            <div class="col-lg-4" >
+                <input placeholder="Title" type="text" class="form-control" data-ng-model="title"/>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" data-ng-click="addEditText()">Save</button>
+                <button type="button" class="btn btn-danger" data-ng-click="cancelAddEdit()" data-ng-show="modo =='EDIT'">Cancel</button>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-top: 10px;">
+            <textarea placeholder="Text" class="form-control" data-ng-model="text" rows="7"></textarea>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered table-hover table-striped" style="margin-top: 10px;">
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="text in textsList">
+            <td>{{text.key}}</td>
+            <td>{{text.title}}</td>
+            <td>{{text.text}}</td>
+            <td><i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;" data-ng-click="editTextClick(text)"></i></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--Modal Delete
+    <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                </div>
+                <div class="modal-body">
+                    Sure you want to delete the selected record?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteUser()">NO</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteUser()">YES</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete -->
+</div>
