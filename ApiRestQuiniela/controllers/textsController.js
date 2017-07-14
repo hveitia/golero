@@ -38,7 +38,7 @@ exports.saveText = function(req, res){
 
 exports.updateText = function(req, res){
 
-    TEXTSMODEL.find({key: req.body.key}, function (err, obj) {
+    TEXTSMODEL.findOne({key: req.body.key}, function (err, obj) {
 
         if (err) res.status(500).send(err.message);
 
@@ -56,7 +56,7 @@ exports.updateText = function(req, res){
         }else{
             res.status(404).send('404');
         }
-        res.status(200).jsonp(result);
+
     });
 };
 

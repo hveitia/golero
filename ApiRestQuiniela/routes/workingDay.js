@@ -10,6 +10,9 @@ router.route('/workingDay')
   .get(middleware.ensureAuthenticated, workingDayController.findAll)
   .post(middleware.ensureAuthenticated, workingDayController.add);
 
+router.route('/workingDayActive')
+    .get(middleware.ensureAuthenticated, workingDayController.findAllActives);
+
 router.route('/workingDay/:season')
   .get(middleware.ensureAuthenticated, workingDayController.findBySeason);
 

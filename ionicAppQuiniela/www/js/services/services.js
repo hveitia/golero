@@ -225,6 +225,16 @@ angular.module('QuinielaIonicApp.Services', [])
             'Content-Type': 'application/json'
           }
         });
+      },
+      getTextsByKey: function(key) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getTextsByKey/' + key,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
       }
     };
   }])
@@ -254,6 +264,25 @@ angular.module('QuinielaIonicApp.Services', [])
           data: {
             "registerHash": registerHash
           }
+        });
+      },
+      editEmail: function (newEmail) {
+        return $http({
+          method: 'PUT',
+          url: urlApi + '/editEmail',
+          data:{
+            "email": newEmail
+          },
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+      verificateUserName:function(userName){
+        return $http({
+          method: 'GET',
+          url: urlApi + 'verificateUser/' + userName
         });
       }
     };

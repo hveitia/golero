@@ -1,9 +1,11 @@
 //todo: comprobar si existe email y/o usuario
-//todo: look and feel enrolamiento
+//todo: agregar el nuevo calendario
 //todo: textos en el cliente
 //todo: cambiar la vista de ayuda
 //todo: gestionar reversos
 //todo: poner logs en los emails
+//todo: hacer e flujo de comentarios
+//todo: actualizar dashboard voto y comentarios
 //todo: refactor al handledataService -- prioridad baja --
 
 

@@ -1,8 +1,11 @@
 angular.module('QuinielaIonicApp')
 
   .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform,
-                                    Vote, Game, DatabaseService, RankinService, UserService, StorageService) {
+                                    Vote, Game, Text, DatabaseService, RankinService, UserService, StorageService) {
 
+    //colores
+    //azul #190855
+    //naranja #ea905d
     // --------- Modals zone  --------------
 
     $ionicModal.fromTemplateUrl('select-team-modal.html', {
@@ -135,10 +138,10 @@ angular.module('QuinielaIonicApp')
 
       var acierto = 'green';
       var noAcierto = 'red';
-      var blanco = '#fff';
+      var negro = '#190855';
 
       if (game.state != "UPDATED") {
-        return blanco;
+        return negro;
       }
 
 
@@ -244,7 +247,6 @@ angular.module('QuinielaIonicApp')
 
     $scope.loadVotesByUser = function () {
 
-      $scope.userName = StorageService.getItem('user');
       Vote.getVoteByUser().success(function (data) {
         $scope.voteList = data;
       })
@@ -281,13 +283,13 @@ angular.module('QuinielaIonicApp')
 
     $scope.loadRankingPosition = function () {
 
-      RankinService.getRankingPosition().success(function (data) {
-        $scope.rankingPosition = data.pos;
-        $scope.points = data.points;
-      })
-        .error(function (err) {
-          console.log(err);
-        });
+        RankinService.getRankingPosition().success(function (data) {
+          $scope.rankingPosition = data.pos;
+          $scope.points = data.points;
+        })
+          .error(function (err) {
+            console.log(err);
+          });
 
     };
 
@@ -360,43 +362,84 @@ angular.module('QuinielaIonicApp')
 
     $scope.editName = function () {
       $scope.loading = true;
-      $http({
-        method: 'PUT',
-        url: urlApi + 'editName',
-        data: {
-          "user": $scope.data.newName,
-          "email": $scope.data.newEmail,
-          "uuid": StorageService.getItem('password')
-        }
-      }).success(function (response) {
-        if (response.message) {
-          $ionicPopup.alert({
-            title: 'Error!',
-            template: returnApiCodes[response.message]
-          });
-          $scope.loading = false;
-        } else {
-          $http.post(urlApi + 'authenticate', {
+      if (!EsNuloVacio($scope.data.newName) && !EsNuloVacio($scope.data.newEmail) && $scope.data.terminosLeidos) {
+        $http({
+          method: 'PUT',
+          url: urlApi + 'editName',
+          data: {
             "user": $scope.data.newName,
-            "pass": StorageService.getItem('password')
-          })
-            .success(function (response) {
-              $scope.loading = false;
-              StorageService.setItem('token', response.token);
-              StorageService.setItem('user', $scope.data.newName);
-              $scope.enroler = 'avatar';
-              $scope.modalEnrolerTitle = 'Avatar';
-
-            })
-            .error(function (err) {
-              console.log(err);
+            "email": $scope.data.newEmail,
+            "uuid": StorageService.getItem('password')
+          }
+        }).success(function (response) {
+          if (response.message) {
+            $ionicPopup.alert({
+              title: '¡Error!',
+              template: returnApiCodes[response.message]
             });
-        }
-      })
-        .error(function (err) {
+            $scope.loading = false;
+          } else {
+            $http.post(urlApi + 'authenticate', {
+              "user": $scope.data.newName,
+              "pass": StorageService.getItem('password')
+            })
+              .success(function (response) {
+                $scope.loading = false;
+                StorageService.setItem('token', response.token);
+                StorageService.setItem('user', $scope.data.newName);
+                $scope.enroler = 'avatar';
+                $scope.modalEnrolerTitle = 'Avatar';
+
+              })
+              .error(function (err) {
+                console.log(err);
+              });
+          }
+        }).error(function (err) {
+          $scope.loading = false;
           console.log(err);
         });
+      } else {
 
+        $scope.loading = false;
+        $ionicPopup.alert({
+          title: '¡Error!',
+          template: 'Para continuar con el registro por favor rellene todos los campos y acepte los Términos y Condiciones de Uso.'
+        });
+      }
+
+    };
+
+    $scope.actualizarEmail = function () {
+
+      if (EsNuloVacio($scope.data.newActivationEmail)) {
+
+        $ionicPopup.alert({
+          title: '¡Error!',
+          template: 'Por favor inserte su nuevo email.'
+        });
+
+      } else {
+        UserService.editEmail($scope.data.newActivationEmail).success(function (data) {
+          if (data.message) {
+            $ionicPopup.alert({
+              title: '¡Error!',
+              template: returnApiCodes[data.message]
+            });
+          } else {
+
+            $scope.hideNewEmail = true;
+
+            $ionicPopup.alert({
+              title: '¡Enhorabuena!',
+              template: 'Su email ha sido actualizado correctamente. Por favor compruébelo para obtener su código de activación.'
+            });
+
+          }
+        }).error(function (err) {
+          console.log(err);
+        })
+      }
     };
 
     $scope.activateAccount = function () {
@@ -442,11 +485,49 @@ angular.module('QuinielaIonicApp')
       $state.go('tab.pronosticar');
     };
 
-    $scope.showTerminos = function () {
-      $ionicPopup.alert({
-        title: 'Términos y Condiciones de uso.',
-        template: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non neque ac nisl vulputate sodales. Nulla ac consequat erat. Cras molestie eu neque porta laoreet. In accumsan vehicula est ut cursus. Suspendisse aliquet tincidunt nunc, sed tempus lacus consectetur vel. Vivamus mollis commodo arcu nec tempor. Morbi quis accumsan nulla, vel facilisis nibh. Praesent bibendum massa sapien, nec pellentesque lacus euismod sed. Quisque aliquet ante ex, eu ullamcorper justo facilisis at. Vestibulum libero lacus, ultricies vitae blandit quis, cursus quis augue. Phasellus tempus velit id diam rutrum vestibulum. Cras eget nunc sit amet sem ullamcorper tristique.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non neque ac nisl vulputate sodales. Nulla ac consequat erat. Cras molestie eu neque porta laoreet. In accumsan vehicula est ut cursus. Suspendisse aliquet tincidunt nunc, sed tempus lacus consectetur vel. Vivamus mollis commodo arcu nec tempor. Morbi quis accumsan nulla, vel facilisis nibh. Praesent bibendum massa sapien, nec pellentesque lacus euismod sed. Quisque aliquet ante ex, eu ullamcorper justo facilisis at. Vestibulum libero lacus, ultricies vitae blandit quis, cursus quis augue. Phasellus tempus velit id diam rutrum vestibulum. Cras eget nunc sit amet sem ullamcorper tristique.'
+    $scope.comprobarUserName = function () {
+
+      if (EsNuloVacio($scope.data.newName)) {
+        $ionicPopup.alert({
+          title: '¡Error!',
+          template: 'Por favor inserte su nombre para comprobar la disponibilidad del mismo.'
+        });
+      } else {
+        UserService.verificateUserName($scope.data.newName).success(function (data) {
+
+          if (data) {
+            $ionicPopup.alert({
+              title: '¡Los sentimos!',
+              template: 'El usuario ' + $scope.data.newName + ' no está disponible.'
+            });
+          } else {
+            $ionicPopup.alert({
+              title: '¡Enhorabuena!',
+              template: 'El usuario' + $scope.data.newName + ' está disponible.'
+            });
+          }
+
+        }).error(function (err) {
+          console.log(err);
+        })
+      }
+
+    };
+
+    $scope.showInformativePopup = function (value) {
+
+      Text.getTextsByKey(value).success(function (data) {
+
+        $ionicPopup.alert({
+          title: data[0].title,
+          template: data[0].text
+        });
+
+      }).error(function (err) {
+        console.log(err);
       });
+
+
     };
 
     $scope.$on('$ionicView.enter', function () {
@@ -467,6 +548,7 @@ angular.module('QuinielaIonicApp')
         $scope.voteList = [];
         $scope.todayVoteList = [];
         $scope.loadUserData();
+        $scope.username = StorageService.getItem('user');
         $scope.loadVotesByUser();
         $scope.loadRankingPosition();
         $scope.loadactiveVotesByUser();

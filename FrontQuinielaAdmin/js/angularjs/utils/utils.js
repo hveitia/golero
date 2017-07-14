@@ -41,3 +41,10 @@ function LogOut() {
   SetLocalStorage('userToken', undefined);
   window.location.href = 'login.html';
 }
+
+function EsNuloVacio(value) {
+  if (value === null || value === undefined || value === '')
+    return true;
+  else
+    return false;
+}

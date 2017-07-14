@@ -16,6 +16,18 @@ angular.module('QuinielaApp')
 
             };
 
+            $scope.addSeason = function () {
+
+                if (!EsNuloVacio($scope.nameSeason)) {
+                    HandleDataService.addSeanson($scope.nameSeason).success(function (data) {
+                        $scope.pageload();
+                        $scope.nameSeason = '';
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }
+            };
+
             $scope.activateUnactivateSeason = function (season, activate) {
 
                 season.active = activate;

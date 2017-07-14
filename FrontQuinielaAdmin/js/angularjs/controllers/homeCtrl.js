@@ -91,7 +91,7 @@ angular.module('QuinielaApp')
       };
 
       $scope.loadWorkingDays = function() {
-        HandleDataService.getAllWorkingDays().success(function(data) {
+        HandleDataService.getAllWorkingDaysActive().success(function(data) {
             $scope.workinDayList = data;
             $scope.workinDaySelected = data[0];
             $scope.loadGames();
@@ -138,7 +138,7 @@ angular.module('QuinielaApp')
           goalsVisitorTeam: $scope.goalsVisitor
         };
         HandleDataService.updateGame(obj).success(function(data) {
-            $('#modalUpdateGame').modal('hide')
+            $('#modalUpdateGame').modal('hide');
             $scope.loadGames();
           })
           .error(function(err) {

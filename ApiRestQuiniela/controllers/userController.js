@@ -45,12 +45,47 @@ exports.userRankingPosition = function (req, res) {
             res.send(500, err.message);
         }
 
+        var flag = false;
         for (var i = 0; i < result.length; i++) {
             if (result[i]._doc._id == req.user) {
+                flag= true;
                 res.status(200).jsonp({'pos': i + 1, 'points': result[i].points});
+
             }
         }
+        if(!flag)
+        res.status(200).jsonp({'pos': -1, 'points': 0});
 
+    });
+};
+
+exports.verificateUser = function (req, res) {
+
+    USERMODEL.findOne({user: req.params.userName}, function (err, user) {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        if (user) {
+            res.status(200).send(true);
+
+        } else {
+            res.status(200).send(false);
+        }
+    });
+};
+
+exports.verificateEmail = function (req, res) {
+
+    USERMODEL.findOne({email: req.body.email}, function (err, user) {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        if (user) {
+            res.status(200).send(true);
+
+        } else {
+            res.status(200).send(false);
+        }
     });
 };
 
@@ -135,9 +170,8 @@ exports.register = function (req, res) {
 
 exports.editName = function (req, res) {
 
-    USERMODEL.findOne({
-        user: req.body.user
-    }, function (err, user) {
+    USERMODEL.findOne({user: req.body.user}, function (err, user) {
+
         if (err) {
             res.send(500, err.message);
         }
@@ -147,29 +181,39 @@ exports.editName = function (req, res) {
                 message: '0001'
             });
         } else {
-            USERMODEL.findOne({
-                pass: req.body.uuid
-            }, function (err, user) {
-                if (err) {
-                    res.send(500, err.message);
-                }
+
+            USERMODEL.findOne({email: req.body.email}, function (err, user) {
 
                 if (user) {
-
-                    user.user = req.body.user;
-                    user.email = req.body.email;
-                    user.registerHash = user.registerHash.substring(user.registerHash.length - 6);
-
-                    user.save(function (err, result) {
-                        if (err) return res.send(500, err.message);
-
-                        sendRegistrationConfirmation(user);
-
-                        res.status(200).send('ok');
+                    res.json({
+                        success: false,
+                        message: '0002'
                     });
-
                 } else {
-                    res.send(500, 'User not found');
+
+                    USERMODEL.findOne({pass: req.body.uuid}, function (err, user) {
+                        if (err) {
+                            res.send(500, err.message);
+                        }
+
+                        if (user) {
+
+                            user.user = req.body.user;
+                            user.email = req.body.email;
+                            user.registerHash = user.registerHash.substring(user.registerHash.length - 6);
+
+                            user.save(function (err, result) {
+                                if (err) return res.send(500, err.message);
+
+                                sendRegistrationConfirmation(user);
+
+                                res.status(200).send('ok');
+                            });
+
+                        } else {
+                            res.send(500, 'User not found');
+                        }
+                    });
                 }
             });
         }
@@ -202,11 +246,19 @@ exports.editFavoriteTeam = function (req, res) {
 
 };
 
+exports.resetUserPointsAll = function () {
+
+    USERMODEL.update({}, {points: 0}, {multi: true}, function (err) {
+
+        if (err)res.status(500).send(err.message);
+
+        res.status(200).send('OK');
+    });
+};
+
 exports.editAvatar = function (req, res) {
 
-    USERMODEL.findOne({
-        _id: req.user
-    }, function (err, user) {
+    USERMODEL.findOne({_id: req.user}, function (err, user) {
         if (err) {
             res.send(500, err.message);
         }
@@ -225,7 +277,35 @@ exports.editAvatar = function (req, res) {
             res.send(500, 'User not found');
         }
     });
+};
 
+exports.editEmail = function (req, res) {
+
+    USERMODEL.findOne({_id: req.user}, function (err, user) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        USERMODEL.findOne({email: req.body.email}, function (err, newUser) {
+
+            if (newUser) {
+                res.json({
+                    success: false,
+                    message: '0002'
+                });
+            } else {
+
+                user.email = req.body.email;
+
+                user.save(function (err, result) {
+                    if (err) return res.send(500, err.message);
+
+                    sendRegistrationConfirmation(user);
+
+                    res.status(200).send('ok');
+                });
+            }
+        });
+    });
 };
 
 exports.getUser = function (req, res) {

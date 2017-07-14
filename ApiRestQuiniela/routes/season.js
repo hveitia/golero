@@ -12,6 +12,9 @@ router.route('/season')
   .get(middleware.ensureAuthenticated, seasonController.findAll)
   .post(middleware.ensureAuthenticated, seasonController.add);
 
+router.route('/seasonActives')
+    .get(middleware.ensureAuthenticated, seasonController.findAllActives);
+
 router.route('/activateUnactivateSeason/:id')
     .put(middleware.ensureAuthenticated, seasonController.activateUnactivateSeason);
 

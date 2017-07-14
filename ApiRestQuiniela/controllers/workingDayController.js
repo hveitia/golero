@@ -15,6 +15,19 @@ exports.findAll = function(req, res) {
   });
 };
 
+exports.findAllActives = function(req, res) {
+
+  WORKINGDAYMODEL.find({active: true},function(err, result) {
+    SEASONMODEL.populate(result, {
+      path: "season"
+    }, function(err, workingDays) {
+      if (err) res.send(500, err.message);
+
+      res.status(200).jsonp(workingDays);
+    });
+  });
+};
+
 exports.findBySeason = function(req, res) {
 
   WORKINGDAYMODEL.find({

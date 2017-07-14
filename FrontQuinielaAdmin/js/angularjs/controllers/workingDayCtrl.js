@@ -29,7 +29,8 @@ angular.module('QuinielaApp')
       };
 
       $scope.loadWorkingDays = function() {
-        HandleDataService.getAllWorkingDays().success(function(data) {
+        $scope.workinDayList = [];
+        HandleDataService.getAllWorkingDaysActive().success(function(data) {
             $scope.workinDayList = data;
 
           })

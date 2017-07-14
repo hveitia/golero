@@ -29,7 +29,7 @@ angular.module('QuinielaApp')
     };
 
     $scope.loadSeasons = function() {
-      HandleDataService.getAllSeansons().success(function(data) {
+      HandleDataService.getAllSeansonsActive().success(function(data) {
           $scope.seasonList = data;
           $scope.seasonSelected = data[0];
 
@@ -41,7 +41,7 @@ angular.module('QuinielaApp')
     };
 
     $scope.loadWorkingDays = function() {
-      HandleDataService.getAllWorkingDays().success(function(data) {
+      HandleDataService.getAllWorkingDaysActive().success(function(data) {
           $scope.workinDayList = data;
           $scope.workinDaySelected = data[0];
 

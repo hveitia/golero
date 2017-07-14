@@ -22,7 +22,16 @@ angular.module('QuinielaApp')
                         console.log(err);
                     });
                 } else {
-
+                    if ($scope.modo == 'EDIT'){
+                        HandleDataService.updateText($scope.key, $scope.text, $scope.title).success(function (data) {
+                            $scope.loadTexts();
+                            $scope.key = '';
+                            $scope.text = '';
+                            $scope.title = '';
+                        }).error(function (err) {
+                            console.log(err);
+                        });
+                    }
                 }
 
             };

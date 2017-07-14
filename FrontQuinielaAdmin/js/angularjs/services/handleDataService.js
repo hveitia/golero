@@ -83,6 +83,16 @@
                         }
                     });
                 },
+                getAllWorkingDaysActive: function () {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'workingDayActive',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 getAllGames: function () {
                     return $http({
                         method: 'GET',
@@ -137,11 +147,33 @@
                         }
                     });
                 },
-
                 getAllSeansons: function () {
                     return $http({
                         method: 'GET',
                         url: urlApi + 'season',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                getAllSeansonsActive: function () {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'seasonActives',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addSeanson: function (name) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'season',
+                        data:{
+                            "name": name
+                        },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
                             'Content-Type': 'application/json'
@@ -163,13 +195,14 @@
                     });
                 },
 
-                updateText: function (objText) {
+                updateText: function (key, text, title) {
                     return $http({
                         method: 'PUT',
                         url: urlApi + 'updateTexts',
                         data: {
-                            "key": objText.key,
-                            "text": objText.text
+                            "key": key,
+                            "text": text,
+                            "title": title
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
@@ -177,6 +210,7 @@
                         }
                     });
                 },
+
                 addText: function (key, text, title) {
                     return $http({
                         method: 'POST',
@@ -255,9 +289,9 @@
                         method: 'POST',
                         url: urlApi + 'workingDay',
                         data: {
-                            "date": obj.workinDayDate,
-                            "season": obj.seasonSelected._id,
-                            "name": obj.workinDayName
+                            "date": obj.date,
+                            "season": obj.season,
+                            "name": obj.name
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),

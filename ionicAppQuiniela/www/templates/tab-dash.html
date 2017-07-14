@@ -1,7 +1,7 @@
 <ion-view view-title="La Quiniela">
   <ion-content style="background: ghostwhite;">
     <div class="bar bar-header bar-light">
-      <h1 class="title viewTitle">{{userName}}</h1>
+      <h1 class="title viewTitle">{{username}}</h1>
     </div>
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
@@ -17,17 +17,19 @@
         <p><strong style="font-size:25px;"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i> {{points}}</strong></p>
       </div>
 
-      <div class="list">
+      <div class="list" data-ng-show="user.state == 'ACTIVE'">
 
         <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
           <strong>Mis estadísticas</strong>
         </div>
 
         <div class="item">
-          <div class="row">
+          <div class="row" style="padding: 0;">
 
-            <div class="col">
-              <button class="button icon-left ion-trophy button-block" data-ng-click="goToRanking()" style="background: #190855; color: white;">Ranking {{rankingPosition}}</button>
+            <div class="col" style="padding-left: 0;">
+              <button class="button icon-left ion-trophy button-block button-small"
+                      data-ng-click="goToRanking()" style="background: #190855; color: white; margin-top: 0; margin-bottom: 0;">
+                Ranking {{rankingPosition}}</button>
 
             </div>
             <!--<div class="col" style="" data-ng-click="goToMyVotes()">
@@ -35,8 +37,11 @@
               <i class="fa fa-file-text-o" aria-hidden="true" style="margin-right: 5px;"></i>V. Activos {{activeVotes}}
 
             </div>-->
-            <div class="col">
-              <button class="button icon-right ion-more button-block" data-ng-click="showAllVotes()" style="background: #190855; color: white;">Pronósticos {{voteList.length}}</button>
+            <div class="col" style="padding-right: 0;">
+              <button class="button icon-right ion-more button-block button-small"
+                      data-ng-click="showAllVotes()" style="background: #190855; color: white; margin-top: 0; margin-bottom: 0;">
+                Mis Pronósticos <!--{{voteList.length}}-->
+              </button>
 
             </div>
 
@@ -51,12 +56,12 @@
           <strong data-ng-show='todayVoteList.length == 0'>Noy hay partidos programados para hoy.</strong>
         </div>
         <div class="item">
-          <button class="button icon-right ion-eye button-block"
+          <button class="button icon-right ion-eye button-block button-small"
                   data-ng-click="showTodayVote()"
                   style="background: #190855; color: white;"
                   data-ng-show='todayVoteList.length > 0'>
             Ver mis pronósticos</button>
-          <button class="button icon-right ion-stats-bars button-full button-balanced"
+          <button class="button icon-right ion-stats-bars button-block button-balanced button-small"
                   data-ng-click="goToPronosticar()"
                   style="background: #190855; color: white;"
                   data-ng-show='todayVoteList.length == 0'>
@@ -66,20 +71,32 @@
 
       <div class="list" data-ng-show="user.state != 'ACTIVE'">
         <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
-          <strong>Su cuenta está inactiva ingresa el texto recibido en su email para activarla.</strong>
+          <strong style="white-space: normal;">Su cuenta está inactiva ingresa el texto recibido en su email para activarla.</strong>
         </div>
         <div class="item">
           <input type="text" class="text-center"
                  placeholder="Texto de activación"
                  data-ng-model="data.activationText"
                  maxlength="6" style="margin-left: auto; margin-right: auto;">
-          <button class="button icon-right ion-toggle-filled button-full button-balanced"
+          <button class="button icon-right ion-toggle-filled button-block button-small button-balanced"
                   data-ng-click="activateAccount()"
-                  style="background: #190855; color: white;">
+                  style="background: #190855; color: white; margin-bottom: 10%;">
             Activar Cuenta</button>
+
+          <i class="icon ion-ios-help" style="color: #190855; font-size: 2em" data-ng-hide="hideNewEmail"></i>
+          <input type="text" class="text-center"
+                 placeholder="Nuevo email"
+                 data-ng-model="data.newActivationEmail"
+                 data-ng-hide="hideNewEmail"
+                 maxlength="40" style="margin-left: auto; margin-right: auto;">
+
+          <button class="button icon-right ion-ios-email button-block button-small button-balanced"
+                  data-ng-click="actualizarEmail()"
+                  data-ng-hide="hideNewEmail"
+                  style="background: #190855; color: white;">
+            Actualizar email</button>
         </div>
       </div>
-
 
       <!-- Promociones e informaciones
       <div class="row">
@@ -170,23 +187,28 @@
             <span class="input-label text-left">Nombre</span>
             <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName" maxlength="40">
           </label>
-          <button class="button button-positive icon-right button-full ion-help">
+          <button class="button button-positive icon-right button-full ion-help"
+                  style="background: #190855;"
+            data-ng-click="comprobarUserName()">
             Comprobar disponibilidad
           </button>
           <label class="item item-input item-floating-label" style="margin-top: 5%;">
             <span class="input-label text-left">Email</span>
             <input type="email" placeholder="Inserte su email" data-ng-model="data.newEmail" maxlength="40">
           </label>
-          <button class="button button-positive icon-right button-full ion-help">
-            Por qué ingresar mi email
+          <button class="button button-positive icon-right button-full ion-help"
+                  data-ng-click="showInformativePopup('porqueEmail')" style="background: #190855;">
+            ¿Por qué ingresar mi email?
           </button>
           <ion-list>
             <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%;">Acepto Términos y Condiciones.</ion-checkbox>
           </ion-list>
-          <button class="button button-positive icon-right button-full ion-ios-book-outline" data-ng-click="showTerminos()">
+          <button class="button button-positive icon-right button-full ion-ios-book-outline"
+                  data-ng-click="showInformativePopup('terminosCondiciones')" style="background: #ea905d;">
             Ver Términos y condiciones de uso
           </button>
-          <button class="button icon-right ion-android-checkbox-outline button-full button-balanced" data-ng-click="editName()" style="margin-top: 15%;">Aceptar</button>
+          <button class="button icon-right ion-android-checkbox-outline button-full button-balanced"
+                  data-ng-click="editName()" style="margin-top: 15%; background: #190855;">Aceptar</button>
         </div>
 
 

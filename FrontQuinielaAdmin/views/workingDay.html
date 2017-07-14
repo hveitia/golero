@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="w in workinDayList">
+        <tr ng-repeat="w in workinDayList" data-ng-show="w.active">
           <td>{{w.season.name}}</td>
           <td>{{w.name}}</td>
           <td>{{w.date | date}}</td>

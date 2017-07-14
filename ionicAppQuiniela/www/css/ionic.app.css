@@ -6557,7 +6557,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 }
 
 .popup-container .popup {
-  width: 250px;
+  width: 90%;
   max-width: 100%;
   max-height: 90%;
   border-radius: 0px;
@@ -9095,8 +9095,8 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
 }
 
 .checkbox input:checked:before, .checkbox input:checked+.checkbox-icon:before {
-  background: #1568ff;
-  border-color: #1568ff;
+  background: #190855;
+  border-color: #190855;
 }
 
 .checkbox-light input:before, .checkbox-light .checkbox-icon:before {
@@ -10148,7 +10148,7 @@ progress {
 
 .button.button-positive {
   border-color: transparent;
-  background-color: #1568ff;
+  background-color: #190855;
   color: #fff;
 }
 

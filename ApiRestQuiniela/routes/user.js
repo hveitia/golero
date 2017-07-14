@@ -29,6 +29,10 @@ router.route('/editFavoriteTeam')
 router.route('/editAvatar')
     .put(middleware.ensureAuthenticated, userController.editAvatar);
 
+router.route('/editEmail')
+    .put(middleware.ensureAuthenticated, userController.editEmail);
+
+
 router.route('/activateAccount')
     .put(middleware.ensureAuthenticated, userController.activateAccount);
 
@@ -49,6 +53,9 @@ router.route('/authenticate')
 
 router.route('/userActivation/:hash')
     .get(userController.confirmRegistration);
+
+router.route('/verificateUser/:userName')
+    .get(userController.verificateUser);
 
 
 module.exports = router;
