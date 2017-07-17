@@ -246,7 +246,7 @@ exports.editFavoriteTeam = function (req, res) {
 
 };
 
-exports.resetUserPointsAll = function () {
+exports.resetUserPointsAll = function (req, res) {
 
     USERMODEL.update({}, {points: 0}, {multi: true}, function (err) {
 

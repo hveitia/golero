@@ -4,10 +4,16 @@
   </div>
   <ion-content style="background: ghostwhite;">
     <div class="list" style="margin-top: 15%;">
-      <div class="card" data-ng-show='showTipsHowToEdit'>
+      <div class="list" data-ng-show='showTipsHowToEdit'>
+        <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
+          <strong>Consejos</strong>
+        </div>
         <div class="item item-text-wrap">
           ¿Cambiaste de idea? No te preocupes puedes editar tu predicción.
-          <button class="button icon-right ion-android-checkbox-outline button-full button-balanced" data-ng-click="buttonIKnowClick()">Entiendo, no mostrar de nuevo.</button>
+          <button class="button button-block button-small"
+                 style="background: #190855; color: white"
+                  data-ng-click="buttonIKnowClick()">Entiendo, no mostrar de nuevo.
+          </button>
         </div>
       </div>
       <div class="row">

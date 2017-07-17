@@ -140,7 +140,6 @@ angular.module('QuinielaIonicApp')
      //$scope.login();
      //$scope.addUserUUDI(Math.floor(Date.now()));
 
-
       var user = StorageService.getItem('user');
       var pass = StorageService.getItem('password');
       var registred = StorageService.getItem('registred');

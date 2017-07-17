@@ -1,18 +1,34 @@
 angular.module('QuinielaIonicApp')
 
 
-  .controller('AccountCtrl', function($scope, $state, $stateParams, $ionicPlatform, UserService, DatabaseService) {
+  .controller('AccountCtrl', function ($scope, $state, $stateParams, $ionicPlatform, $ionicModal, UserService, DatabaseService, Text) {
 
+    $ionicModal.fromTemplateUrl('view-texts-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+    $scope.openModal = function (key) {
+      $scope.modal.show();
+      $scope.getTextsByKey(key);
+    };
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
 
+    $scope.$on('$destroy', function () {
+      $scope.modal.remove();
+    });
 
-    $scope.loadUserData = function() {
+    $scope.loadUserData = function () {
       DatabaseService.initDB();
-      DatabaseService.getData("userData").then(function(res) {
+      DatabaseService.getData("userData").then(function (res) {
 
-        UserService.getUser(res.data.token).success(function(data) {
-            $scope.user = data;
-          })
-          .error(function(err) {
+        UserService.getUser(res.data.token).success(function (data) {
+          $scope.user = data;
+        })
+          .error(function (err) {
             console.log(err);
           });
       });
@@ -27,19 +43,27 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.showComoJugarClick = function () {
-
+     $scope.openModal('comoJugar');
     };
 
     $scope.showComoPronosticarClick = function () {
-
+      $scope.openModal('comoPronosticar');
     };
 
-    $scope.$on('$ionicView.enter', function() {
-      $scope.loadUserData();
+    $scope.getTextsByKey = function (key) {
+      $scope.loading = true;
+      Text.getTextsByKey(key).success(function (data) {
+        $scope.textToShow = data[0].text;
+        $scope.modalTitle = data[0].title;
+        $scope.loading = false;
+      }).error(function (err) {
+        console.log(err);
+      })
+    };
+
+    $scope.$on('$ionicView.enter', function () {
+      //$scope.loadUserData();
 
     });
 
-    $ionicPlatform.on('resume', function(){
-      $state.go('tab.dash');
-    });
   });

@@ -27,6 +27,19 @@ angular.module('QuinielaApp')
         $scope.idDelete = '';
       };
 
+      $scope.cancelResetAllUsers = function(){
+
+      };
+
+      $scope.resetAllUsers = function () {
+        HandleDataService.resetUserPointsAll().success(function (data) {
+          $scope.pageload();
+        }).error(function(err){
+          console.log(err);
+        });
+
+      };
+
       $scope.deleteUser = function() {
 
         if ($scope.idDelete != '') {

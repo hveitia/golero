@@ -442,6 +442,13 @@ angular.module('QuinielaIonicApp')
       }
     };
 
+    $scope.showModalNewEmail = function () {
+      $ionicPopup.alert({
+        title: '¿Por que un nuevo email?',
+        template:'Si se ha equivocado ingresando su email puede corregirlo. Ingrese su email correcto y luego active su cuenta.'
+      });
+    };
+
     $scope.activateAccount = function () {
 
       if (!EsNuloVacio($scope.data.activationText)) {

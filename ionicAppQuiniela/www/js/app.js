@@ -27,7 +27,9 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
 
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
-        StatusBar.styleDefault();
+        StatusBar.overlaysWebView( false );
+        StatusBar.backgroundColorByHexString('#190855');
+        StatusBar.styleLightContent();
       }
 
 

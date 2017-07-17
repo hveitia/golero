@@ -5,28 +5,39 @@
   <ion-content style="background: ghostwhite;">
 
 
-    <div class="list" style="margin-top: 15%;">
+    <div class="list" style="margin-top: 17%;">
 
-      <a class="item item-icon-left" href="#" data-ng-click="showComoJugarClick()">
+      <a class="item item-icon-left"  data-ng-click="showComoJugarClick()">
         <i class="icon ion-email"></i>
         ¿Como jugar?
       </a>
 
-      <a class="item item-icon-left" href="#" data-ng-click="showComoPronosticarClick()">
+      <a class="item item-icon-left" data-ng-click="showComoPronosticarClick()">
         <i class="icon ion-email"></i>
         ¿Como pronosticar?
       </a>
 
-
-      <a class="item item-icon-left" href="#" data-ng-click="cargarModalShare()">
+      <a class="item item-icon-left"  data-ng-click="cargarModalShare()" data-ng-show="false">
         <i class="icon ion-email"></i>
         Invitar Amigos.
       </a>
 
-
     </div>
-
-
   </ion-content>
+
+  <script id="view-texts-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title" style="color:white;">{{modalTitle}}</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
+      </ion-header-bar>
+      <ion-content style="text-align:left; padding: 10px;">
+        <div class="row" style="padding-top: 0px;">
+          <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
+        </div>
+        {{textToShow}}
+      </ion-content>
+    </ion-modal-view>
+  </script>
 
 </ion-view>

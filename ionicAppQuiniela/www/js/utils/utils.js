@@ -1,4 +1,4 @@
-//todo: comprobar si existe email y/o usuario
+
 //todo: agregar el nuevo calendario
 //todo: textos en el cliente
 //todo: cambiar la vista de ayuda

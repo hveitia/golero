@@ -180,7 +180,6 @@
                         }
                     });
                 },
-
                 activateUnactivateSeason: function (season) {
                     return $http({
                         method: 'PUT',
@@ -194,7 +193,6 @@
                         }
                     });
                 },
-
                 updateText: function (key, text, title) {
                     return $http({
                         method: 'PUT',
@@ -210,7 +208,6 @@
                         }
                     });
                 },
-
                 addText: function (key, text, title) {
                     return $http({
                         method: 'POST',
@@ -226,7 +223,6 @@
                         }
                     });
                 },
-
                 updateGame: function (game) {
                     return $http({
                         method: 'PUT',
@@ -241,7 +237,6 @@
                         }
                     });
                 },
-
                 updateSaveLogs: function (config) {
                     return $http({
                         method: 'PUT',
@@ -255,7 +250,6 @@
                         }
                     });
                 },
-
                 setStateUpdated: function (game) {
                     return $http({
                         method: 'PUT',
@@ -267,7 +261,6 @@
                         }
                     });
                 },
-
                 addGame: function (obj) {
                     return $http({
                         method: 'POST',
@@ -283,7 +276,6 @@
                         }
                     });
                 },
-
                 addWorkingDay: function (obj) {
                     return $http({
                         method: 'POST',
@@ -299,7 +291,6 @@
                         }
                     });
                 },
-
                 updateGameSpecialDate: function (game) {
                     return $http({
                         method: 'PUT',
@@ -313,7 +304,16 @@
                         }
                     });
                 },
-
+                resetUserPointsAll: function () {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'resetUserPointsAll',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 deleteUser: function (user) {
                     return $http({
                         method: 'DELETE',
@@ -324,7 +324,6 @@
                         }
                     });
                 },
-
                 deleteVote: function (vote) {
                     return $http({
                         method: 'DELETE',
@@ -335,7 +334,6 @@
                         }
                     });
                 },
-
                 deleteGame: function (game) {
                     return $http({
                         method: 'DELETE',

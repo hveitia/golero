@@ -20,8 +20,6 @@ router.route('/user/:id')
     .options(middleware.ensureAuthenticated, userController.options)
     .delete(middleware.ensureAuthenticated, userController.delete);
 
-router.route('/register')
-    .post(userController.register);
 
 router.route('/editFavoriteTeam')
     .put(middleware.ensureAuthenticated, userController.editFavoriteTeam);
@@ -32,12 +30,11 @@ router.route('/editAvatar')
 router.route('/editEmail')
     .put(middleware.ensureAuthenticated, userController.editEmail);
 
-
 router.route('/activateAccount')
     .put(middleware.ensureAuthenticated, userController.activateAccount);
 
-router.route('/editName')
-    .put(userController.editName);
+router.route('/resetUserPointsAll')
+    .get(middleware.ensureAuthenticated, userController.resetUserPointsAll);
 
 router.route('/userRanking')
     .get(middleware.ensureAuthenticated, userController.userRanking);
@@ -48,8 +45,14 @@ router.route('/userRankingPosition')
 router.route('/getUser')
     .get(middleware.ensureAuthenticated, userController.getUser);
 
+router.route('/editName')
+    .put(userController.editName);
+
+router.route('/register')
+    .post(userController.register);
+
 router.route('/authenticate')
-  .post(authController.authenticate);
+    .post(authController.authenticate);
 
 router.route('/userActivation/:hash')
     .get(userController.confirmRegistration);

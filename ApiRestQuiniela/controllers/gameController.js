@@ -16,10 +16,12 @@ exports.findAll = function (req, res) {
         .populate('localTeam')
         .populate('visitorTeam')
         .populate('workingDay')
-        .exec(function (err,result) {
+        .exec(function (err, result) {
 
             if (err) res.send(500, err.message);
-            var output = result.filter(function(x){return x != null && x.workingDay.active == true});
+            var output = result.filter(function (x) {
+                return x != null && x.workingDay.active == true
+            });
             res.status(200).jsonp(output);
 
         });
@@ -31,10 +33,12 @@ exports.findById = function (req, res) {
         .populate('localTeam')
         .populate('visitorTeam')
         .populate('workingDay')
-        .exec(function (err,result) {
+        .exec(function (err, result) {
 
             if (err) res.send(500, err.message);
-            var output = result.filter(function(x){return x != null && x.workingDay.active == true});
+            var output = result.filter(function (x) {
+                return x != null && x.workingDay.active == true
+            });
             res.status(200).jsonp(output);
 
         });
@@ -42,13 +46,15 @@ exports.findById = function (req, res) {
 
 exports.findByIdMany = function (req, res) {
 
-    GAMEMODEL.find({_id:{ "$in" : req.body.idList}})
+    GAMEMODEL.find({_id: {"$in": req.body.idList}})
         .populate('localTeam')
         .populate('visitorTeam')
         .populate('workingDay')
         .exec(function (err, result) {
             if (err) res.send(500, err.message);
-            var response = result.filter(function(x){return  x != null && x.workingDay.active == true});
+            var response = result.filter(function (x) {
+                return x != null && x.workingDay.active == true
+            });
             res.status(200).jsonp(response);
         });
 };
@@ -204,19 +210,24 @@ exports.update = function (req, res) {
                             }
                         }
 
-                        element.user.points += value;
-                        if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
+                        if (element && element.user) {
+                            element.user.points += value;
+                            if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
 
-                        element.user.save(function (err, result) {
-                            if (err) {
-                                logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Saving new user points ' + err.messag, 'gameController', 'update');
-                                return res.send(500, err.message);
-                            }
+                            element.user.save(function (err, result) {
+                                if (err) {
+                                    logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Saving new user points ' + err.messag, 'gameController', 'update');
+                                    return res.send(500, err.message);
+                                }
 
-                            logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'New Points Saved', 'gameController', 'update');
+                                logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'New Points Saved', 'gameController', 'update');
+                                next();
+
+                            });
+                        }
+                        else{
                             next();
-
-                        });
+                        }
 
                     }).then(function () {
                         console.log('All requests have finished');
@@ -264,10 +275,12 @@ exports.gameToVoteByDate = function (req, res) {
         .populate('localTeam')
         .populate('visitorTeam')
         .populate('workingDay')
-        .exec(function (err,result) {
+        .exec(function (err, result) {
 
             if (err) res.send(500, err.message);
-            var output = result.filter(function(x){return x != null && utils.canVoteGame(x)});
+            var output = result.filter(function (x) {
+                return x != null && utils.canVoteGame(x)
+            });
             res.status(200).jsonp(output);
 
         });

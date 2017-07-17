@@ -1,4 +1,4 @@
-<ion-view view-title="La Quiniela">
+<ion-view view-title="Golero">
   <ion-content style="background: ghostwhite;">
     <div class="bar bar-header bar-light">
       <h1 class="title viewTitle">{{username}}</h1>
@@ -83,7 +83,7 @@
                   style="background: #190855; color: white; margin-bottom: 10%;">
             Activar Cuenta</button>
 
-          <i class="icon ion-ios-help" style="color: #190855; font-size: 2em" data-ng-hide="hideNewEmail"></i>
+          <i class="icon ion-ios-help" style="color: #190855; font-size: 2em" data-ng-hide="hideNewEmail" data-ng-click="showModalNewEmail()"></i>
           <input type="text" class="text-center"
                  placeholder="Nuevo email"
                  data-ng-model="data.newActivationEmail"
