@@ -45,6 +45,12 @@ router.route('/userRankingPosition')
 router.route('/getUser')
     .get(middleware.ensureAuthenticated, userController.getUser);
 
+router.route('/getAvatar/:avatar')
+    .get(userController.getAvatar);
+
+router.route('/getTeamLogo/:logo')
+    .get(userController.getTeamLogo);
+
 router.route('/editName')
     .put(userController.editName);
 

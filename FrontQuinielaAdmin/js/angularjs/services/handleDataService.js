@@ -304,6 +304,19 @@
                         }
                     });
                 },
+                updateTeamName: function (team, newName) {
+                    return $http({
+                        method: 'PUT',
+                        url: urlApi + 'editTeamName/' + team,
+                        data: {
+                            "name": newName
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 resetUserPointsAll: function () {
                     return $http({
                         method: 'GET',

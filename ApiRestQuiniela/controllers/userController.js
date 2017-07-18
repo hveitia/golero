@@ -320,6 +320,32 @@ exports.getUser = function (req, res) {
     });
 };
 
+exports.getAvatar = function (req, res) {
+
+    if(req.params.avatar){
+
+        res.sendFile(path.join(__dirname + '/images/avatars/' + req.params.avatar));
+
+    }else{
+
+        res.sendFile(path.join(__dirname + '/images/avatars/user.png'));
+    }
+
+};
+
+exports.getTeamLogo = function (req, res) {
+
+    if(req.params.logo){
+
+        res.sendFile(path.join(__dirname + '/images/teamLogos/' + req.params.logo));
+
+    }else{
+
+        res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
+    }
+
+};
+
 exports.confirmRegistration = function (req, res) {
 
     USERMODEL.findOne({registerHash: req.params.hash}, function (err, user) {
@@ -415,7 +441,6 @@ sendRegistrationConfirmation = function (obj) {
 
 
 };
-
 
 //OPTIONS Allow CORS to DELETE
 exports.options = function (req, res, next) {

@@ -1,4 +1,6 @@
 var TEXTSMODEL = mongoose.model('TEXTSMODEL');
+var logController = require('./logController');
+
 
 
 //OPTIONS Allow CORS to DELETE
@@ -62,15 +64,24 @@ exports.updateText = function(req, res){
 
 exports.findByKey = function(req, res){
 
+    var logText = 'Key: ' + req.params.key;
+    logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), logText, 'textsController', 'findByKey');
+
     TEXTSMODEL.find({key: req.params.key}, function (err, obj) {
 
-        if (err) res.status(500).send(err.message);
+        if (err){
+
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Error 500 - ' + err.message, 'textsController', 'findByKey');
+            res.status(500).send(err.message);
+        }
 
         if(obj){
 
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Found 200 - ' + obj, 'textsController', 'findByKey');
             res.status(200).jsonp(obj);
 
         }else{
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Not Found 404', 'textsController', 'findByKey');
             res.status(404).send('404');
         }
 

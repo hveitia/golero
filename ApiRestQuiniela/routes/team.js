@@ -13,5 +13,8 @@ router.route('/team')
   .get(middleware.ensureAuthenticated, teamController.findAll)
   .post(middleware.ensureAuthenticated, teamController.add);
 
+router.route('/editTeamName/:id')
+   .put(middleware.ensureAuthenticated, teamController.editTeamName);
+
 
 module.exports = router;
