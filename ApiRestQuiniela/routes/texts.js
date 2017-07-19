@@ -16,7 +16,7 @@ router.route('/addTexts')
     .post(middleware.ensureAuthenticated, textsController.saveText);
 
 router.route('/getTextsByKey/:key')
-    .get(middleware.ensureAuthenticated, textsController.findByKey);
+    .get(textsController.findByKey);
 
 router.route('/getTexts')
     .get(middleware.ensureAuthenticated, textsController.find);

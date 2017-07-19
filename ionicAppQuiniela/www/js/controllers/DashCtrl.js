@@ -311,6 +311,7 @@ angular.module('QuinielaIonicApp')
           StorageService.setItem('showRolerWizard', false);
           teamRoler = team;
           $scope.voteList = [];
+          StorageService.setItem('registred', true);
           $scope.loadUserData(true);
           $scope.loadVotesByUser();
           $scope.loadRankingPosition();
@@ -533,8 +534,6 @@ angular.module('QuinielaIonicApp')
       }).error(function (err) {
         console.log(err);
       });
-
-
     };
 
     $scope.$on('$ionicView.enter', function () {
@@ -543,8 +542,6 @@ angular.module('QuinielaIonicApp')
       $scope.activeVotes = 0;
 
       if (StorageService.getItem('showRolerWizard')) {
-        var teamRoler = '';
-        var avatarRoler = '';
         $scope.loading = false;
         $scope.openModalRoler();
         $scope.enroler = 'name';

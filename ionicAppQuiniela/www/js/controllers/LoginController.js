@@ -62,7 +62,7 @@ angular.module('QuinielaIonicApp')
                 });
               } else {
 
-                StorageService.setItem('registred', true);
+                //StorageService.setItem('registred', true);
                 $scope.showView = 'SUCCESS';
                 $scope.title = '';
               }
@@ -88,7 +88,7 @@ angular.module('QuinielaIonicApp')
         .success(function(response) {
 
           StorageService.setItem('password', uuid);
-          StorageService.setItem('registred', true);
+          //StorageService.setItem('registred', true);
           StorageService.setItem('showRolerWizard', true);
           $state.go('tab.dash');
 
