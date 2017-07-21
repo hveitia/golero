@@ -177,7 +177,10 @@ angular.module('QuinielaIonicApp')
         UserService.getUserByName($scope.data.userFinded).success(function (data) {
 
           if(data =='EMPTY'){
-
+            $ionicPopup.alert({
+              title: '¡Usuario no encontrado!',
+              template: 'No se ha encontrado el usuario. Verifique el nombre. Tenga en cuenta mayúsculas y minúsculas.'
+            });
           }
           else {
             $scope.data.userFinded = '';
