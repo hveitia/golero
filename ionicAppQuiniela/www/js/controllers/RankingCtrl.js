@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicScrollDelegate, $state, $ionicPlatform,
+  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,
                                        RankinService, DatabaseService, Vote, Game, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
