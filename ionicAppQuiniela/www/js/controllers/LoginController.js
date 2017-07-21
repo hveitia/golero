@@ -1,20 +1,20 @@
 angular.module('QuinielaIonicApp')
-  .controller('LoginController', function($scope, $http, $stateParams, $ionicPopup, $state, md5,
-    StorageService, $cordovaDevice) {
+  .controller('LoginController', function ($scope, $http, $stateParams, $ionicPopup, $state, md5,
+                                           StorageService, $cordovaDevice) {
 
-    $scope.login = function() {
+    $scope.login = function () {
 
       //$scope.data = {};
-      //$scope.data.username = 'Los4';
-      //$scope.data.password = '327ED387-D95B-4226-884D-74D4CC23FF1E';
+      //$scope.data.username = 'nombre';
+      //$scope.data.password = '1500427389246';
 
       if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
 
         $http.post(urlApi + 'authenticate', {
-            "user": $scope.data.username,
-            "pass": $scope.data.password
-          })
-          .success(function(response) {
+          "user": $scope.data.username,
+          "pass": $scope.data.password
+        })
+          .success(function (response) {
 
             if (!response.success) {
               var alertPopup = $ionicPopup.alert({
@@ -29,7 +29,7 @@ angular.module('QuinielaIonicApp')
               $state.go('tab.dash');
             }
           })
-          .error(function(err) {
+          .error(function (err) {
             console.log(err);
           });
       } else {
@@ -40,7 +40,7 @@ angular.module('QuinielaIonicApp')
       }
     };
 
-    $scope.addUser = function() {
+    $scope.addUser = function () {
       if (!$scope.data.password) {
         var alertPopup = $ionicPopup.alert({
           title: 'Contraseña incorrecta!',
@@ -49,11 +49,11 @@ angular.module('QuinielaIonicApp')
       } else {
         if ($scope.registerValidate()) {
           $http.post(urlApi + 'user', {
-              "user": $scope.data.username,
-              "pass": md5.createHash($scope.data.password || ''),
-              "email": $scope.data.email
-            })
-            .success(function(response) {
+            "user": $scope.data.username,
+            "pass": md5.createHash($scope.data.password || ''),
+            "email": $scope.data.email
+          })
+            .success(function (response) {
 
               if (response.message) {
                 var alertPopup = $ionicPopup.alert({
@@ -68,7 +68,7 @@ angular.module('QuinielaIonicApp')
               }
 
             })
-            .error(function(err) {
+            .error(function (err) {
               console.log(err);
             });
         } else {
@@ -80,12 +80,12 @@ angular.module('QuinielaIonicApp')
       }
     };
 
-    $scope.addUserUUDI = function(uuid) {
+    $scope.addUserUUDI = function (uuid) {
 
       $http.post(urlApi + 'register', {
-          "pass": uuid
-        })
-        .success(function(response) {
+        "pass": uuid
+      })
+        .success(function (response) {
 
           StorageService.setItem('password', uuid);
           //StorageService.setItem('registred', true);
@@ -93,12 +93,12 @@ angular.module('QuinielaIonicApp')
           $state.go('tab.dash');
 
         })
-        .error(function(err) {
+        .error(function (err) {
           console.log(err);
         });
     };
 
-    $scope.creatAccountButtonClick = function() {
+    $scope.creatAccountButtonClick = function () {
 
       $scope.data = {};
       $scope.showView = 'REG';
@@ -106,16 +106,14 @@ angular.module('QuinielaIonicApp')
 
     };
 
-    $scope.backButtonClick = function() {
+    $scope.backButtonClick = function () {
       $scope.showView = 'HOME';
       $scope.title = '';
       $scope.data = {};
     };
 
-    $scope.registerValidate = function() {
-      if (!$scope.data.username ||
-        !$scope.data.email ||
-        !$scope.data.password ||
+    $scope.registerValidate = function () {
+      if (!$scope.data.username || !$scope.data.email || !$scope.data.password ||
         $scope.data.username.trim() == "" ||
         $scope.data.email.trim() == "") {
         return false;
@@ -124,7 +122,7 @@ angular.module('QuinielaIonicApp')
     };
 
 
-    document.addEventListener("deviceready", function() {
+    document.addEventListener("deviceready", function () {
 
       var registred = StorageService.getItem('registred');
       if (!registred) {
@@ -134,27 +132,27 @@ angular.module('QuinielaIonicApp')
 
     }, false);
 
-    $scope.$on('$ionicView.enter', function() {
+    $scope.$on('$ionicView.enter', function () {
+
+      //$scope.login();
+      //$scope.addUserUUDI(Math.floor(Date.now()));
 
 
-     //$scope.login();
-     //$scope.addUserUUDI(Math.floor(Date.now()));
+       var user = StorageService.getItem('user');
+       var pass = StorageService.getItem('password');
+       var registred = StorageService.getItem('registred');
 
-      var user = StorageService.getItem('user');
-      var pass = StorageService.getItem('password');
-      var registred = StorageService.getItem('registred');
+       $scope.data = {};
 
-      $scope.data = {};
+       if (registred) {
 
-      if (registred) {
+       $scope.data.username = user;
+       $scope.data.password = pass;
+       $scope.login();
 
-        $scope.data.username = user;
-        $scope.data.password = pass;
-        $scope.login();
-
-      } else {
-        //$scope.addUserUUDI('uuid');
-      }
+       } else {
+       //$scope.addUserUUDI('uuid');
+       }
 
 
     });

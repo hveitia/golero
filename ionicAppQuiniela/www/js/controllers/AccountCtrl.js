@@ -1,7 +1,7 @@
 angular.module('QuinielaIonicApp')
-
-
   .controller('AccountCtrl', function ($scope, $state, $stateParams, $ionicPlatform, $ionicModal, UserService, DatabaseService, Text) {
+
+    $scope.urlApi = urlApi;
 
     $ionicModal.fromTemplateUrl('view-texts-modal.html', {
       scope: $scope,

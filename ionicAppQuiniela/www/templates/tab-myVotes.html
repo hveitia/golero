@@ -45,13 +45,13 @@
             <i class="fa fa-minus-circle fa-2x animated zoomIn" data-ng-click='deleteVote(item)' aria-hidden="true" style="color: red; margin-top: 5px;"></i>
           </div>
           <div class="col">
-            <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}}" data-ng-click="updateVote(item,'1')">
+            <img class="{{item.localTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}}" data-ng-click="updateVote(item,'1')">
           </div>
           <div class="col">
             <i class="{{item.tiedClass}}" aria-hidden="true" style="color: darkblue; margin-top: 10px;" data-ng-click="updateVote(item,'0')"></i>
           </div>
           <div class="col">
-            <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}}" data-ng-click="updateVote(item,'2')">
+            <img class="{{item.visitoTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}}" data-ng-click="updateVote(item,'2')">
           </div>
         </div>
       </div>

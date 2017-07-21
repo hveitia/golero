@@ -15,11 +15,13 @@ router.route('/user')
   .get(middleware.ensureAuthenticated, userController.findAll)
   .post(userController.add);
 
+router.route('/getUserByName/:name')
+    .get(middleware.ensureAuthenticated, userController.getUserByName);
+
 router.route('/user/:id')
     //.put(middleware.ensureAuthenticated, voteController.update)
     .options(middleware.ensureAuthenticated, userController.options)
     .delete(middleware.ensureAuthenticated, userController.delete);
-
 
 router.route('/editFavoriteTeam')
     .put(middleware.ensureAuthenticated, userController.editFavoriteTeam);
@@ -50,6 +52,9 @@ router.route('/getAvatar/:avatar')
 
 router.route('/getTeamLogo/:logo')
     .get(userController.getTeamLogo);
+
+router.route('/getTeamLogo')
+    .get(userController.getTeamLogoEmpty);
 
 router.route('/editName')
     .put(userController.editName);

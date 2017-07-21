@@ -41,13 +41,13 @@
         </div>
         <div class="row " style="text-align: center ">
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.localTeam.logo}} " data-ng-click="addVote(item, '1') ">
+            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}} " data-ng-click="addVote(item, '1') ">
           </div>
           <div class="col ">
             <i class="fa fa-handshake-o fa-2x animated zoomIn " aria-hidden="true " style="color: darkblue; margin-top: 10px; " data-ng-click="addVote(item, '0') "></i>
           </div>
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.visitorTeam.logo}} " data-ng-click="addVote(item, '2') ">
+            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}} " data-ng-click="addVote(item, '2') ">
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@
         <img ng-src="./img/avatars/{{user.avatar}}" data-ng-click="openModalAvatar()">
 
       </div>
-      <img ng-src="./img/logos/{{user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
+      <img ng-src="{{urlApi + 'getTeamLogo/' + user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
 
       <div class="box box-blue">
 
@@ -29,7 +29,8 @@
             <div class="col" style="padding-left: 0;">
               <button class="button icon-left ion-trophy button-block button-small"
                       data-ng-click="goToRanking()" style="background: #190855; color: white; margin-top: 0; margin-bottom: 0;">
-                Ranking {{rankingPosition}}</button>
+                Ranking {{rankingPosition}}
+              </button>
 
             </div>
             <!--<div class="col" style="" data-ng-click="goToMyVotes()">
@@ -60,12 +61,14 @@
                   data-ng-click="showTodayVote()"
                   style="background: #190855; color: white;"
                   data-ng-show='todayVoteList.length > 0'>
-            Ver mis pronósticos</button>
+            Ver mis pronósticos
+          </button>
           <button class="button icon-right ion-stats-bars button-block button-balanced button-small"
                   data-ng-click="goToPronosticar()"
                   style="background: #190855; color: white;"
                   data-ng-show='todayVoteList.length == 0'>
-            Pronosticar</button>
+            Pronosticar
+          </button>
         </div>
       </div>
 
@@ -81,7 +84,8 @@
           <button class="button icon-right ion-toggle-filled button-block button-small button-balanced"
                   data-ng-click="activateAccount()"
                   style="background: #190855; color: white; margin-bottom: 10%;">
-            Activar Cuenta</button>
+            Activar Cuenta
+          </button>
 
           <i class="icon ion-ios-help" style="color: #190855; font-size: 2em" data-ng-hide="hideNewEmail" data-ng-click="showModalNewEmail()"></i>
           <input type="email" class="text-center"
@@ -94,7 +98,8 @@
                   data-ng-click="actualizarEmail()"
                   data-ng-hide="hideNewEmail"
                   style="background: #190855; color: white;">
-            Actualizar email</button>
+            Actualizar email
+          </button>
         </div>
       </div>
 
@@ -119,24 +124,32 @@
       </ion-header-bar>
       <ion-content style="text-align:center;">
         <div class="row" style="margin-top:30px;">
-          <div class="col-30"><img ng-src="./img/logos/barcelona.png" style="width:80%;" data-ng-click="editFAvoriteTeam('barcelona.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/clanjuvenil.png" style="width:80%;" data-ng-click="editFAvoriteTeam('clanjuvenil.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/cuenca.png" style="width:80%;" data-ng-click="editFAvoriteTeam('cuenca.png')"></div>
+          <div class="col-30" ng-repeat="item in teamList track by $index">
+            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                 style="width:80%;" data-ng-show="$index < 3"
+                 data-ng-click="editFAvoriteTeam(item.logo)">
+          </div>
         </div>
         <div class="row" style="margin-top:30px;">
-          <div class="col-30"><img ng-src="./img/logos/delfin.png" style="width:80%;" data-ng-click="editFAvoriteTeam('delfin.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/emelec.png" style="width:80%;" data-ng-click="editFAvoriteTeam('emelec.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/famarilla.png" style="width:80%;" data-ng-click="editFAvoriteTeam('famarilla.png')"></div>
+          <div class="col-30" ng-repeat="item in teamList track by $index">
+            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                 style="width:80%;" data-ng-show="$index > 2 && $index < 6"
+                 data-ng-click="editFAvoriteTeam(item.logo)">
+          </div>
         </div>
         <div class="row" style="margin-top:30px;">
-          <div class="col-30"><img ng-src="./img/logos/independiente.png" style="width:80%;" data-ng-click="editFAvoriteTeam('independiente.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/liga.png" style="width:80%;" data-ng-click="editFAvoriteTeam('liga.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/macara.png" style="width:80%;" data-ng-click="editFAvoriteTeam('macara.png')"></div>
+          <div class="col-30" ng-repeat="item in teamList track by $index">
+            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                 style="width:80%;" data-ng-show="$index > 5 && $index < 9"
+                 data-ng-click="editFAvoriteTeam(item.logo)">
+          </div>
         </div>
         <div class="row" style="margin-top:30px;">
-          <div class="col-30"><img ng-src="./img/logos/nacional.png" style="width:80%;" data-ng-click="editFAvoriteTeam('nacional.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/river.png" style="width:80%;" data-ng-click="editFAvoriteTeam('river.png')"></div>
-          <div class="col-30"><img ng-src="./img/logos/ucatolica.png" style="width:80%;" data-ng-click="editFAvoriteTeam('ucatolica.png')"></div>
+          <div class="col-30" ng-repeat="item in teamList track by $index">
+            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                 style="width:80%;" data-ng-show="$index > 8"
+                 data-ng-click="editFAvoriteTeam(item.logo)">
+          </div>
         </div>
       </ion-content>
     </ion-modal-view>
@@ -168,6 +181,46 @@
           <div class="col-30"><img ng-src="./img/avatars/11.png" style="width:80%;" data-ng-click="editAvatar('11.png')"></div>
           <div class="col-30"><img ng-src="./img/avatars/12.png" style="width:80%;" data-ng-click="editAvatar('12.png')"></div>
         </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/13.png" style="width:80%;" data-ng-click="editAvatar('13.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/14.png" style="width:80%;" data-ng-click="editAvatar('14.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/15.png" style="width:80%;" data-ng-click="editAvatar('15.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/16.png" style="width:80%;" data-ng-click="editAvatar('16.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/17.png" style="width:80%;" data-ng-click="editAvatar('17.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/18.png" style="width:80%;" data-ng-click="editAvatar('18.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/19.png" style="width:80%;" data-ng-click="editAvatar('19.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/20.png" style="width:80%;" data-ng-click="editAvatar('20.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/21.png" style="width:80%;" data-ng-click="editAvatar('21.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/22.png" style="width:80%;" data-ng-click="editAvatar('22.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/23.png" style="width:80%;" data-ng-click="editAvatar('23.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/24.png" style="width:80%;" data-ng-click="editAvatar('24.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/25.png" style="width:80%;" data-ng-click="editAvatar('25.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/26.png" style="width:80%;" data-ng-click="editAvatar('26.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/27.png" style="width:80%;" data-ng-click="editAvatar('27.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/28.png" style="width:80%;" data-ng-click="editAvatar('28.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/29.png" style="width:80%;" data-ng-click="editAvatar('29.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/30.png" style="width:80%;" data-ng-click="editAvatar('30.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/31.png" style="width:80%;" data-ng-click="editAvatar('31.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/32.png" style="width:80%;" data-ng-click="editAvatar('32.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/33.png" style="width:80%;" data-ng-click="editAvatar('33.png')"></div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30"><img ng-src="./img/avatars/34.png" style="width:80%;" data-ng-click="editAvatar('34.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/35.png" style="width:80%;" data-ng-click="editAvatar('35.png')"></div>
+          <div class="col-30"><img ng-src="./img/avatars/36.png" style="width:80%;" data-ng-click="editAvatar('36.png')"></div>
+        </div>
       </ion-content>
     </ion-modal-view>
   </script>
@@ -180,8 +233,6 @@
         <div class="row">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
-
-
         <div class="list" data-ng-show="enroler == 'name'">
           <label class="item item-input item-floating-label">
             <span class="input-label text-left">Nombre</span>
@@ -189,7 +240,7 @@
           </label>
           <button class="button button-positive icon-right button-full ion-help"
                   style="background: #190855;"
-            data-ng-click="comprobarUserName()">
+                  data-ng-click="comprobarUserName()">
             Comprobar disponibilidad
           </button>
           <label class="item item-input item-floating-label" style="margin-top: 5%;">
@@ -208,7 +259,8 @@
             Ver Términos y condiciones de uso
           </button>
           <button class="button icon-right ion-android-checkbox-outline button-full button-balanced"
-                  data-ng-click="editName()" style="margin-top: 15%; background: #190855;">Aceptar</button>
+                  data-ng-click="editName()" style="margin-top: 15%; background: #190855;">Aceptar
+          </button>
         </div>
 
 
@@ -233,27 +285,75 @@
             <div class="col-30"><img ng-src="./img/avatars/11.png" style="width:80%;" data-ng-click="editAvatar('11.png', true)"></div>
             <div class="col-30"><img ng-src="./img/avatars/12.png" style="width:80%;" data-ng-click="editAvatar('12.png', true)"></div>
           </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/13.png" style="width:80%;" data-ng-click="editAvatar('13.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/14.png" style="width:80%;" data-ng-click="editAvatar('14.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/15.png" style="width:80%;" data-ng-click="editAvatar('15.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/16.png" style="width:80%;" data-ng-click="editAvatar('16.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/17.png" style="width:80%;" data-ng-click="editAvatar('17.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/18.png" style="width:80%;" data-ng-click="editAvatar('18.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/19.png" style="width:80%;" data-ng-click="editAvatar('19.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/20.png" style="width:80%;" data-ng-click="editAvatar('20.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/21.png" style="width:80%;" data-ng-click="editAvatar('21.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/22.png" style="width:80%;" data-ng-click="editAvatar('22.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/23.png" style="width:80%;" data-ng-click="editAvatar('23.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/24.png" style="width:80%;" data-ng-click="editAvatar('24.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/25.png" style="width:80%;" data-ng-click="editAvatar('25.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/26.png" style="width:80%;" data-ng-click="editAvatar('26.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/27.png" style="width:80%;" data-ng-click="editAvatar('27.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/28.png" style="width:80%;" data-ng-click="editAvatar('28.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/29.png" style="width:80%;" data-ng-click="editAvatar('29.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/30.png" style="width:80%;" data-ng-click="editAvatar('30.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/31.png" style="width:80%;" data-ng-click="editAvatar('31.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/32.png" style="width:80%;" data-ng-click="editAvatar('32.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/33.png" style="width:80%;" data-ng-click="editAvatar('33.png', true)"></div>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <div class="col-30"><img ng-src="./img/avatars/34.png" style="width:80%;" data-ng-click="editAvatar('34.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/35.png" style="width:80%;" data-ng-click="editAvatar('35.png', true)"></div>
+            <div class="col-30"><img ng-src="./img/avatars/36.png" style="width:80%;" data-ng-click="editAvatar('36.png', true)"></div>
+          </div>
         </div>
         <div data-ng-show="enroler == 'team'">
           <div class="row" style="margin-top:30px;">
-            <div class="col-30"><img ng-src="./img/logos/barcelona.png" style="width:80%;" data-ng-click="editFAvoriteTeam('barcelona.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/clanjuvenil.png" style="width:80%;" data-ng-click="editFAvoriteTeam('clanjuvenil.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/cuenca.png" style="width:80%;" data-ng-click="editFAvoriteTeam('cuenca.png', true)"></div>
+            <div class="col-30" ng-repeat="item in teamList track by $index">
+              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                   style="width:80%;" data-ng-show="$index < 3"
+                   data-ng-click="editFAvoriteTeam(item.logo, true)">
+            </div>
           </div>
           <div class="row" style="margin-top:30px;">
-            <div class="col-30"><img ng-src="./img/logos/delfin.png" style="width:80%;" data-ng-click="editFAvoriteTeam('delfin.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/emelec.png" style="width:80%;" data-ng-click="editFAvoriteTeam('emelec.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/famarilla.png" style="width:80%;" data-ng-click="editFAvoriteTeam('famarilla.png', true)"></div>
+            <div class="col-30" ng-repeat="item in teamList track by $index">
+              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                   style="width:80%;" data-ng-show="$index > 2 && $index < 6"
+                   data-ng-click="editFAvoriteTeam(item.logo, true)">
+            </div>
           </div>
           <div class="row" style="margin-top:30px;">
-            <div class="col-30"><img ng-src="./img/logos/independiente.png" style="width:80%;" data-ng-click="editFAvoriteTeam('independiente.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/liga.png" style="width:80%;" data-ng-click="editFAvoriteTeam('liga.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/macara.png" style="width:80%;" data-ng-click="editFAvoriteTeam('macara.png', true)"></div>
+            <div class="col-30" ng-repeat="item in teamList track by $index">
+              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                   style="width:80%;" data-ng-show="$index > 5 && $index < 9"
+                   data-ng-click="editFAvoriteTeam(item.logo, true)">
+            </div>
           </div>
           <div class="row" style="margin-top:30px;">
-            <div class="col-30"><img ng-src="./img/logos/nacional.png" style="width:80%;" data-ng-click="editFAvoriteTeam('nacional.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/river.png" style="width:80%;" data-ng-click="editFAvoriteTeam('river.png', true)"></div>
-            <div class="col-30"><img ng-src="./img/logos/ucatolica.png" style="width:80%;" data-ng-click="editFAvoriteTeam('ucatolica.png', true)"></div>
+            <div class="col-30" ng-repeat="item in teamList track by $index">
+              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+                   style="width:80%;" data-ng-show="$index > 8"
+                   data-ng-click="editFAvoriteTeam(item.logo, true)">
+            </div>
           </div>
         </div>
       </ion-content>
@@ -277,7 +377,7 @@
           </div>
           <div class="row " style="text-align: center ">
             <div class="col ">
-              <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}} ">
+              <img class="{{item.localTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}} ">
             </div>
             <div class="col ">
               <i class="{{item.tiedClass}}" aria-hidden="true " style="color: darkblue;"></i>
@@ -285,7 +385,7 @@
               <div class="col" style="color: {{item.backGroundClass}} !important;"><strong>{{item.goalsLocalTeam}} - {{item.goalsVisitorTeam}}</strong></div>
             </div>
             <div class="col ">
-              <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}} ">
+              <img class="{{item.visitoTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}} ">
             </div>
           </div>
         </div>

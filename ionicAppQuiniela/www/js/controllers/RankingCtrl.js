@@ -1,7 +1,8 @@
 angular.module('QuinielaIonicApp')
   .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicScrollDelegate, $state, $ionicPlatform,
-                                       RankinService, DatabaseService, Vote, Game, StorageService) {
+                                       RankinService, DatabaseService, Vote, Game, UserService, StorageService) {
 
+    $scope.urlApi = urlApi;
     $ionicModal.fromTemplateUrl('view-votes-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -12,6 +13,11 @@ angular.module('QuinielaIonicApp')
       $scope.userName = user.user;
       $scope.loading = true;
       $scope.gameVotedList = [];
+      $scope.data = {};
+      $scope.data.userFinded = '';
+      $scope.data.avatar = user.avatar;
+      $scope.data.favoriteTeam = user.favoriteTeam;
+      $scope.data.points = user.points;
       $scope.modal.show();
       $scope.loadVotesByUser(user._id);
     };
@@ -164,16 +170,41 @@ angular.module('QuinielaIonicApp')
 
     };
 
+    $scope.getUserByName = function () {
+
+      if (!EsNuloVacio($scope.data.userFinded)) {
+
+        UserService.getUserByName($scope.data.userFinded).success(function (data) {
+
+          if(data =='EMPTY'){
+
+          }
+          else {
+            $scope.data.userFinded = '';
+            $scope.openModal(data);
+          }
+
+        }).error(function (err) {
+          console.log(err);
+        });
+
+      }
+
+    };
+
     $scope.$on('$ionicView.enter', function () {
       $scope.rankinList = [];
       $scope.loading = false;
+      $scope.data = {};
+      $scope.data.userFinded = '';
+      $scope.data.favoriteTeam = 'noteam.png';
       $ionicScrollDelegate.scrollTop();
       $scope.voteList = [];
       $scope.gameVotedList = [];
       $scope.loadRanking();
     });
 
-    $ionicPlatform.on('resume', function(){
+    $ionicPlatform.on('resume', function () {
       $state.go('tab.dash');
     });
 

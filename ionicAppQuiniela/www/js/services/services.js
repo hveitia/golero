@@ -239,6 +239,22 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
+  .factory('Team', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+
+    return {
+      getTeamsAll: function() {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/team',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+    };
+  }])
+
   .factory('UserService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
 
     return {
@@ -246,6 +262,17 @@ angular.module('QuinielaIonicApp.Services', [])
         return $http({
           method: 'GET',
           url: urlApi + '/getUser',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+
+      },
+      getUserByName: function(name) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getUserByName/' + name,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'

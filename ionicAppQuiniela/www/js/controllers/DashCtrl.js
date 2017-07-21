@@ -1,7 +1,9 @@
 angular.module('QuinielaIonicApp')
 
   .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform,
-                                    Vote, Game, Text, DatabaseService, RankinService, UserService, StorageService) {
+                                    Vote, Game, Text, Team, DatabaseService, RankinService, UserService, StorageService) {
+
+    $scope.urlApi = urlApi;
 
     //colores
     //azul #190855
@@ -283,13 +285,13 @@ angular.module('QuinielaIonicApp')
 
     $scope.loadRankingPosition = function () {
 
-        RankinService.getRankingPosition().success(function (data) {
-          $scope.rankingPosition = data.pos;
-          $scope.points = data.points;
-        })
-          .error(function (err) {
-            console.log(err);
-          });
+      RankinService.getRankingPosition().success(function (data) {
+        $scope.rankingPosition = data.pos;
+        $scope.points = data.points;
+      })
+        .error(function (err) {
+          console.log(err);
+        });
 
     };
 
@@ -388,6 +390,8 @@ angular.module('QuinielaIonicApp')
                 $scope.loading = false;
                 StorageService.setItem('token', response.token);
                 StorageService.setItem('user', $scope.data.newName);
+                $scope.teamList = [];
+                $scope.loadTeamsAll();
                 $scope.enroler = 'avatar';
                 $scope.modalEnrolerTitle = 'Avatar';
 
@@ -446,7 +450,7 @@ angular.module('QuinielaIonicApp')
     $scope.showModalNewEmail = function () {
       $ionicPopup.alert({
         title: '¿Por que un nuevo email?',
-        template:'Si se ha equivocado ingresando su email puede corregirlo. Ingrese su email correcto y luego active su cuenta.'
+        template: 'Si se ha equivocado ingresando su email puede corregirlo. Ingrese su email correcto y luego active su cuenta.'
       });
     };
 
@@ -511,7 +515,7 @@ angular.module('QuinielaIonicApp')
           } else {
             $ionicPopup.alert({
               title: '¡Enhorabuena!',
-              template: 'El usuario' + $scope.data.newName + ' está disponible.'
+              template: 'El usuario ' + $scope.data.newName + ' está disponible.'
             });
           }
 
@@ -536,6 +540,16 @@ angular.module('QuinielaIonicApp')
       });
     };
 
+    $scope.loadTeamsAll = function () {
+
+      Team.getTeamsAll().success(function (data) {
+        $scope.teamList = data;
+      }).error(function (err) {
+        console.log(err);
+      });
+
+    };
+
     $scope.$on('$ionicView.enter', function () {
       $scope.showNavBar = true;
       $scope.data = {};
@@ -551,6 +565,8 @@ angular.module('QuinielaIonicApp')
       } else {
         $scope.voteList = [];
         $scope.todayVoteList = [];
+        $scope.teamList = [];
+        $scope.loadTeamsAll();
         $scope.loadUserData();
         $scope.username = StorageService.getItem('user');
         $scope.loadVotesByUser();

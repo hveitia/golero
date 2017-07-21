@@ -1,6 +1,8 @@
 angular.module('QuinielaIonicApp')
   .controller('MyVotesCtrl', function ($scope, $http, $ionicScrollDelegate, $state, $ionicPlatform, Game, Vote, DatabaseService, StorageService) {
 
+    $scope.urlApi = urlApi;
+
     $scope.loadVotesByUser = function () {
 
       $scope.loading = true;

@@ -48,13 +48,13 @@ exports.userRankingPosition = function (req, res) {
         var flag = false;
         for (var i = 0; i < result.length; i++) {
             if (result[i]._doc._id == req.user) {
-                flag= true;
+                flag = true;
                 res.status(200).jsonp({'pos': i + 1, 'points': result[i].points});
 
             }
         }
-        if(!flag)
-        res.status(200).jsonp({'pos': -1, 'points': 0});
+        if (!flag)
+            res.status(200).jsonp({'pos': -1, 'points': 0});
 
     });
 };
@@ -320,13 +320,36 @@ exports.getUser = function (req, res) {
     });
 };
 
+exports.getUserByName = function (req, res) {
+
+    USERMODEL.findOne({user: req.params.name}, function (err, result) {
+
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        if (result) {
+
+            result._doc.email = '';
+            result._doc.pass = '';
+            result._doc.registerHash = '';
+
+            res.status(200).jsonp(result);
+        }
+        else {
+            res.status(200).jsonp('EMPTY');
+        }
+
+    });
+};
+
 exports.getAvatar = function (req, res) {
 
-    if(req.params.avatar){
+    if (req.params.avatar) {
 
         res.sendFile(path.join(__dirname + '/images/avatars/' + req.params.avatar));
 
-    }else{
+    } else {
 
         res.sendFile(path.join(__dirname + '/images/avatars/user.png'));
     }
@@ -335,14 +358,20 @@ exports.getAvatar = function (req, res) {
 
 exports.getTeamLogo = function (req, res) {
 
-    if(req.params.logo){
+    if (req.params.logo) {
 
         res.sendFile(path.join(__dirname + '/images/teamLogos/' + req.params.logo));
 
-    }else{
+    } else {
 
         res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
     }
+
+};
+
+exports.getTeamLogoEmpty = function (req, res) {
+
+    res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
 
 };
 
