@@ -530,9 +530,14 @@ angular.module('QuinielaIonicApp')
 
       Text.getTextsByKey(value).success(function (data) {
 
-        $ionicPopup.alert({
+        $scope.parrafosList = data[0].text.split('<p>');
+
+        $ionicPopup.show({
+          template: '<div><p ng-repeat="p in parrafosList">{{p}}</p></div>',
           title: data[0].title,
-          template: data[0].text
+          subTitle: '',
+          scope: $scope,
+          buttons: [{text: 'Acepto', type:'button-positive'}]
         });
 
       }).error(function (err) {

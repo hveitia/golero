@@ -1,23 +1,35 @@
 <ion-view view-title="Mi Perfil">
   <div class="bar bar-header bar-light">
-    <h1 class="title viewTitle">Ayuda</h1>
+    <h1 class="title viewTitle">Información y Ayuda</h1>
   </div>
   <ion-content style="background: ghostwhite;">
 
+    <div class="accountBannerContainer">
+      <img ng-src="{{imgUrl}}" style="width: 100%;">
+    </div>
 
-    <div class="list" style="margin-top: 17%;">
+    <div class="list">
 
-      <a class="item item-icon-left"  data-ng-click="showComoJugarClick()">
-        <i class="icon ion-information" style="color: #190855"></i>
-        ¿Como jugar?
+      <a class="item item-icon-left" data-ng-click="showComoJugarClick()">
+        <i class="icon ion-help" style="color: #190855"></i>
+        ¿Cómo jugar?
       </a>
 
       <a class="item item-icon-left" data-ng-click="showComoPronosticarClick()">
-        <i class="icon ion-information" style="color: #190855"></i>
-        ¿Como pronosticar?
+        <i class="icon ion-help" style="color: #190855"></i>
+        ¿Cómo pronosticar?
+      </a>
+      <a class="item item-icon-left" data-ng-click="openModal('editarPronosticos')">
+        <i class="icon ion-help" style="color: #190855"></i>
+        ¿Puedo editar mis pronósticos?
       </a>
 
-      <a class="item item-icon-left"  data-ng-click="cargarModalShare()" data-ng-show="false">
+      <a class="item item-icon-left" data-ng-click="openModal('terminosCondiciones')">
+        <i class="icon ion-ios-paper" style="color: #190855"></i>
+        Términos y Condiciones
+      </a>
+
+      <a class="item item-icon-left" data-ng-click="cargarModalShare()" data-ng-show="false">
         <i class="icon ion-email"></i>
         Invitar Amigos.
       </a>
@@ -28,14 +40,18 @@
   <script id="view-texts-modal.html" type="text/ng-template">
     <ion-modal-view>
       <ion-header-bar>
-        <h1 class="title" style="color:white;">{{modalTitle}}</h1>
+        <h1 class="title" style="color:white; text-align: center !important;">{{modalTitle}}</h1>
         <button class="button button-clear button-primary" ng-click="modal.hide()" style="color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
       </ion-header-bar>
       <ion-content style="text-align:left; padding: 10px;">
         <div class="row" style="padding-top: 0px;">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
-        <div data-ng-show='!loading'>{{textToShow}}</div>
+        <div data-ng-show='!loading'>
+          <p ng-repeat="p in parrafosList track by $index">
+            {{p}}
+          </p>
+        </div>
       </ion-content>
     </ion-modal-view>
   </script>

@@ -28,6 +28,7 @@ angular.module('QuinielaApp')
                             $scope.key = '';
                             $scope.text = '';
                             $scope.title = '';
+                            $scope.modo = 'ADD';
                         }).error(function (err) {
                             console.log(err);
                         });
