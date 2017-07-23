@@ -19,4 +19,8 @@ router.route('/workingDay/:season')
 router.route('/workingDayName/:name')
   .get(middleware.ensureAuthenticated, workingDayController.findByName);
 
+router.route('/workingDayName/:id')
+    .options(middleware.ensureAuthenticated, workingDayController.options)
+    .delete(middleware.ensureAuthenticated, workingDayController.delete);
+
 module.exports = router;

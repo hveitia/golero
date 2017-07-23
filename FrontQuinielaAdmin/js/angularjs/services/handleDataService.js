@@ -356,6 +356,16 @@
                             'Content-Type': 'application/json'
                         }
                     });
+                },
+                deleteWorkingDay: function(wd){
+                    return $http({
+                        method: 'DELETE',
+                        url: urlApi + 'workingDayName/' + wd,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
                 }
                 //////////////////////////////////////////////
             }

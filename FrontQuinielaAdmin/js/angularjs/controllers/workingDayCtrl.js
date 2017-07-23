@@ -1,62 +1,72 @@
 angular.module('QuinielaApp')
 
-  .controller('WorkingDayCtrl', ['$scope', '$http', '$q', 'HandleDataService',
-    function($scope, $http, $q, HandleDataService) {
+    .controller('WorkingDayCtrl', ['$scope', '$http', '$q', 'HandleDataService',
+        function ($scope, $http, $q, HandleDataService) {
 
 
-      $scope.seasonList = [];
-      $scope.workinDayList = [];
-      $scope.workinDayName = 1;
-      $scope.workinDayDate = new Date();
-
-      $scope.pageload = function() {
-
-        $scope.loadWorkingDays();
-        $scope.loadSeasons();
-
-      };
-
-      $scope.loadSeasons = function() {
-        HandleDataService.getAllSeansons().success(function(data) {
-            $scope.seasonList = data;
-            $scope.seasonSelected = data[0];
-
-          })
-          .error(function(err) {
             $scope.seasonList = [];
-            console.log(err);
-          });
-      };
-
-      $scope.loadWorkingDays = function() {
-        $scope.workinDayList = [];
-        HandleDataService.getAllWorkingDaysActive().success(function(data) {
-            $scope.workinDayList = data;
-
-          })
-          .error(function(err) {
             $scope.workinDayList = [];
-            console.log(err);
-          });
-      };
+            $scope.workinDayName = 1;
+            $scope.workinDayDate = new Date();
 
-      $scope.addWorkingDay = function() {
+            $scope.pageload = function () {
 
-        var obj = {
-          "date": $scope.workinDayDate,
-          "season": $scope.seasonSelected._id,
-          "name": $scope.workinDayName
-        };
+                $scope.loadWorkingDays();
+                $scope.loadSeasons();
 
-        HandleDataService.addWorkingDay(obj).success(function(data) {
-            $scope.loadWorkingDays();
-          })
-          .error(function(err) {
-            console.log(err);
-          });
-      };
+            };
 
-      $scope.pageload();
+            $scope.loadSeasons = function () {
+                HandleDataService.getAllSeansons().success(function (data) {
+                    $scope.seasonList = data;
+                    $scope.seasonSelected = data[0];
 
-    }
-  ]);
+                })
+                    .error(function (err) {
+                        $scope.seasonList = [];
+                        console.log(err);
+                    });
+            };
+
+            $scope.loadWorkingDays = function () {
+                $scope.workinDayList = [];
+                HandleDataService.getAllWorkingDaysActive().success(function (data) {
+                    $scope.workinDayList = data;
+
+                })
+                    .error(function (err) {
+                        $scope.workinDayList = [];
+                        console.log(err);
+                    });
+            };
+
+            $scope.addWorkingDay = function () {
+
+                var obj = {
+                    "date": $scope.workinDayDate,
+                    "season": $scope.seasonSelected._id,
+                    "name": $scope.workinDayName
+                };
+
+                HandleDataService.addWorkingDay(obj).success(function (data) {
+                    $scope.loadWorkingDays();
+                })
+                    .error(function (err) {
+                        console.log(err);
+                    });
+            };
+
+            $scope.deleteWorkingDay = function (wd) {
+                HandleDataService.deleteWorkingDay(wd._id).success(function (data) {
+                    $scope.loadWorkingDays();
+                })
+                    .error(function (err) {
+                        console.log(err);
+                    });
+
+            };
+
+            $scope.pageload();
+
+        }
+    ]);
