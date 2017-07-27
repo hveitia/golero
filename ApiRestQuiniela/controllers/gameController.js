@@ -44,6 +44,25 @@ exports.findById = function (req, res) {
         });
 };
 
+exports.findByTeam = function (req, res) {
+
+    GAMEMODEL.find({$and:[{'state': 'UPDATED'}], $or: [{'localTeam': req.params.idTeam}, {'visitorTeam': req.params.idTeam}]})
+        .populate('localTeam')
+        .populate('visitorTeam')
+        .populate('workingDay')
+        .sort({'workingDay': -1})
+        .limit(5)
+        .exec(function (err, result) {
+
+            if (err) {
+                res.send(500, err.message);
+            }
+
+            res.status(200).jsonp(result);
+        });
+
+};
+
 exports.findByIdMany = function (req, res) {
 
     GAMEMODEL.find({_id: {"$in": req.body.idList}})
@@ -212,6 +231,7 @@ exports.update = function (req, res) {
 
                         if (element && element.user) {
                             element.user.points += value;
+                            element.user.historicalPunctuation.unshift(element.user.points);
                             if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
 
                             element.user.save(function (err, result) {
@@ -225,7 +245,7 @@ exports.update = function (req, res) {
 
                             });
                         }
-                        else{
+                        else {
                             next();
                         }
 

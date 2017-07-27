@@ -52,4 +52,7 @@ router.route('/gameUpdateSpecialDate/:id')
 router.route('/gameToVoteByDate')
     .get(middleware.ensureAuthenticated, gameController.gameToVoteByDate);
 
+router.route('/findByTeam/:idTeam')
+    .get(middleware.ensureAuthenticated,gameController.findByTeam);
+
 module.exports = router;

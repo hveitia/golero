@@ -76,9 +76,9 @@ exports.getVotesTodayByOwnUser = function (req, res) {
     VOTEMODEL.find({user: req.user})
         .populate({
             path: 'game',
-            populate: { path: 'localTeam' }
+            populate: {path: 'localTeam'}
         })
-        .exec(function(err, result){
+        .exec(function (err, result) {
 
             if (err)res.send(500, err.message);
 
@@ -122,6 +122,10 @@ exports.getVotesByGame = function (game) {
 
         return result;
     });
+};
+
+exports.clearVotes = function (req, res) {
+
 };
 
 //OPTIONS Allow CORS to DELETE

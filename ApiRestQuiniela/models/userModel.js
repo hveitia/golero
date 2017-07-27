@@ -33,6 +33,9 @@ exports = module.exports = function(app, mongoose) {
     },
     role:{
       type: String
+    },
+    historicalPunctuation:{
+      type: []
     }
 
   });

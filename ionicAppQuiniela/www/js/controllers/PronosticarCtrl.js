@@ -1,7 +1,28 @@
 angular.module('QuinielaIonicApp')
-  .controller('PronosticarCtrl', function ($scope, $http, $ionicScrollDelegate, $state, $ionicPlatform,
-                                           Game, Vote, $ionicPopup, DatabaseService, StorageService) {
+  .controller('PronosticarCtrl', function ($scope, $http, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,
+                                           Game, Vote, DatabaseService, StorageService) {
     $scope.urlApi = urlApi;
+
+    $ionicModal.fromTemplateUrl('streak-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+    $scope.openModal = function (key) {
+      $scope.loadingLocal = true;
+      $scope.loadinVisitor = true;
+      $scope.modal.show();
+
+    };
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function () {
+      $scope.modal.remove();
+    });
+
     $scope.loadGame = function () {
       $scope.gameToVoteList = [];
       $scope.gameToVoteListByDate = [];
@@ -64,11 +85,93 @@ angular.module('QuinielaIonicApp')
         $ionicScrollDelegate.scrollTop();
         $scope.showTipsHowToVote = StorageService.getItem('showTipsHowToVote') == null;
         $scope.loadVotesByUser();
+        $scope.closeModal();
       })
         .error(function (err) {
           console.log(err);
         });
 
+    };
+
+    $scope.addVoteClick = function (game) {
+
+      $scope.gameSelected = game;
+      $scope.localStreak = [];
+      $scope.visitorStreak = [];
+      $scope.openModal();
+
+      Game.findGamesByTeam(game.localTeam._id).success(function (data) {
+
+        $scope.localStreak = data;
+        $scope.loadingLocal = false;
+
+        for(var i=0;i<$scope.localStreak.length;i++){
+          if($scope.localStreak[i].goalsLocalTeam > $scope.localStreak[i].goalsVisitorTeam){
+
+            if($scope.gameSelected.localTeam._id == $scope.localStreak[i].localTeam._id){
+              $scope.localStreak[i].resultado = 'g';
+            }
+            else{
+              $scope.localStreak[i].resultado = 'p';
+            }
+
+          }
+          else{
+            if($scope.localStreak[i].goalsLocalTeam < $scope.localStreak[i].goalsVisitorTeam){
+
+              if($scope.gameSelected.localTeam._id == $scope.localStreak[i].localTeam._id){
+                $scope.localStreak[i].resultado = 'p';
+              }
+              else{
+                $scope.localStreak[i].resultado = 'g';
+              }
+            }
+            else{
+              $scope.localStreak[i].resultado = 'e';
+            }
+          }
+        }
+
+      })
+        .error(function (err) {
+          console.log(err);
+        });
+      Game.findGamesByTeam(game.visitorTeam._id).success(function (data) {
+
+        $scope.visitorStreak = data;
+        $scope.loadinVisitor = false;
+
+        for(var i=0;i<$scope.visitorStreak.length;i++){
+          if($scope.visitorStreak[i].goalsLocalTeam > $scope.visitorStreak[i].goalsVisitorTeam){
+
+            if($scope.gameSelected.visitorTeam._id == $scope.visitorStreak[i].localTeam._id){
+              $scope.visitorStreak[i].resultado = 'g';
+            }
+            else{
+              $scope.visitorStreak[i].resultado = 'p';
+            }
+
+          }
+          else{
+            if($scope.visitorStreak[i].goalsLocalTeam < $scope.visitorStreak[i].goalsVisitorTeam){
+
+              if($scope.gameSelected.visitorTeam._id == $scope.visitorStreak[i].visitorTeam._id){
+                $scope.visitorStreak[i].resultado = 'g';
+              }
+              else{
+                $scope.visitorStreak[i].resultado = 'p';
+              }
+            }
+            else{
+              $scope.visitorStreak[i].resultado = 'e';
+            }
+          }
+        }
+
+      })
+        .error(function (err) {
+          console.log(err);
+        });
     };
 
     $scope.loadVotesByUser = function () {

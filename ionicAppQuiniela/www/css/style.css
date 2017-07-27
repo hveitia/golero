@@ -164,10 +164,37 @@ ion-content {
 
 .accountBannerContainer{
   margin-top: 17%;
-
 }
 
 .tab-nav{
   background-color: #190855 !important;
-
 }
+
+.divisorNaranja{
+  background: #ea905d;
+  color: white !important;
+  border-top: none;
+}
+.textoLargo{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: bold;
+}
+.indicador{
+  z-index: 1;
+  display: inline-block;
+  padding: 2px 5px 2px;
+  min-width: 10px;
+  border-radius: 2px;
+  vertical-align: baseline;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  position: absolute;
+  top:10px;
+}
+

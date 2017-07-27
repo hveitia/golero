@@ -47,8 +47,17 @@ router.route('/userRankingPosition')
 router.route('/getUser')
     .get(middleware.ensureAuthenticated, userController.getUser);
 
+router.route('/clearUsers')
+    .get(middleware.ensureAuthenticated, userController.clearUsers);
+
 router.route('/getAvatar/:avatar')
     .get(userController.getAvatar);
+
+//router.route('/insertHistoricPoints')
+//    .get(userController.insertHistoricPoints);
+
+router.route('/revertPunctuation')
+    .get(middleware.ensureAuthenticated, userController.revertPunctuation);
 
 router.route('/getTeamLogo/:logo')
     .get(userController.getTeamLogo);

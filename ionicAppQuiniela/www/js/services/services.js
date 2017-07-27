@@ -129,6 +129,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+
       findGameByIdMany: function (idList) {
         return $http({
           method: 'POST',
@@ -143,6 +144,18 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+
+      findGamesByTeam: function (game) {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/findByTeam/' + game,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+
       getGameById: function (idGame) {
         return $http({
           method: 'GET',

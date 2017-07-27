@@ -2,6 +2,7 @@
   <h1 class="page-header">Users List</h1>
 
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalConfirmReset">Reset All Users to 0 points.!!</button>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalConfirmRevert">Revert punctuation!!</button>
   <hr>
   <table class="table table-bordered table-hover table-striped">
     <thead>
@@ -69,6 +70,26 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalConfirmResetLabel">Delete</h4>
+        </div>
+        <div class="modal-body">
+          Sure you want to reset ALL USERS to 0 points?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelResetAllUsers()">NO</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="resetAllUsers()">YES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Reset Users -->
+
+  <!--Modal Reset Users -->
+  <div class="modal fade" id="myModalConfirmRevert" tabindex="-1" role="dialog" aria-labelledby="myModalConfirmResetLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalConfirmRevertLabel">Delete</h4>
         </div>
         <div class="modal-body">
           Sure you want to reset ALL USERS to 0 points?

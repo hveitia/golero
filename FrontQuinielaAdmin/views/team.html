@@ -15,6 +15,7 @@
   <table class="table table-bordered table-hover table-striped"  style="margin-top: 10px;">
     <thead>
       <tr>
+        <th>Id</th>
         <th>Name</th>
         <th>Logo</th>
         <th>Actions</th>
@@ -22,6 +23,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="t in teamsList">
+        <td>{{t._id}}</td>
         <td>{{t.name}}</td>
         <td><img src="{{t.logoUrl}}" style="width: 5%;"></td>
         <td>

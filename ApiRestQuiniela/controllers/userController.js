@@ -5,6 +5,7 @@ var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require("path");
 var utils = require('../utils/utils.js');
+var forEachAsync = require('forEachAsync').forEachAsync;
 
 
 exports.findAll = function (req, res) {
@@ -122,7 +123,8 @@ exports.add = function (req, res) {
                         avatar: 'user.png',
                         favoriteTeam: 'noteam.png',
                         registerDate: new Date(),
-                        role: req.body.role
+                        role: req.body.role,
+                        historicalPunctuation: []
                     });
                     obj.save(function (err, result) {
                         if (err) return res.send(500, err.message);
@@ -159,7 +161,8 @@ exports.register = function (req, res) {
         avatar: 'user.png',
         favoriteTeam: 'noteam.png',
         registerDate: new Date(),
-        role: 'USER'
+        role: 'USER',
+        historicalPunctuation: []
     });
     obj.save(function (err, result) {
         if (err) return res.send(500, err.message);
@@ -253,6 +256,44 @@ exports.resetUserPointsAll = function (req, res) {
         if (err)res.status(500).send(err.message);
 
         res.status(200).send('OK');
+    });
+};
+
+exports.insertHistoricPoints = function (req, res) {
+
+    USERMODEL.update({}, {historicalPunctuation: [1,2,3,4,5,6,7,8,9]}, {multi: true}, function (err) {
+
+        if (err)res.status(500).send(err.message);
+
+        res.status(200).send('OK');
+    });
+};
+
+exports.revertPunctuation = function (req, res) {
+
+    USERMODEL.find({state: 'ACTIVE'}, function (err, result) {
+
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        forEachAsync(result, function (next, element, index, array) {
+
+            element.points = element.historicalPunctuation.pop();
+
+            element.save(function (err, result) {
+                if (err) {
+
+                    return res.send(500, err.message);
+                }
+                next();
+            });
+
+        }).then(function () {
+            console.log('All requests have finished');
+        });
+
+        res.status(200).jsonp(result);
     });
 };
 
@@ -372,7 +413,16 @@ exports.getTeamLogo = function (req, res) {
 exports.getTeamLogoEmpty = function (req, res) {
 
     res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
+};
 
+exports.clearUsers = function(req, res){
+
+        USERMODEL.remove({user: ''}, function (err) {
+
+            if (err) return res.status(500).send(err.message);
+
+            res.status(200).jsonp('OK');
+        });
 };
 
 exports.confirmRegistration = function (req, res) {

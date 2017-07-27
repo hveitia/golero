@@ -56,14 +56,26 @@ angular.module('QuinielaApp')
                     });
             };
 
-            $scope.deleteWorkingDay = function (wd) {
-                HandleDataService.deleteWorkingDay(wd._id).success(function (data) {
-                    $scope.loadWorkingDays();
-                })
-                    .error(function (err) {
-                        console.log(err);
-                    });
+            $scope.deleteWorkingDay = function () {
 
+                if (!EsNuloVacio($scope.idToDelete)) {
+                    HandleDataService.deleteWorkingDay($scope.idToDelete).success(function (data) {
+                        $scope.loadWorkingDays();
+                    })
+                        .error(function (err) {
+                            console.log(err);
+                        });
+                }
+            };
+
+            $scope.deleteWorkingDayClick = function (wd) {
+
+                $scope.idToDelete = wd._id;
+
+            };
+
+            $scope.canceldelete = function () {
+                $scope.idToDelete = '';
             };
 
             $scope.pageload();
