@@ -19,25 +19,39 @@ exports.findAll = function (req, res) {
 
 exports.add = function (req, res) {
 
-    GAMEMODEL.findById(req.body.game, function (err, result) {
-        WORKINGDAYMODEL.populate(result, {
-            path: "workingDay"
-        }, function (err, workingDay) {
-            if (err) res.send(500, err.message);
+    VOTEMODEL.find({user: req.user, game: req.body.game}, function (err, result) {
 
-            var obj = new VOTEMODEL({
-                valueVote: req.body.valueVote,
-                user: req.user,
-                game: req.body.game,
-                date: (workingDay.especialDate) ? workingDay.especialDate : workingDay.workingDay.date
+        if (err) res.send(500, err.message);
 
+        if (result.length == 0) {
+
+            GAMEMODEL.findById(req.body.game, function (err, result) {
+                WORKINGDAYMODEL.populate(result, {
+                    path: "workingDay"
+                }, function (err, workingDay) {
+                    if (err) res.send(500, err.message);
+
+                    var obj = new VOTEMODEL({
+                        valueVote: req.body.valueVote,
+                        user: req.user,
+                        game: req.body.game,
+                        date: (workingDay.especialDate) ? workingDay.especialDate : workingDay.workingDay.date
+
+                    });
+                    obj.save(function (err, result) {
+                        if (err) return res.send(500, err.message);
+                        res.status(200).jsonp(result);
+                    });
+                });
             });
-            obj.save(function (err, result) {
-                if (err) return res.send(500, err.message);
-                res.status(200).jsonp(result);
-            });
-        });
+        }
+        else {
+            res.status(200).jsonp('DUPLEX');
+        }
+
     });
+
+
 };
 
 exports.update = function (req, res) {
