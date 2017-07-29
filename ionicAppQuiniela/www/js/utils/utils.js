@@ -4,7 +4,6 @@
 //todo: hacer e flujo de comentarios
 //todo: actualizar dashboard voto y comentarios
 //todo: refactor al handledataService -- prioridad baja --
-//todo: gestionar pantalla de roler que se vea solo una vez
 //todo: no se le puede dar atrás
 //todo: gestionr la caida de la conexion
 
