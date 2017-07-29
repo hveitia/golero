@@ -71,24 +71,26 @@ exports.userRankingUpdate = function (req, res) {
 
 exports.userRankingPosition = function (req, res) {
 
-    USERMODEL.find({state: 'ACTIVE'}, null, {sort: {'points': -1}}, function (err, result) {
-
-        if (err) {
-            res.send(500, err.message);
-        }
-
-        var flag = false;
-        for (var i = 0; i < result.length; i++) {
-            if (result[i]._doc._id == req.user) {
-                flag = true;
-                res.status(200).jsonp({'pos': i + 1, 'points': result[i].points});
-
+    USERMODEL.find({$and:[{user:{$ne:'admin'}},{'state': 'ACTIVE'}]})
+        .sort({'points': -1})
+        .limit(200)
+        .exec(function (err, result) {
+            if (err) {
+                res.send(500, err.message);
             }
-        }
-        if (!flag)
-            res.status(200).jsonp({'pos': -1, 'points': 0});
 
-    });
+            var flag = false;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i]._doc._id == req.user) {
+                    flag = true;
+                    res.status(200).jsonp({'pos': i + 1, 'points': result[i].points});
+
+                }
+            }
+            if (!flag)
+                res.status(200).jsonp({'pos': -1, 'points': 0});
+
+        });
 };
 
 exports.verificateUser = function (req, res) {
