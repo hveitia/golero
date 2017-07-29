@@ -8,8 +8,8 @@
 //todo: gestionr la caida de la conexion
 
 
-//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
-var urlApi = 'http://localhost:3000/api/';
+var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+//var urlApi = 'http://localhost:3000/api/';
 
 
 var returnApiCodes = {
