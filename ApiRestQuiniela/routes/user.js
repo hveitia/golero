@@ -53,8 +53,8 @@ router.route('/clearUsers')
 router.route('/getAvatar/:avatar')
     .get(userController.getAvatar);
 
-//router.route('/insertHistoricPoints')
-//    .get(userController.insertHistoricPoints);
+router.route('/userRankingUpdate')
+    .get(middleware.ensureAuthenticated, userController.userRankingUpdate);
 
 router.route('/revertPunctuation')
     .get(middleware.ensureAuthenticated, userController.revertPunctuation);
@@ -82,3 +82,7 @@ router.route('/verificateUser/:userName')
 
 
 module.exports = router;
+
+//router.route('/insertHistoricPoints')
+//    .get(userController.insertHistoricPoints);
+

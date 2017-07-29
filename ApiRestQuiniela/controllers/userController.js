@@ -25,7 +25,7 @@ exports.findAll = function (req, res) {
 
 exports.userRanking = function (req, res) {
 
-    USERMODEL.find({state: 'ACTIVE'})
+    USERMODEL.find({$and:[{user:{$ne:'admin'}},{'state': 'ACTIVE'}]})
         .sort({'points': -1})
         .limit(200)
         .exec(function (err, result) {
@@ -35,6 +35,37 @@ exports.userRanking = function (req, res) {
             }
 
             res.status(200).jsonp(result);
+        });
+};
+
+exports.userRankingUpdate = function (req, res) {
+
+    USERMODEL.find({$and:[{user:{$ne:'admin'}},{'state': 'ACTIVE'}]})
+        .sort({'points': -1})
+        .limit(200)
+        .exec(function (err, result) {
+
+            if (err) {
+                res.send(500, err.message);
+            }
+
+            forEachAsync(result, function (next, element, index, array) {
+
+                element.lastPosition = index + 1;
+
+                element.save(function (err, result) {
+                    if (err) {
+
+                        return res.send(500, err.message);
+                    }
+                    next();
+                });
+
+            }).then(function () {
+                console.log('All requests have finished');
+            });
+
+            res.status(200).jsonp('OK');
         });
 };
 
@@ -124,7 +155,8 @@ exports.add = function (req, res) {
                         favoriteTeam: 'noteam.png',
                         registerDate: new Date(),
                         role: req.body.role,
-                        historicalPunctuation: []
+                        historicalPunctuation: [],
+                        lastPosition: 201
                     });
                     obj.save(function (err, result) {
                         if (err) return res.send(500, err.message);
@@ -293,7 +325,7 @@ exports.revertPunctuation = function (req, res) {
             console.log('All requests have finished');
         });
 
-        res.status(200).jsonp(result);
+        res.status(200).jsonp('OK');
     });
 };
 

@@ -22,18 +22,16 @@ angular.module('QuinielaApp')
 
                     HandleDataService.findGameByIdMany(idList).success(function (data) {
 
-                        for(var i=0;i<data.length;i++){
-                            for(var j=0;j<$scope.voteList.length;j++){
-                                if($scope.voteList[j].game == data[i]._id){
+                        for (var i = 0; i < data.length; i++) {
+                            for (var j = 0; j < $scope.voteList.length; j++) {
+                                if ($scope.voteList[j].game == data[i]._id) {
                                     $scope.voteList[j].game = data[i];
                                 }
                             }
                         }
-
                     }).error(function (err) {
                         console.log(err);
-                    })
-
+                    });
 
                 }).error(function (err) {
                     $scope.voteList = [];

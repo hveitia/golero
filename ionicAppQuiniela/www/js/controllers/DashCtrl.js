@@ -1,6 +1,6 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform,
+  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory,
                                     Vote, Game, Text, Team, DatabaseService, RankinService, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
@@ -43,7 +43,14 @@ angular.module('QuinielaIonicApp')
       $scope.modalRoler = modal;
     });
     $scope.openModalRoler = function () {
-      $scope.modalRoler.show();
+
+      if(StorageService.getItem('registred')){
+        $scope.closeModalRoler();
+      }
+      else{
+        $scope.modalRoler.show();
+      }
+
     };
     $scope.closeModalRoler = function () {
       $scope.modalRoler.hide();
@@ -579,6 +586,10 @@ angular.module('QuinielaIonicApp')
         $scope.loadactiveVotesByUser();
         $scope.loadTodayVotes();
       }
+
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+
 
     });
 

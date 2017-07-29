@@ -18,9 +18,10 @@ angular.module('QuinielaApp')
 
             $scope.loadSeasons = function () {
                 HandleDataService.getAllSeansons().success(function (data) {
-                    $scope.seasonList = data;
-                    $scope.seasonSelected = data[0];
-
+                    $scope.seasonList = data.filter(function (x) {
+                        return x.active
+                    });
+                    $scope.seasonSelected = $scope.seasonList[0];
                 })
                     .error(function (err) {
                         $scope.seasonList = [];

@@ -156,6 +156,19 @@ angular.module('QuinielaIonicApp')
               $scope.rankinList[i].class = '#190855';
           }
 
+          if (i > 2) {
+            if ($scope.rankinList[i].lastPosition > i + 1) {
+              $scope.rankinList[i].class = 'g';
+            } else {
+              if ($scope.rankinList[i].lastPosition < i + 1) {
+                $scope.rankinList[i].class = 'r';
+              }
+              else {
+                $scope.rankinList[i].class = 'y';
+              }
+            }
+          }
+
           if ($scope.rankinList[i].user == StorageService.getItem('user')) {
             $scope.rankinList[i].backGroundClass = '#ddd';
           } else {
@@ -176,7 +189,7 @@ angular.module('QuinielaIonicApp')
 
         UserService.getUserByName($scope.data.userFinded).success(function (data) {
 
-          if(data =='EMPTY'){
+          if (data == 'EMPTY') {
             $ionicPopup.alert({
               title: '¡Usuario no encontrado!',
               template: 'No se ha encontrado el usuario. Verifique el nombre. Tenga en cuenta mayúsculas y minúsculas.'

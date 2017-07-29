@@ -1,13 +1,16 @@
-//todo: cambiar la vista de ayuda
-//todo: gestionar reversos
+
+
 //todo: poner logs en los emails
 //todo: hacer e flujo de comentarios
 //todo: actualizar dashboard voto y comentarios
 //todo: refactor al handledataService -- prioridad baja --
+//todo: gestionar pantalla de roler que se vea solo una vez
+//todo: no se le puede dar atrás
+//todo: gestionr la caida de la conexion
 
 
-var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
-//var urlApi = 'http://localhost:3000/api/';
+//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+var urlApi = 'http://localhost:3000/api/';
 
 
 var returnApiCodes = {

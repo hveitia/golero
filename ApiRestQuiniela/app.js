@@ -22,7 +22,7 @@ var dbLocation = 'localhost';
 // Connection to DB
 mongoose.connect('mongodb://'+dbLocation+'/' + dbName, function(err, res) {
   if (err) throw err;
-  console.log('Connected to Database ' + dbName);
+  console.log('Connected to Database: ' + dbName + ' on server: ' + dbLocation);
 });
 
 // Middlewares

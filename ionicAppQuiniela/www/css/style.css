@@ -198,3 +198,14 @@ ion-content {
   top:10px;
 }
 
+.badgetRankingPosition{
+  border-radius: 10px;
+  color: black;
+  padding: 0px 3px;
+  position: absolute;
+  top: 39%;
+  left: 3%;
+  font-size: 14px;
+
+}
+
