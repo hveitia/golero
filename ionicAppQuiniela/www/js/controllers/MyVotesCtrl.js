@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('MyVotesCtrl', function ($scope, $http, $ionicScrollDelegate, $state, $ionicPlatform, Game, Vote, DatabaseService, StorageService) {
+  .controller('MyVotesCtrl', function ($scope, $http, $ionicScrollDelegate, $state, $ionicPlatform, $ionicPopup, Game, Vote, DatabaseService, StorageService) {
 
     $scope.urlApi = urlApi;
 
@@ -139,7 +139,6 @@ angular.module('QuinielaIonicApp')
       $scope.deleting = !$scope.deleting;
     };
 
-
     $scope.$on('$ionicView.enter', function () {
       $scope.loading = false;
       $scope.showTipsHowToEdit = StorageService.getItem('showTipsHowToEdit') == null;
@@ -148,6 +147,20 @@ angular.module('QuinielaIonicApp')
       $scope.deleting = false;
       $ionicScrollDelegate.scrollTop();
       $scope.loadVotesByUser();
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
+
     });
 
 

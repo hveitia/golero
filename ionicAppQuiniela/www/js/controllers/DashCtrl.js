@@ -1,6 +1,6 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory, $rootScope, $cordovaNetwork,
+  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory,
                                     Vote, Game, Text, Team, DatabaseService, Configs, RankinService, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
@@ -590,6 +590,8 @@ angular.module('QuinielaIonicApp')
       $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
 
+
+
       if (ionic.Platform.isIOS()) {
 
         Configs.getIosVersion().success(function (data) {
@@ -641,29 +643,20 @@ angular.module('QuinielaIonicApp')
           });
         }
       }
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
     });
-
-    document.addEventListener("deviceready", function () {
-
-      // listen for Online event
-      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-
-        var onlineState = networkState;
-
-        alert(onlineState);
-
-      });
-
-      // listen for Offline event
-      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-
-        var offlineState = networkState;
-
-        alert(offlineState);
-
-      });
-
-    }, false);
 
     $ionicPlatform.on('resume', function () {
       $state.go('tab.dash');

@@ -17,6 +17,11 @@ var returnApiCodes = {
   "0004": "El usuario no está activo, por favor proceda con la activación de su usuario desde su email."
 };
 
+var textConectionLost = {
+  title:'¡Conexión Perdida!',
+  text:'Lo sentimos, se ha perdido la conexión. Intente reconectar.'
+};
+
 var iosVersion = 0;
 var androidVersion = 48;
 

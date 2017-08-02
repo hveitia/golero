@@ -22,6 +22,7 @@ angular.module('QuinielaApp')
             $scope.clearLogs = function () {
                 HandleDataService.clearLogs().success(function (data) {
                     alert('Logs Cleared !!');
+                    $scope.pageload();
                 })
                     .error(function (err) {
                         console.log(err);

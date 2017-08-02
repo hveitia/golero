@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('LoginController', function ($scope, $http, $stateParams, $ionicPopup, $state, md5, $rootScope, $cordovaNetwork,
+  .controller('LoginController', function ($scope, $http, $stateParams, $ionicPopup, $state, md5,
                                            StorageService, $cordovaDevice) {
 
     $scope.login = function () {
@@ -129,24 +129,6 @@ angular.module('QuinielaIonicApp')
         $scope.addUserUUDI($cordovaDevice.getUUID());
       }
 
-      // listen for Online event
-      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-
-        var onlineState = networkState;
-
-        alert(onlineState);
-
-      });
-
-      // listen for Offline event
-      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-
-        var offlineState = networkState;
-
-        alert(offlineState);
-
-      });
-
     }, false);
 
     $scope.$on('$ionicView.enter', function () {
@@ -167,6 +149,19 @@ angular.module('QuinielaIonicApp')
        $scope.login();
 
        }
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
 
     });
 

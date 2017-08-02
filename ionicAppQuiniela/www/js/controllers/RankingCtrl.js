@@ -218,6 +218,20 @@ angular.module('QuinielaIonicApp')
       $scope.voteList = [];
       $scope.gameVotedList = [];
       $scope.loadRanking();
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
+
     });
 
     $ionicPlatform.on('resume', function () {

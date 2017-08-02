@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Services', 'angular-md5', 'ngCordova'])
 
-  .run(function($ionicPlatform) {
+  .run(function($ionicPlatform, $ionicPopup) {
 
 
     $ionicPlatform.ready(function() {
@@ -32,6 +32,20 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         StatusBar.styleLightContent();
       }
 
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            content: textConectionLost.text
+          })
+            .then(function(result) {
+              if(!result) {
+                ionic.Platform.exitApp();
+              }
+            });
+        }
+      }
+
     });
   })
 
@@ -48,6 +62,12 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         url: '/login',
         templateUrl: 'templates/login.html',
         controller: 'LoginController'
+      })
+
+      .state('lostConnection', {
+        url: '/lostConnection',
+        templateUrl: 'templates/lostConnection.html',
+        controller: 'LostConnectionCtrl'
       })
 
 

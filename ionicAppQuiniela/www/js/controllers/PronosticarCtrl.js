@@ -204,7 +204,6 @@ angular.module('QuinielaIonicApp')
       $scope.showTipsHowToVote = false;
     };
 
-
     $scope.$on('$ionicView.enter', function () {
       $scope.loading = false;
       $scope.gameToVoteList = [];
@@ -213,6 +212,19 @@ angular.module('QuinielaIonicApp')
       $ionicScrollDelegate.scrollTop();
       $scope.showTipsHowToVote = StorageService.getItem('showTipsHowToVote') == null;
       $scope.loadVotesByUser();
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
     });
 
     $ionicPlatform.on('resume', function () {

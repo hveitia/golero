@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('AccountCtrl', function ($scope, $interval, $state, $stateParams, $ionicPlatform, $ionicModal,
+  .controller('AccountCtrl', function ($scope, $interval, $state, $stateParams, $ionicPlatform, $ionicModal,$ionicPopup,
                                        UserService, DatabaseService, Text) {
 
     $ionicModal.fromTemplateUrl('view-texts-modal.html', {
@@ -87,6 +87,19 @@ angular.module('QuinielaIonicApp')
 
     $scope.$on('$ionicView.enter', function () {
       //$scope.loadUserData();
+
+      if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+              }]
+          });
+        }
+      }
 
     });
 

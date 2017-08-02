@@ -32,12 +32,12 @@ exports.loadConfigs = function (req, res) {
 
 exports.getIosVersion = function (req,res) {
 
-    CONFIGSMODEL.findById(req.params.id,function (err, obj) {
+    CONFIGSMODEL.find(function (err, obj) {
 
         if (err) res.send(500, err.message);
 
-        if(obj){
-            res.status(200).jsonp(obj.iosVersion);
+        if(obj.length == 1){
+            res.status(200).jsonp(obj[0].iosVersion);
         }
         res.status(200).jsonp(0);
     });
@@ -45,12 +45,12 @@ exports.getIosVersion = function (req,res) {
 
 exports.getAndroidVersion = function (req,res) {
 
-    CONFIGSMODEL.findById(req.params.id,function (err, obj) {
+    CONFIGSMODEL.find(function (err, obj) {
 
         if (err) res.send(500, err.message);
 
-        if(obj){
-            res.status(200).jsonp(obj.androidVersion);
+        if(obj.length == 1){
+            res.status(200).jsonp(obj[0].androidVersion);
         }
         res.status(200).jsonp(0);
     });
