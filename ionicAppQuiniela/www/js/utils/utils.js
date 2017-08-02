@@ -23,7 +23,7 @@ var textConectionLost = {
 };
 
 var iosVersion = 0;
-var androidVersion = 48;
+var androidVersion = 58;
 
 var tokenUser = '';
 
