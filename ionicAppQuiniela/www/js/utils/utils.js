@@ -1,10 +1,8 @@
 
-
 //todo: poner logs en los emails
 //todo: hacer e flujo de comentarios
 //todo: actualizar dashboard voto y comentarios
 //todo: refactor al handledataService -- prioridad baja --
-//todo: no se le puede dar atrás
 //todo: gestionr la caida de la conexion
 
 
@@ -18,6 +16,9 @@ var returnApiCodes = {
   "0003": "Usuario y/o Contraseña Incorrectos.",
   "0004": "El usuario no está activo, por favor proceda con la activación de su usuario desde su email."
 };
+
+var iosVersion = 0;
+var androidVersion = 48;
 
 var tokenUser = '';
 

@@ -167,6 +167,30 @@
                                 onstyle="btn-success"
                                 offstyle="btn-danger"></toggle>
                     </div>
+
+                    <div class="col-lg-6" style="margin-top: 15px;">
+                        Ios Version
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 15px; padding-right: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" data-ng-model="configs.iosVersion">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" data-ng-click="updateIosVersion()">Save</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" style="margin-top: 15px;">
+                        Android Version
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 15px; padding-right: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" data-ng-model="configs.androidVersion">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" data-ng-click="updateAndroidVersion()">Save</button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

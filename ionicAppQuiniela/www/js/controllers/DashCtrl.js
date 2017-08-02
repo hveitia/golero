@@ -1,7 +1,7 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory,
-                                    Vote, Game, Text, Team, DatabaseService, RankinService, UserService, StorageService) {
+  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory, $rootScope, $cordovaNetwork,
+                                    Vote, Game, Text, Team, DatabaseService, Configs, RankinService, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
 
@@ -44,10 +44,10 @@ angular.module('QuinielaIonicApp')
     });
     $scope.openModalRoler = function () {
 
-      if(StorageService.getItem('registred')){
+      if (StorageService.getItem('registred')) {
         $scope.closeModalRoler();
       }
-      else{
+      else {
         $scope.modalRoler.show();
       }
 
@@ -544,7 +544,7 @@ angular.module('QuinielaIonicApp')
           title: data[0].title,
           subTitle: '',
           scope: $scope,
-          buttons: [{text: 'Acepto', type:'button-positive'}]
+          buttons: [{text: 'Acepto', type: 'button-positive'}]
         });
 
       }).error(function (err) {
@@ -590,8 +590,80 @@ angular.module('QuinielaIonicApp')
       $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
 
+      if (ionic.Platform.isIOS()) {
 
+        Configs.getIosVersion().success(function (data) {
+
+          if (iosVersion < data) {
+
+            $ionicPopup.confirm({
+              title: '¡Nueva Versión!',
+              template: 'Una nueva versión de Golero está disponible. ¿Desea actualizar la aplicación ahora? Tenga en cuenta que de no actualizar la aplicación esta podría tener resultados inesperados.',
+              buttons: [
+                {
+                  text: 'NO', onTap: function (e) {
+                }
+                }, {
+                  text: 'SI', type: 'button-positive', onTap: function (e) {
+                    window.open('http://soygolero.com', '_system');
+                  }
+                }]
+            });
+
+          }
+        }).error(function (err) {
+          console.log(err);
+        });
+
+      } else {
+
+        if (ionic.Platform.isAndroid()) {
+
+          Configs.getAndroidVersion().success(function (data) {
+
+            if (androidVersion < data) {
+
+              $ionicPopup.confirm({
+                title: '¡Nueva Versión!',
+                template: 'Una nueva versión de Golero está disponible. ¿Desea actualizar la aplicación ahora? Tenga en cuenta que de no actualizar la aplicación esta podría tener resultados inesperados.',
+                buttons: [
+                  {
+                    text: 'NO'
+                  }, {
+                    text: 'SI', type: 'button-positive', onTap: function (e) {
+                      window.open('http://soygolero.com', '_system');
+                     }
+                  }]
+              });
+            }
+          }).error(function () {
+
+          });
+        }
+      }
     });
+
+    document.addEventListener("deviceready", function () {
+
+      // listen for Online event
+      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+
+        var onlineState = networkState;
+
+        alert(onlineState);
+
+      });
+
+      // listen for Offline event
+      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+
+        var offlineState = networkState;
+
+        alert(offlineState);
+
+      });
+
+    }, false);
 
     $ionicPlatform.on('resume', function () {
       $state.go('tab.dash');

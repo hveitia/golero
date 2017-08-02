@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('LoginController', function ($scope, $http, $stateParams, $ionicPopup, $state, md5,
+  .controller('LoginController', function ($scope, $http, $stateParams, $ionicPopup, $state, md5, $rootScope, $cordovaNetwork,
                                            StorageService, $cordovaDevice) {
 
     $scope.login = function () {
@@ -129,6 +129,23 @@ angular.module('QuinielaIonicApp')
         $scope.addUserUUDI($cordovaDevice.getUUID());
       }
 
+      // listen for Online event
+      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+
+        var onlineState = networkState;
+
+        alert(onlineState);
+
+      });
+
+      // listen for Offline event
+      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+
+        var offlineState = networkState;
+
+        alert(offlineState);
+
+      });
 
     }, false);
 
@@ -136,7 +153,6 @@ angular.module('QuinielaIonicApp')
 
       //$scope.login();
       //$scope.addUserUUDI(Math.floor(Date.now()));
-
 
        var user = StorageService.getItem('user');
        var pass = StorageService.getItem('password');
@@ -151,9 +167,6 @@ angular.module('QuinielaIonicApp')
        $scope.login();
 
        }
-
-
-
 
     });
 

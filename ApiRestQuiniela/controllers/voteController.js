@@ -7,6 +7,8 @@ var TEAMMODEL = mongoose.model('TEAMMODEL');
 
 var utils = require('../utils/utils.js');
 
+var logController = require('./logController');
+
 exports.findAll = function (req, res) {
 
     VOTEMODEL.find(function (err, result) {
@@ -35,17 +37,24 @@ exports.add = function (req, res) {
                         valueVote: req.body.valueVote,
                         user: req.user,
                         game: req.body.game,
-                        date: (workingDay.especialDate) ? workingDay.especialDate : workingDay.workingDay.date
+                        date: (workingDay.especialDate) ? workingDay.especialDate : workingDay.workingDay.date,
+                        insertedDate: new Date().toString('dd/MM/yyyy HH:mm:ss')
 
                     });
                     obj.save(function (err, result) {
-                        if (err) return res.send(500, err.message);
+                        if (err){
+                            return res.send(500, err.message);
+                            logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Log Save Failed', 'voteController', 'add');
+                        }
+
+                        logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Vote Saved OK', 'voteController', 'add');
                         res.status(200).jsonp(result);
                     });
                 });
             });
         }
         else {
+            logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'DUPLEX', 'voteController', 'add');
             res.status(200).jsonp('DUPLEX');
         }
 

@@ -4,10 +4,9 @@ var CONFIGSMODEL = mongoose.model('CONFIGSMODEL');
 
 exports.saveLog = function (user, method, date, logText, controller, action) {
 
-
     CONFIGSMODEL.find(function (err, result) {
 
-        if (result &&  result.length > 0 && result[0].saveLogs != undefined) {
+        if (result &&  result.length > 0 && result[0].saveLogs != undefined && result[0].saveLogs == true) {
 
             USERMODEL.findOne({_id: user}, function (err, result) {
 
@@ -26,16 +25,12 @@ exports.saveLog = function (user, method, date, logText, controller, action) {
 
                 objLog.save(function (err, result) {
                     if (err) {
-
                         console.log(err.message);
                     }
                 });
-
             });
         }
     });
-
-
 };
 
 exports.findAll = function (req, res) {
@@ -47,6 +42,25 @@ exports.findAll = function (req, res) {
         res.status(200).jsonp(result);
     });
 
+};
+
+//OPTIONS Allow CORS to DELETE
+exports.options = function (req, res, next) {
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+
+    next();
+};
+
+exports.clearLogs = function(req, res){
+    LOGMODEL.remove(function (err) {
+
+        if (err) return res.status(500).send(err.message);
+
+        res.status(200).jsonp('OK');
+    });
 };
 
 

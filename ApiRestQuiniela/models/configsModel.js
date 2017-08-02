@@ -1,11 +1,10 @@
-
-exports = module.exports = function(app, mongoose) {
+exports = module.exports = function (app, mongoose) {
 
     var configsSchema = new mongoose.Schema({
 
-        saveLogs: {
-            type: Boolean
-        }
+        saveLogs: {type: Boolean},
+        iosVersion: {type: Number},
+        androidVersion: {type: Number}
 
     });
 

@@ -250,6 +250,32 @@
                         }
                     });
                 },
+                updateIosVersion: function (config) {
+                    return $http({
+                        method: 'PUT',
+                        url: urlApi + 'updateIosVersion/' + config._id,
+                        data: {
+                            "iosVersion": config.iosVersion
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                updateAndroidVersion: function (config) {
+                    return $http({
+                        method: 'PUT',
+                        url: urlApi + 'updateAndriodVersion/' + config._id,
+                        data: {
+                            "androidVersion": config.androidVersion
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 setStateUpdated: function (game) {
                     return $http({
                         method: 'PUT',
@@ -331,6 +357,16 @@
                     return $http({
                         method: 'DELETE',
                         url: urlApi + 'user/' + user,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                clearLogs: function () {
+                    return $http({
+                        method: 'DELETE',
+                        url: urlApi + 'clearLogs',
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
                             'Content-Type': 'application/json'

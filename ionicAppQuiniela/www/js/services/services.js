@@ -2,19 +2,19 @@ angular.module('QuinielaIonicApp.Services', [])
 
   .constant('storageKey', 'storage_')
 
-  .factory('StorageService', ['$window', 'storageKey', function($window, storageKey) {
+  .factory('StorageService', ['$window', 'storageKey', function ($window, storageKey) {
 
     var storageService = {};
 
-    var getStorageKey = function(key) {
+    var getStorageKey = function (key) {
       return storageKey + key;
     };
 
-    storageService.setItem = function(key, object) {
+    storageService.setItem = function (key, object) {
       $window.localStorage.setItem(getStorageKey(key), angular.toJson(object));
     };
 
-    storageService.getItem = function(key) {
+    storageService.getItem = function (key) {
       var jsonObject = $window.localStorage.getItem(getStorageKey(key));
       return jsonObject ? angular.fromJson(jsonObject) : null;
     };
@@ -22,7 +22,7 @@ angular.module('QuinielaIonicApp.Services', [])
     return storageService;
   }])
 
-  .factory('DatabaseService', ['$q', function($q) {
+  .factory('DatabaseService', ['$q', function ($q) {
     var _db;
 
     return {
@@ -36,12 +36,12 @@ angular.module('QuinielaIonicApp.Services', [])
     function initDB() {
       // Creates the database or opens if it already exists
       /*PouchDB.plugin(PouchAdapterCordovaSqlite);
-      _db = new PouchDB('appData.db', {
-        adapter: 'cordova-sqlite',
-        location: 'default',
-        revs_limit: 1,
-        auto_compaction: true
-      });*/
+       _db = new PouchDB('appData.db', {
+       adapter: 'cordova-sqlite',
+       location: 'default',
+       revs_limit: 1,
+       auto_compaction: true
+       });*/
       _db = new PouchDB('appData', {
         revs_limit: 1,
         auto_compaction: true
@@ -68,10 +68,10 @@ angular.module('QuinielaIonicApp.Services', [])
     }
   }])
 
-  .factory('RankinService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('RankinService', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getRanking: function() {
+      getRanking: function () {
         return $http({
           method: 'GET',
           url: urlApi + 'userRanking',
@@ -81,7 +81,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      getRankingPosition: function() {
+      getRankingPosition: function () {
         return $http({
           method: 'GET',
           url: urlApi + 'userRankingPosition',
@@ -94,10 +94,10 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Game', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('Game', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getAllWorkingDay: function() {
+      getAllWorkingDay: function () {
         return $http({
           method: 'GET',
           url: urlApi + 'workingDay',
@@ -108,7 +108,7 @@ angular.module('QuinielaIonicApp.Services', [])
         });
       },
 
-      getAllGames: function() {
+      getAllGames: function () {
         return $http({
           method: 'GET',
           url: urlApi + 'game',
@@ -119,7 +119,7 @@ angular.module('QuinielaIonicApp.Services', [])
         });
       },
 
-      getGameToVote: function() {
+      getGameToVote: function () {
         return $http({
           method: 'GET',
           url: urlApi + 'gameToVoteByDate',
@@ -170,10 +170,10 @@ angular.module('QuinielaIonicApp.Services', [])
 
   }])
 
-  .factory('Vote', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('Vote', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getVoteByUser: function() {
+      getVoteByUser: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUser',
@@ -183,7 +183,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      getVoteByUserAny: function(user) {
+      getVoteByUserAny: function (user) {
         return $http({
           method: 'GET',
           url: urlApi + '/voteByUserAny/' + user,
@@ -193,7 +193,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      getActiveVotesByUser: function() {
+      getActiveVotesByUser: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/votesActiveByUser',
@@ -203,7 +203,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      getTodayVotesByUser: function() {
+      getTodayVotesByUser: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/votesTodayByUser',
@@ -213,7 +213,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      deleteVote: function(vote) {
+      deleteVote: function (vote) {
         return $http({
           method: 'DELETE',
           url: urlApi + '/vote/' + vote,
@@ -226,10 +226,10 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Text', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('Text', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getTexts: function() {
+      getTexts: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/getTexts',
@@ -239,7 +239,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      getTextsByKey: function(key) {
+      getTextsByKey: function (key) {
         return $http({
           method: 'GET',
           url: urlApi + '/getTextsByKey/' + key,
@@ -252,10 +252,10 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('Team', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('Team', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getTeamsAll: function() {
+      getTeamsAll: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/team',
@@ -268,10 +268,36 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .factory('UserService', ['$http', '$q', 'StorageService', function($http, $q, StorageService) {
+  .factory('Configs', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
 
     return {
-      getUser: function() {
+      getIosVersion: function () {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getIosVersion',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+      getAndroidVersion: function () {
+        return $http({
+          method: 'GET',
+          url: urlApi + '/getAndroidVersion',
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+    };
+  }])
+
+  .factory('UserService', ['$http', '$q', 'StorageService', function ($http, $q, StorageService) {
+
+    return {
+      getUser: function () {
         return $http({
           method: 'GET',
           url: urlApi + '/getUser',
@@ -282,7 +308,7 @@ angular.module('QuinielaIonicApp.Services', [])
         });
 
       },
-      getUserByName: function(name) {
+      getUserByName: function (name) {
         return $http({
           method: 'GET',
           url: urlApi + '/getUserByName/' + name,
@@ -293,7 +319,7 @@ angular.module('QuinielaIonicApp.Services', [])
         });
 
       },
-      activateAccount: function(registerHash){
+      activateAccount: function (registerHash) {
         return $http({
           method: 'PUT',
           url: urlApi + 'activateAccount',
@@ -310,7 +336,7 @@ angular.module('QuinielaIonicApp.Services', [])
         return $http({
           method: 'PUT',
           url: urlApi + '/editEmail',
-          data:{
+          data: {
             "email": newEmail
           },
           headers: {
@@ -319,7 +345,7 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
-      verificateUserName:function(userName){
+      verificateUserName: function (userName) {
         return $http({
           method: 'GET',
           url: urlApi + 'verificateUser/' + userName

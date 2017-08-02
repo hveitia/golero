@@ -16,6 +16,9 @@ exports = module.exports = function(app, mongoose) {
     },
     date: {
       type: Date
+    },
+    insertedDate:{
+      type: Date
     }
 
 

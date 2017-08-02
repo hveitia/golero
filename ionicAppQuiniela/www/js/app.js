@@ -32,11 +32,6 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         StatusBar.styleLightContent();
       }
 
-
-
-
-
-
     });
   })
 
@@ -121,8 +116,8 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
 
   })
-  .controller('MainCtrl', function($scope) {
 
+  .controller('MainCtrl', function($scope) {
 
     $scope.$on('$ionicView.enter', function() {
       $scope.showNavBar = false;

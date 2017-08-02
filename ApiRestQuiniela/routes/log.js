@@ -10,6 +10,9 @@ var logController = require('../controllers/logController');
 router.route('/log')
     .get(middleware.ensureAuthenticated, logController.findAll);
 
+router.route('/clearLogs')
+    .options(middleware.ensureAuthenticated, logController.options)
+    .delete(middleware.ensureAuthenticated, logController.clearLogs);
 
 
 module.exports = router;

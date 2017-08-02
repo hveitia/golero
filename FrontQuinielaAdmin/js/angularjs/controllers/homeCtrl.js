@@ -24,7 +24,7 @@ angular.module('QuinielaApp')
 
         $scope.configs.saveLogs = $scope.toggleValue;
         HandleDataService.updateSaveLogs($scope.configs).success(function (data) {
-
+            alert('Logs configs updated success!!');
         }).error(function(err){
           console.log(err.message);
         });
@@ -35,10 +35,34 @@ angular.module('QuinielaApp')
         HandleDataService.getConfigs().success(function (data) {
             $scope.configs = data[0];
           $scope.toggleValue = $scope.configs.saveLogs;
+
         }).error(function(err){
 
           console.log(err.message);
         });
+      };
+
+
+      $scope.updateIosVersion = function () {
+
+        HandleDataService.updateIosVersion($scope.configs).success(function (data) {
+          $scope.configs = data;
+          alert('Ios Version updated!!');
+        }).error(function(err){
+
+          console.log(err.message);
+        });
+      };
+
+      $scope.updateAndroidVersion = function () {
+
+        HandleDataService.updateAndroidVersion($scope.configs).success(function (data) {
+          $scope.configs = data;
+          alert('Android Version updated!!');
+        }).error(function(err){
+
+          console.log(err.message);
+        })
       };
 
       $scope.loadRegisteredUsers = function() {
@@ -105,6 +129,7 @@ angular.module('QuinielaApp')
 
       $scope.loadGamesToUpdate = function() {
         $scope.gamesToUpdateList = [];
+        $scope.gamesToUpdate = 0;
         HandleDataService.getGameByState('SCHEDULED').success(function(data) {
 
             for (var i = 0; i < data.length; i++) {
@@ -140,6 +165,7 @@ angular.module('QuinielaApp')
         HandleDataService.updateGame(obj).success(function(data) {
             $('#modalUpdateGame').modal('hide');
             $scope.loadGames();
+          $scope.loadGamesToUpdate();
           })
           .error(function(err) {
             alert(err);

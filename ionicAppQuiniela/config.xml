@@ -81,6 +81,7 @@
   <plugin name="cordova-plugin-console" spec="~1.0.5"/>
   <plugin name="cordova-plugin-whitelist" spec="npm"/>
   <plugin name="cordova-plugin-statusbar" source="npm"/>
+  <plugin name="cordova-plugin-network-information" source="npm"/>
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>
