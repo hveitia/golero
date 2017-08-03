@@ -633,7 +633,7 @@ angular.module('QuinielaIonicApp')
                     text: 'NO'
                   }, {
                     text: 'SI', type: 'button-positive', onTap: function (e) {
-                      window.open('http://soygolero.com', '_system');
+                      window.open('https://play.google.com/store/apps/details?id=com.hectorveitia.golero', '_system');
                      }
                   }]
               });
