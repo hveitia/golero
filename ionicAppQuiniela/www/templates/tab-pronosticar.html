@@ -42,13 +42,13 @@
         </div>
         <div class="row " style="text-align: center " data-ng-click="addVoteClick(item)">
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}}">
+            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.localTeam.logo}}">
           </div>
           <div class="col ">
             <i class="fa fa-handshake-o fa-2x animated zoomIn " aria-hidden="true " style="color: darkblue; margin-top: 10px; "></i>
           </div>
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}}">
+            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{item.visitorTeam.logo}}">
           </div>
         </div>
       </div>
@@ -65,13 +65,13 @@
 
         <div class="row " style="text-align: center ">
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + gameSelected.localTeam.logo}} " data-ng-click="addVote(gameSelected, '1') ">
+            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{gameSelected.localTeam.logo}} " data-ng-click="addVote(gameSelected, '1') ">
           </div>
           <div class="col ">
             <i class="fa fa-handshake-o fa-2x animated zoomIn " aria-hidden="true " style="color: darkblue; margin-top: 10px; " data-ng-click="addVote(gameSelected, '0') "></i>
           </div>
           <div class="col ">
-            <img class="animated zoomIn pronosticarList " ng-src="{{urlApi + 'getTeamLogo/' + gameSelected.visitorTeam.logo}} " data-ng-click="addVote(gameSelected, '2') ">
+            <img class="animated zoomIn pronosticarList " ng-src="./img/logos/{{gameSelected.visitorTeam.logo}} " data-ng-click="addVote(gameSelected, '2') ">
           </div>
         </div>
 

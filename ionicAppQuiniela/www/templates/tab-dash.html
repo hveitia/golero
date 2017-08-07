@@ -10,7 +10,7 @@
         <img ng-src="./img/avatars/{{user.avatar}}" data-ng-click="openModalAvatar()">
 
       </div>
-      <img ng-src="{{urlApi + 'getTeamLogo/' + user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
+      <img ng-src="./img/logos/{{user.favoriteTeam}}" class="favoriteTeamDash" data-ng-click="openModal()">
 
       <div class="box box-blue">
 
@@ -116,7 +116,7 @@
     </div>
   </ion-content>
   <script id="select-team-modal.html" type="text/ng-template">
-    <ion-modal-view>
+    <ion-modal-view cache-view="false">
       <ion-header-bar>
 
         <h1 class="title" style="color:white;">Equipo favorito</h1>
@@ -125,28 +125,28 @@
       <ion-content style="text-align:center;">
         <div class="row" style="margin-top:30px;">
           <div class="col-30" ng-repeat="item in teamList track by $index">
-            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+            <img ng-src="./img/logos/{{item.logo}}"
                  style="width:80%;" data-ng-show="$index < 3"
                  data-ng-click="editFAvoriteTeam(item.logo)">
           </div>
         </div>
         <div class="row" style="margin-top:30px;">
           <div class="col-30" ng-repeat="item in teamList track by $index">
-            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+            <img ng-src="./img/logos/{{item.logo}}"
                  style="width:80%;" data-ng-show="$index > 2 && $index < 6"
                  data-ng-click="editFAvoriteTeam(item.logo)">
           </div>
         </div>
         <div class="row" style="margin-top:30px;">
           <div class="col-30" ng-repeat="item in teamList track by $index">
-            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+            <img ng-src="./img/logos/{{item.logo}}"
                  style="width:80%;" data-ng-show="$index > 5 && $index < 9"
                  data-ng-click="editFAvoriteTeam(item.logo)">
           </div>
         </div>
         <div class="row" style="margin-top:30px;">
           <div class="col-30" ng-repeat="item in teamList track by $index">
-            <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+            <img ng-src="./img/logos/{{item.logo}}"
                  style="width:80%;" data-ng-show="$index > 8"
                  data-ng-click="editFAvoriteTeam(item.logo)">
           </div>
@@ -329,28 +329,28 @@
         <div data-ng-show="enroler == 'team'">
           <div class="row" style="margin-top:30px;">
             <div class="col-30" ng-repeat="item in teamList track by $index">
-              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+              <img ng-src="./img/logos/{{item.logo}}"
                    style="width:80%;" data-ng-show="$index < 3"
                    data-ng-click="editFAvoriteTeam(item.logo, true)">
             </div>
           </div>
           <div class="row" style="margin-top:30px;">
             <div class="col-30" ng-repeat="item in teamList track by $index">
-              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+              <img ng-src="./img/logos/{{item.logo}}"
                    style="width:80%;" data-ng-show="$index > 2 && $index < 6"
                    data-ng-click="editFAvoriteTeam(item.logo, true)">
             </div>
           </div>
           <div class="row" style="margin-top:30px;">
             <div class="col-30" ng-repeat="item in teamList track by $index">
-              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+              <img ng-src="./img/logos/{{item.logo}}"
                    style="width:80%;" data-ng-show="$index > 5 && $index < 9"
                    data-ng-click="editFAvoriteTeam(item.logo, true)">
             </div>
           </div>
           <div class="row" style="margin-top:30px;">
             <div class="col-30" ng-repeat="item in teamList track by $index">
-              <img ng-src="{{urlApi + 'getTeamLogo/' + item.logo}}"
+              <img ng-src="./img/logos/{{item.logo}}"
                    style="width:80%;" data-ng-show="$index > 8"
                    data-ng-click="editFAvoriteTeam(item.logo, true)">
             </div>
@@ -377,7 +377,7 @@
           </div>
           <div class="row " style="text-align: center ">
             <div class="col ">
-              <img class="{{item.localTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}} ">
+              <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}} ">
             </div>
             <div class="col ">
               <i class="{{item.tiedClass}}" aria-hidden="true " style="color: darkblue;"></i>
@@ -385,7 +385,7 @@
               <div class="col" style="color: {{item.backGroundClass}} !important;"><strong>{{item.goalsLocalTeam}} - {{item.goalsVisitorTeam}}</strong></div>
             </div>
             <div class="col ">
-              <img class="{{item.visitoTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}} ">
+              <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}} ">
             </div>
           </div>
         </div>

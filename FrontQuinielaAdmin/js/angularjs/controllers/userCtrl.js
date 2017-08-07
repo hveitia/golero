@@ -32,7 +32,7 @@ angular.module('QuinielaApp')
       };
 
       $scope.resetAllUsers = function () {
-        HandleDataService.resetUserPointsAll().success(function (data) {
+        HandleDataService.resetUserPointsAll().success(function () {
           $scope.pageload();
         }).error(function(err){
           console.log(err);
@@ -51,6 +51,16 @@ angular.module('QuinielaApp')
               console.log(err);
             });
         }
+      };
+
+      $scope.userRankingUpdate = function(){
+
+        HandleDataService.userRankingUpdate().success(function () {
+          $scope.pageload();
+        }).error(function(err){
+          console.log(err);
+        });
+
       };
 
       $scope.pageload();

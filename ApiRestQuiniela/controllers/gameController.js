@@ -230,8 +230,16 @@ exports.update = function (req, res) {
                         }
 
                         if (element && element.user) {
+
                             element.user.points += value;
-                            element.user.historicalPunctuation.unshift(element.user.points);
+
+                            if(element.user.points <= 0) {
+                                element.user.historicalPunctuation.unshift(0);
+                            }
+                            else{
+                                element.user.historicalPunctuation.unshift(element.user.points);
+                            }
+
                             if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
 
                             element.user.save(function (err, result) {

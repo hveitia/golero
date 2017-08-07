@@ -353,6 +353,16 @@
                         }
                     });
                 },
+                userRankingUpdate: function () {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'userRankingUpdate',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 deleteUser: function (user) {
                     return $http({
                         method: 'DELETE',

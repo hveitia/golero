@@ -3,37 +3,40 @@
 
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalConfirmReset">Reset All Users to 0 points.!!</button>
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalConfirmRevert">Revert punctuation!!</button>
+  <button type="button" class="btn btn-primary" data-ng-click="userRankingUpdate()">Update Ranking</button>
   <hr>
   <table class="table table-bordered table-hover table-striped">
     <thead>
       <tr>
-        <th>Id</th>
+
         <th>User</th>
         <th>Pass</th>
         <th>Email</th>
         <th>Points</th>
+        <th>Hitorical Points</th>
+        <th>Last Position</th>
         <th>State</th>
         <th>Favorite Team</th>
         <th>Avatar</th>
         <th>Register Hash</th>
         <th>Register Date</th>
-        <th>Role</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="user in registeredUsers">
-        <td>{{user._id}}</td>
+
         <td>{{user.user}}</td>
         <td>{{user.pass}}</td>
         <td>{{user.email}}</td>
         <td>{{user.points}}</td>
+        <td>{{user.historicalPunctuation.join(',')}}</td>
+        <td>{{user.lastPosition}}</td>
         <td>{{user.state}}</td>
         <td>{{user.favoriteTeam}}</td>
         <td>{{user.avatar}}</td>
         <td>{{user.registerHash}}</td>
         <td>{{user.registerDate | date}}</td>
-        <td>{{user.role}}</td>
         <td>
           <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;"></i>
           <i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteUserClick(user)" style="cursor:pointer;"></i>

@@ -29,7 +29,7 @@
         <h3 class="userRankingName" style="margin: 0 0 10px 0; !important">{{item.user}}</h3>
 
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
-        <img ng-src="{{urlApi + 'getTeamLogo/' + item.favoriteTeam}}" class="userRankingTeamLogo">
+        <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
         <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index <= 2">
           <i class="fa fa-trophy fa-lg" aria-hidden="true" style="font-size: 1.8em;"></i>
         </span>
@@ -59,7 +59,7 @@
               <img ng-src="./img/avatars/{{data.avatar}}">
             </div>
             <div class="col">
-              <img ng-src="{{urlApi + 'getTeamLogo/' + data.favoriteTeam }}" style="width: 70%;">
+              <img ng-src="./img/logos/{{data.favoriteTeam }}" style="width: 70%;">
             </div>
           </div>
           <div class="box box-blue">
@@ -81,7 +81,7 @@
           </div>
           <div class="row" style="text-align: center;"><!--border-top: 10px solid {{item.backGroundClass}};-->
             <div class="col">
-              <img class="{{item.localTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.localTeam.logo}}">
+              <img class="{{item.localTeamClass}}" ng-src="./img/logos/{{item.localTeam.logo}}">
             </div>
             <div class="col">
 
@@ -91,7 +91,7 @@
 
             </div>
             <div class="col">
-              <img class="{{item.visitoTeamClass}}" ng-src="{{urlApi + 'getTeamLogo/' + item.visitorTeam.logo}}">
+              <img class="{{item.visitoTeamClass}}" ng-src="./img/logos/{{item.visitorTeam.logo}}">
             </div>
           </div>
         </div>

@@ -3,7 +3,9 @@
 //todo: hacer e flujo de comentarios
 //todo: actualizar dashboard voto y comentarios
 //todo: refactor al handledataService -- prioridad baja --
-//todo: gestionr la caida de la conexion
+
+//todo: Implementar los conceptos de balon de oro y bota de oro
+//todo: Implementar funcionalidad de Retos
 
 
 var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
