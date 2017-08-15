@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('PronosticarCtrl', function ($scope, $http, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform, $timeout,
+  .controller('PronosticarCtrl', function ($scope, $http, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,
                                            Game, Vote, DatabaseService, StorageService) {
     $scope.urlApi = urlApi;
 
@@ -13,11 +13,7 @@ angular.module('QuinielaIonicApp')
 
       $scope.loadingLocal = true;
       $scope.loadinVisitor = true;
-
-      $timeout(function () {
-        $scope.modal.show();
-      });
-
+      $scope.modal.show();
 
     };
     $scope.closeModal = function () {

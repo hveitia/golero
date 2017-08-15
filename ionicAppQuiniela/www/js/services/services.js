@@ -148,7 +148,7 @@ angular.module('QuinielaIonicApp.Services', [])
       findGamesByTeam: function (game) {
         return $http({
           method: 'GET',
-          url: urlApi + '/findByTeam/' + game,
+          url: urlApi + 'findByTeam/' + game,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -159,7 +159,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getGameById: function (idGame) {
         return $http({
           method: 'GET',
-          url: urlApi + '/gameById/' + idGame,
+          url: urlApi + 'gameById/' + idGame,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -176,7 +176,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getVoteByUser: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/voteByUser',
+          url: urlApi + 'voteByUser',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -186,7 +186,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getVoteByUserAny: function (user) {
         return $http({
           method: 'GET',
-          url: urlApi + '/voteByUserAny/' + user,
+          url: urlApi + 'voteByUserAny/' + user,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getActiveVotesByUser: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/votesActiveByUser',
+          url: urlApi + 'votesActiveByUser',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -206,7 +206,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getTodayVotesByUser: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/votesTodayByUser',
+          url: urlApi + 'votesTodayByUser',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ angular.module('QuinielaIonicApp.Services', [])
       deleteVote: function (vote) {
         return $http({
           method: 'DELETE',
-          url: urlApi + '/vote/' + vote,
+          url: urlApi + 'vote/' + vote,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -232,7 +232,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getTexts: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/getTexts',
+          url: urlApi + 'getTexts',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -242,7 +242,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getTextsByKey: function (key) {
         return $http({
           method: 'GET',
-          url: urlApi + '/getTextsByKey/' + key,
+          url: urlApi + 'getTextsByKey/' + key,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -258,7 +258,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getTeamsAll: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/team',
+          url: urlApi + 'team',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -274,7 +274,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getIosVersion: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/getIosVersion',
+          url: urlApi + 'getIosVersion',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -284,7 +284,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getAndroidVersion: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/getAndroidVersion',
+          url: urlApi + 'getAndroidVersion',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -300,7 +300,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getUser: function () {
         return $http({
           method: 'GET',
-          url: urlApi + '/getUser',
+          url: urlApi + 'getUser',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -311,7 +311,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getUserByName: function (name) {
         return $http({
           method: 'GET',
-          url: urlApi + '/getUserByName/' + name,
+          url: urlApi + 'getUserByName/' + name,
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -335,7 +335,7 @@ angular.module('QuinielaIonicApp.Services', [])
       editEmail: function (newEmail) {
         return $http({
           method: 'PUT',
-          url: urlApi + '/editEmail',
+          url: urlApi + 'editEmail',
           data: {
             "email": newEmail
           },

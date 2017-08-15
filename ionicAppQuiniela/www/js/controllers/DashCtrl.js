@@ -17,6 +17,7 @@ angular.module('QuinielaIonicApp')
       $scope.modal = modal;
     });
     $scope.openModal = function () {
+      $scope.loadTeamsAll();
       $scope.modal.show();
     };
     $scope.closeModal = function () {
@@ -275,9 +276,10 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.loadUserData = function (roler) {
-
+      $scope.loadingUserData = true;
       UserService.getUser().success(function (data) {
         $scope.user = data;
+        $scope.loadingUserData = false;
         if (roler) {
           $scope.user.favoriteTeam = teamRoler;
           $scope.user.avatar = avatarRoler;
@@ -286,6 +288,11 @@ angular.module('QuinielaIonicApp')
       })
         .error(function (err) {
           console.log(err);
+
+          $ionicPopup.alert({
+            title: '¡Fallo de Red!',
+            template: 'Existe insetabilidad en su conexión por favor vuelva a intentarlo.'
+          });
         });
 
     };
@@ -553,7 +560,7 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.loadTeamsAll = function () {
-
+      $scope.teamList = [];
       Team.getTeamsAll().success(function (data) {
         $scope.teamList = data;
       }).error(function (err) {
@@ -578,8 +585,8 @@ angular.module('QuinielaIonicApp')
         $scope.voteList = [];
         $scope.todayVoteList = [];
         $scope.teamList = [];
-        $scope.loadTeamsAll();
         $scope.loadUserData();
+        $scope.loadTeamsAll();
         $scope.username = StorageService.getItem('user');
         $scope.loadVotesByUser();
         $scope.loadRankingPosition();
@@ -589,8 +596,6 @@ angular.module('QuinielaIonicApp')
 
       $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
-
-
 
       if (ionic.Platform.isIOS()) {
 

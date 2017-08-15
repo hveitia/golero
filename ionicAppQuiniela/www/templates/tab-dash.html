@@ -3,6 +3,9 @@
     <div class="bar bar-header bar-light">
       <h1 class="title viewTitle">{{username}}</h1>
     </div>
+    <div class="row" style="padding-top: 0px;">
+      <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loadingUserData'></ion-spinner>
+    </div>
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
       <div class="avatar-conatainer">
@@ -50,7 +53,6 @@
         </div>
       </div>
 
-
       <div class="list" data-ng-show="user.state == 'ACTIVE'">
         <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
           <strong data-ng-show='todayVoteList.length > 0'>¡Hoy se juegan {{todayVoteList.length}} partidos!</strong>
@@ -72,7 +74,7 @@
         </div>
       </div>
 
-      <div class="list" data-ng-show="user.state != 'ACTIVE'">
+      <div class="list" data-ng-show="user.state != 'ACTIVE' && !loadingUserData">
         <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">
           <strong style="white-space: normal;">Su cuenta está inactiva ingresa el texto recibido en su email para activarla.</strong>
         </div>
@@ -116,7 +118,7 @@
     </div>
   </ion-content>
   <script id="select-team-modal.html" type="text/ng-template">
-    <ion-modal-view cache-view="false">
+    <ion-modal-view>
       <ion-header-bar>
 
         <h1 class="title" style="color:white;">Equipo favorito</h1>

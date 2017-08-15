@@ -42,7 +42,7 @@ angular.module('QuinielaIonicApp')
 
     $scope.addUser = function () {
       if (!$scope.data.password) {
-        var alertPopup = $ionicPopup.alert({
+        $ionicPopup.alert({
           title: 'Contraseña incorrecta!',
           template: 'Por favor chequear que coincidan la contraseña y la confirmación.'
         });
@@ -56,7 +56,7 @@ angular.module('QuinielaIonicApp')
             .success(function (response) {
 
               if (response.message) {
-                var alertPopup = $ionicPopup.alert({
+                $ionicPopup.alert({
                   title: 'Error!',
                   template: returnApiCodes[response.message]
                 });
@@ -72,7 +72,7 @@ angular.module('QuinielaIonicApp')
               console.log(err);
             });
         } else {
-          var alertPopup = $ionicPopup.alert({
+          $ionicPopup.alert({
             title: 'Campos vacíos!',
             template: 'Por favor chequear que no existen campos vacíos. Además que el email esté correcto.'
           });

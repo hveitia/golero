@@ -1,69 +1,93 @@
 angular.module('QuinielaApp')
 
-  .controller('UserCtrl', ['$scope', '$http', '$q', 'HandleDataService',
-    function($scope, $http, $q, HandleDataService) {
+    .controller('UserCtrl', ['$scope', '$http', '$q', 'HandleDataService',
+        function ($scope, $http, $q, HandleDataService) {
 
-      $scope.pageload = function() {
+            $scope.pageload = function () {
 
-        $scope.loadRegisteredUsers();
+                $scope.showOnlyCreated = false;
+                $scope.loaded = false;
+                $scope.loadRegisteredUsers();
 
-      };
+            };
 
-      $scope.loadRegisteredUsers = function() {
-        HandleDataService.getRegisteredUsers().success(function(data) {
-            $scope.registeredUsers = data;
-          })
-          .error(function(err) {
-            $scope.registeredUsers = [];
-            console.log(err);
-          });
-      };
+            $scope.loadRegisteredUsers = function () {
+                HandleDataService.getRegisteredUsers().success(function (data) {
+                    $scope.loaded = true;
+                    $scope.registeredUsers = data;
 
-      $scope.deleteUserClick = function(user) {
-        $scope.idDelete = user._id;
-      };
+                    if ($scope.showOnlyCreated) {
+                        $scope.registeredUsersToShow = $scope.registeredUsers.filter(function (x) {
+                            return x != null && x.state == 'CREATED';
+                        });
+                    } else {
+                        $scope.registeredUsersToShow = $scope.registeredUsers;
+                    }
+                })
+                    .error(function (err) {
+                        $scope.registeredUsers = [];
+                        console.log(err);
+                    });
+            };
 
-      $scope.canceldeleteUser = function() {
-        $scope.idDelete = '';
-      };
+            $scope.deleteUserClick = function (user) {
+                $scope.idDelete = user._id;
+            };
 
-      $scope.cancelResetAllUsers = function(){
+            $scope.canceldeleteUser = function () {
+                $scope.idDelete = '';
+            };
 
-      };
+            $scope.cancelResetAllUsers = function () {
 
-      $scope.resetAllUsers = function () {
-        HandleDataService.resetUserPointsAll().success(function () {
-          $scope.pageload();
-        }).error(function(err){
-          console.log(err);
-        });
+            };
 
-      };
+            $scope.resetAllUsers = function () {
+                HandleDataService.resetUserPointsAll().success(function () {
+                    $scope.pageload();
+                }).error(function (err) {
+                    console.log(err);
+                });
 
-      $scope.deleteUser = function() {
+            };
 
-        if ($scope.idDelete != '') {
-          HandleDataService.deleteUser($scope.idDelete).success(function(data) {
-              $scope.pageload();
-            })
-            .error(function(err) {
+            $scope.deleteUser = function () {
 
-              console.log(err);
+                if ($scope.idDelete != '') {
+                    HandleDataService.deleteUser($scope.idDelete).success(function (data) {
+                        $scope.pageload();
+                    })
+                        .error(function (err) {
+
+                            console.log(err);
+                        });
+                }
+            };
+
+            $scope.userRankingUpdate = function () {
+
+                HandleDataService.userRankingUpdate().success(function () {
+                    $scope.pageload();
+                }).error(function (err) {
+                    console.log(err);
+                });
+
+            };
+
+            $scope.$watch('showOnlyCreated', function () {
+
+                if ($scope.loaded) {
+                    if ($scope.showOnlyCreated) {
+                        $scope.registeredUsersToShow = $scope.registeredUsers.filter(function (x) {
+                            return x != null && x.state == 'CREATED';
+                        });
+                    } else {
+                        $scope.registeredUsersToShow = $scope.registeredUsers;
+                    }
+                }
             });
+
+            $scope.pageload();
+
         }
-      };
-
-      $scope.userRankingUpdate = function(){
-
-        HandleDataService.userRankingUpdate().success(function () {
-          $scope.pageload();
-        }).error(function(err){
-          console.log(err);
-        });
-
-      };
-
-      $scope.pageload();
-
-    }
-  ]);
+    ]);

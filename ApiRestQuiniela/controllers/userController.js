@@ -7,6 +7,8 @@ var path = require("path");
 var utils = require('../utils/utils.js');
 var forEachAsync = require('forEachAsync').forEachAsync;
 
+var logController = require('./logController');
+
 
 exports.findAll = function (req, res) {
 
@@ -125,21 +127,16 @@ exports.verificateEmail = function (req, res) {
 
 exports.add = function (req, res) {
 
-    USERMODEL.findOne({
-        user: req.body.user
-    }, function (err, user) {
-        if (err) {
-            res.send(500, err.message);
-        }
+    USERMODEL.findOne({user: req.body.user}, function (err, user) {
+
+        if (err) {res.send(500, err.message);}
 
         if (!user) {
 
-            USERMODEL.findOne({
-                email: req.body.email
-            }, function (err, userEmail) {
-                if (err) {
-                    res.send(500, err.message);
-                }
+            USERMODEL.findOne({email: req.body.email}, function (err, userEmail) {
+
+                if (err) {res.send(500, err.message);}
+
                 if (!userEmail) {
 
                     var md5sum = crypto.createHash('md5');
@@ -185,23 +182,37 @@ exports.add = function (req, res) {
 
 exports.register = function (req, res) {
 
-    var obj = new USERMODEL({
-        user: '',
-        pass: req.body.pass,
-        email: '',
-        points: 0,
-        state: 'CREATED',
-        registerHash: req.body.pass,
-        avatar: 'user.png',
-        favoriteTeam: 'noteam.png',
-        registerDate: new Date(),
-        role: 'USER',
-        historicalPunctuation: []
-    });
-    obj.save(function (err, result) {
-        if (err) return res.send(500, err.message);
+    USERMODEL.findOne({registerHash: req.body.pass}, function(err, user){
 
-        res.status(200).jsonp(result);
+        if (err) {res.send(500, err.message);}
+
+        if (!user) {
+
+            var obj = new USERMODEL({
+                user: '',
+                pass: req.body.pass,
+                email: '',
+                points: 0,
+                state: 'CREATED',
+                registerHash: req.body.pass,
+                avatar: 'user.png',
+                favoriteTeam: 'noteam.png',
+                registerDate: new Date(),
+                role: 'USER',
+                historicalPunctuation: [],
+                lastPosition: 201
+            });
+            obj.save(function (err, result) {
+                if (err) return res.send(500, err.message);
+
+                res.status(200).jsonp(result);
+            });
+        }
+        else{
+            logController.saveLog('Register', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'DUPLEX', 'userController', 'register');
+            res.status(200).jsonp('DUPLEX');
+        }
+
     });
 };
 

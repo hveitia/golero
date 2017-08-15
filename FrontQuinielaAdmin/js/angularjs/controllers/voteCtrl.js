@@ -29,6 +29,9 @@ angular.module('QuinielaApp')
                                 }
                             }
                         }
+
+                        $scope.voteListBackup = $scope.voteList;
+
                     }).error(function (err) {
                         console.log(err);
                     });
@@ -66,6 +69,23 @@ angular.module('QuinielaApp')
                     });
                 }
             };
+
+            $scope.filterByWorkingDate = function(){
+                if(EsNuloVacio($scope.workingDayFinded)){
+                    $scope.voteList = $scope.voteListBackup;
+                }else {
+                    $scope.voteList = $scope.voteListBackup.filter(function (x) {
+                        return x.game.workingDay.name == $scope.workingDayFinded;
+                    });
+                }
+            };
+
+            $scope.filterInactives = function () {
+                $scope.voteList = $scope.voteListBackup.filter(function (x) {
+                    return x.user.state == 'CREATED';
+                });
+            };
+
 
             $scope.pageload();
 
