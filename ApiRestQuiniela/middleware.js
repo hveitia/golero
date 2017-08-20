@@ -10,6 +10,11 @@ exports.ensureAuthenticated = function(req, res, next) {
    }
 
    var token = req.headers.authorization.split(" ")[1];
+    if(token == null || token == 'null'){
+        return res
+            .status(403)
+            .send({message: "Error: Access Denied"});
+    }
    var payload = jwt.decode(token, config.TOKEN_SECRET);
 
    if(payload.exp <= moment().unix()) {

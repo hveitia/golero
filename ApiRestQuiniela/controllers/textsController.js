@@ -2,7 +2,6 @@ var TEXTSMODEL = mongoose.model('TEXTSMODEL');
 var logController = require('./logController');
 
 
-
 //OPTIONS Allow CORS to DELETE
 exports.options = function (req, res, next) {
 
@@ -13,15 +12,15 @@ exports.options = function (req, res, next) {
     next();
 };
 
-exports.saveText = function(req, res){
+exports.saveText = function (req, res) {
 
     TEXTSMODEL.find({key: req.body.key}, function (err, obj) {
 
         if (err) res.status(500).send(err.message);
 
-        if(obj.length > 0){
+        if (obj.length > 0) {
             res.status(200).send('DUPLICATE_KEY');
-        }else{
+        } else {
 
             var obj = new TEXTSMODEL({
                 key: req.body.key,
@@ -38,13 +37,13 @@ exports.saveText = function(req, res){
     });
 };
 
-exports.updateText = function(req, res){
+exports.updateText = function (req, res) {
 
     TEXTSMODEL.findOne({key: req.body.key}, function (err, obj) {
 
         if (err) res.status(500).send(err.message);
 
-        if(obj){
+        if (obj) {
 
             obj.text = req.body.text;
             obj.title = req.body.title;
@@ -55,50 +54,50 @@ exports.updateText = function(req, res){
                 res.status(200).jsonp(result);
             });
 
-        }else{
+        } else {
             res.status(404).send('404');
         }
 
     });
 };
 
-exports.findByKey = function(req, res){
+exports.findByKey = function (req, res) {
 
     var logText = 'Key: ' + req.params.key;
-    logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), logText, 'textsController', 'findByKey');
+
 
     TEXTSMODEL.find({key: req.params.key}, function (err, obj) {
 
-        if (err){
+        if (err) {
 
-            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Error 500 - ' + err.message, 'textsController', 'findByKey');
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), logText + '  Error 500 - ' + err.message, 'textsController', 'findByKey');
             res.status(500).send(err.message);
         }
 
-        if(obj){
+        if (obj) {
 
-            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Found 200 - ' + obj, 'textsController', 'findByKey');
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), logText + '  Found 200', 'textsController', 'findByKey');
             res.status(200).jsonp(obj);
 
-        }else{
-            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Not Found 404', 'textsController', 'findByKey');
+        } else {
+            logController.saveLog(req.user, 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), logText + '  Not Found 404', 'textsController', 'findByKey');
             res.status(404).send('404');
         }
 
     });
 };
 
-exports.find = function(req, res){
+exports.find = function (req, res) {
 
     TEXTSMODEL.find(function (err, obj) {
 
         if (err) res.status(500).send(err.message);
 
-        if(obj){
+        if (obj) {
 
             res.status(200).jsonp(obj);
 
-        }else{
+        } else {
             res.status(404).send('404');
         }
 

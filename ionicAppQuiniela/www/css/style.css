@@ -21,6 +21,14 @@
   background-image: url('http://via.placeholder.com/100');
 }
 
+#roler{
+  background-image: url("/img/cover.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top
+;
+}
+
 .fontCustom {
   font-family: 'SportingGrotesqueGras'; //'PumpkinRegular';
   //'PumpkinRegular';

@@ -259,7 +259,7 @@ exports.editName = function (req, res) {
                             });
 
                         } else {
-                            res.send(500, 'User not found');
+                            res.status(500).send('User not found');
                         }
                     });
                 }
@@ -526,7 +526,7 @@ sendRegistrationConfirmation = function (obj) {
     fs.readFile(template, 'utf8', function (err, file) {
         if (err) {
             console.log('ERROR!->' + err.message);
-            res.json({yo: 'error'});
+            //res.json({yo: 'error'});
         }
         else {
 

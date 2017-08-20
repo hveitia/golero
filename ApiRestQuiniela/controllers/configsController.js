@@ -30,35 +30,39 @@ exports.loadConfigs = function (req, res) {
     });
 };
 
-exports.getIosVersion = function (req,res) {
+exports.getIosVersion = function (req, res) {
 
     CONFIGSMODEL.find(function (err, obj) {
 
-        if (err) res.send(500, err.message);
+        if (err)
+            res.status(500).send(err.message);
 
-        if(obj.length == 1){
-            res.status(200).jsonp(obj[0].iosVersion);
+        if (obj.length == 1) {
+            res.status(200).send(obj[0].iosVersion);
+        } else {
+            res.status(200).send(0);
         }
-        res.status(200).jsonp(0);
     });
 };
 
-exports.getAndroidVersion = function (req,res) {
+exports.getAndroidVersion = function (req, res) {
 
     CONFIGSMODEL.find(function (err, obj) {
 
-        if (err) res.send(500, err.message);
+        if (err) res.status(500).send(err.message);
 
-        if(obj.length == 1){
-            res.status(200).jsonp(obj[0].androidVersion);
+        if (obj.length == 1) {
+            res.status(200).send(obj[0].androidVersion);
         }
-        res.status(200).jsonp(0);
+        else {
+            res.status(200).send(0);
+        }
     });
 };
 
-exports.updateSaveLogs = function (req,res) {
+exports.updateSaveLogs = function (req, res) {
 
-    CONFIGSMODEL.findById(req.params.id,function (err, obj) {
+    CONFIGSMODEL.findById(req.params.id, function (err, obj) {
 
         if (err) res.send(500, err.message);
 
@@ -73,9 +77,9 @@ exports.updateSaveLogs = function (req,res) {
     });
 };
 
-exports.updateIosVersion = function (req,res) {
+exports.updateIosVersion = function (req, res) {
 
-    CONFIGSMODEL.findById(req.params.id,function (err, obj) {
+    CONFIGSMODEL.findById(req.params.id, function (err, obj) {
 
         if (err) res.send(500, err.message);
 
@@ -90,9 +94,9 @@ exports.updateIosVersion = function (req,res) {
     });
 };
 
-exports.updateAndriodVersion = function (req,res) {
+exports.updateAndriodVersion = function (req, res) {
 
-    CONFIGSMODEL.findById(req.params.id,function (err, obj) {
+    CONFIGSMODEL.findById(req.params.id, function (err, obj) {
 
         if (err) res.send(500, err.message);
 

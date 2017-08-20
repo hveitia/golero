@@ -363,7 +363,7 @@ angular.module('QuinielaIonicApp')
 
         if (enroler) {
           $scope.enroler = 'team';
-          $scope.modalEnrolerTitle = 'Equipo Favorito';
+          $scope.modalEnrolerTitle = 'Seleccione su Equipo Favorito';
           avatarRoler = avatar;
         } else {
           $scope.user.avatar = avatar;
@@ -407,7 +407,7 @@ angular.module('QuinielaIonicApp')
                 $scope.teamList = [];
                 $scope.loadTeamsAll();
                 $scope.enroler = 'avatar';
-                $scope.modalEnrolerTitle = 'Avatar';
+                $scope.modalEnrolerTitle = 'Seleccione su Avatar';
 
               })
               .error(function (err) {
@@ -546,12 +546,11 @@ angular.module('QuinielaIonicApp')
 
         $scope.parrafosList = data[0].text.split('<p>');
 
-        $ionicPopup.show({
+        $ionicPopup.alert({
           template: '<div><p ng-repeat="p in parrafosList">{{p}}</p></div>',
           title: data[0].title,
           subTitle: '',
-          scope: $scope,
-          buttons: [{text: 'Acepto', type: 'button-positive'}]
+          scope: $scope
         });
 
       }).error(function (err) {
@@ -578,7 +577,7 @@ angular.module('QuinielaIonicApp')
         $scope.loading = false;
         $scope.openModalRoler();
         $scope.enroler = 'name';
-        $scope.modalEnrolerTitle = 'Nombre - Email';
+        $scope.modalEnrolerTitle = 'Bienvenido a Golero';
         $scope.data.terminosLeidos = true;
 
       } else {

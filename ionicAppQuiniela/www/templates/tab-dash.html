@@ -231,38 +231,45 @@
       <ion-header-bar>
         <h1 class="title" style="color:white;">{{modalEnrolerTitle}}</h1>
       </ion-header-bar>
-      <ion-content style="text-align:center;">
+      <ion-content style="text-align:center;" id="roler">
         <div class="row">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
-        <div class="list" data-ng-show="enroler == 'name'">
-          <label class="item item-input item-floating-label">
-            <span class="input-label text-left">Nombre</span>
-            <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName" maxlength="40">
+        <div class="list list-inset" data-ng-show="enroler == 'name'"
+             style="width: 90%; margin-left: auto; margin-right: auto; background-color: transparent; margin-top: 130px;">
+          <label class="item item-input" style="border: none;">
+            <i class="icon ion-person"></i>
+            <input type="text" placeholder="Inserte su nombre" data-ng-model="data.newName" maxlength="40" style="margin-left: 10px;">
           </label>
           <button class="button button-positive icon-right button-full ion-help"
                   style="background: #190855;"
+                  data-ng-show="false"
                   data-ng-click="comprobarUserName()">
             Comprobar disponibilidad
           </button>
-          <label class="item item-input item-floating-label" style="margin-top: 5%;">
-            <span class="input-label text-left">Email</span>
-            <input type="email" placeholder="Inserte su email" data-ng-model="data.newEmail" maxlength="40">
+          <label class="item item-input" style="margin-top: 5%; border: none;">
+            <i class="icon ion-email "></i>
+            <input type="email" placeholder="Inserte su email" data-ng-model="data.newEmail" maxlength="40" style="margin-left: 10px;">
           </label>
-          <button class="button button-positive icon-right button-full ion-help"
-                  data-ng-click="showInformativePopup('porqueEmail')" style="background: #190855;">
+          <button class="button button-block button-small"
+                  data-ng-click="editName()" style="background: #190855; color: white;">Aceptar
+          </button>
+          <button class="button button-positive button-clear button-small"
+                  data-ng-click="showInformativePopup('porqueEmail')" style="color: white; margin-top: 20px; font-weight: bold;">
             ¿Por qué ingresar mi email?
           </button>
-          <ion-list>
-            <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%;">Acepto Términos y Condiciones.</ion-checkbox>
-          </ion-list>
-          <button class="button button-positive icon-right button-full ion-ios-book-outline"
-                  data-ng-click="showInformativePopup('terminosCondiciones')" style="background: #ea905d;">
-            Ver Términos y condiciones de uso
-          </button>
-          <button class="button icon-right ion-android-checkbox-outline button-full button-balanced"
-                  data-ng-click="editName()" style="margin-top: 15%; background: #190855;">Aceptar
-          </button>
+          <div class="row">
+            <div class="col-20">
+            <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%; border: none; min-height: 32px; background-color: transparent;">
+            </ion-checkbox>
+            </div>
+            <div class="col-90 text-left"  style="margin-top: 10px; margin-left: 5px;">
+              <span data-ng-click="showInformativePopup('terminosCondiciones')"
+                    style="font-style: oblique; text-decoration: underline; color: white; font-weight: bold;">Acepto Términos y Condiciones</span>
+            </div>
+          </div>
+
+
         </div>
 
 

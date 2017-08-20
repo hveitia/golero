@@ -15,7 +15,7 @@ exports.saveLog = function (user, method, date, logText, controller, action) {
                 }
 
                 var objLog = new LOGMODEL({
-                    user: result.user,
+                    user: (result && result.user) ? result.user : 'user Sin registrar',
                     method: method,
                     logText: logText,
                     date: date,
