@@ -4,6 +4,7 @@ var CONFIGSMODEL = mongoose.model('CONFIGSMODEL');
 
 exports.saveLog = function (user, method, date, logText, controller, action) {
 
+    try{
     CONFIGSMODEL.find(function (err, result) {
 
         if (result &&  result.length > 0 && result[0].saveLogs != undefined && result[0].saveLogs == true) {
@@ -31,6 +32,9 @@ exports.saveLog = function (user, method, date, logText, controller, action) {
             });
         }
     });
+    }catch(e){
+        console.log(e.message);
+    }
 };
 
 exports.findAll = function (req, res) {

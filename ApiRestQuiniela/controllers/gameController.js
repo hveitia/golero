@@ -12,6 +12,7 @@ var logController = require('./logController');
 
 exports.findAll = function (req, res) {
 
+    try{
     GAMEMODEL.find()
         .populate('localTeam')
         .populate('visitorTeam')
@@ -25,10 +26,14 @@ exports.findAll = function (req, res) {
             res.status(200).jsonp(output);
 
         });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findAll');
+    }
 };
 
 exports.findById = function (req, res) {
 
+    try{
     GAMEMODEL.findById(req.params.id)
         .populate('localTeam')
         .populate('visitorTeam')
@@ -42,10 +47,14 @@ exports.findById = function (req, res) {
             res.status(200).jsonp(output);
 
         });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findById');
+    }
 };
 
 exports.findByTeam = function (req, res) {
 
+    try{
     GAMEMODEL.find({$and:[{'state': 'UPDATED'}], $or: [{'localTeam': req.params.idTeam}, {'visitorTeam': req.params.idTeam}]})
         .populate('localTeam')
         .populate('visitorTeam')
@@ -60,11 +69,15 @@ exports.findByTeam = function (req, res) {
 
             res.status(200).jsonp(result);
         });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findByTeam');
+    }
 
 };
 
 exports.findByIdMany = function (req, res) {
 
+    try{
     GAMEMODEL.find({_id: {"$in": req.body.idList}})
         .populate('localTeam')
         .populate('visitorTeam')
@@ -76,9 +89,14 @@ exports.findByIdMany = function (req, res) {
             });
             res.status(200).jsonp(response);
         });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findByIdMany');
+    }
 };
 
 exports.findByWorkingDay = function (req, res) {
+
+    try{
     GAMEMODEL.find({
         workingDay: req.params.workingDay
     }, function (err, result) {
@@ -99,9 +117,14 @@ exports.findByWorkingDay = function (req, res) {
             res.status(200).jsonp(workingDay);
         });
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findByWorkingDay');
+    }
 };
 
 exports.findByState = function (req, res) {
+
+    try{
     GAMEMODEL.find({
         state: req.params.state
     }, function (err, result) {
@@ -122,10 +145,14 @@ exports.findByState = function (req, res) {
             res.status(200).jsonp(workingDay);
         });
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'findByState');
+    }
 };
 
 exports.add = function (req, res) {
 
+    try{
     var obj = new GAMEMODEL({
         workingDay: req.body.workingDay,
         localTeam: req.body.localTeam,
@@ -145,10 +172,14 @@ exports.add = function (req, res) {
         logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Game Saved OK', 'gameController', 'add');
         res.status(200).jsonp(result);
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'add');
+    }
 };
 
 exports.setUpdateState = function (req, res) {
 
+    try{
     GAMEMODEL.findById(req.params.id, function (err, result) {
 
         result.state = 'UPDATED';
@@ -161,11 +192,15 @@ exports.setUpdateState = function (req, res) {
 
         });
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'setUpdateState');
+    }
 
 };
 
 exports.simpleUpdate = function (req, res) {
 
+    try{
     GAMEMODEL.findById(req.params.id, function (err, result) {
 
         result.goalsLocalTeam = req.body.goalsLocalTeam;
@@ -179,10 +214,14 @@ exports.simpleUpdate = function (req, res) {
             res.status(200).send('ok');
         });
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'simpleUpdate');
+    }
 };
 
 exports.update = function (req, res) {
 
+    try{
     GAMEMODEL.findById(req.params.id, function (err, result) {
 
         result.goalsLocalTeam = req.body.goalsLocalTeam;
@@ -265,40 +304,48 @@ exports.update = function (req, res) {
             });
         });
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'update');
+    }
 };
 
 exports.addSpecialDate = function (req, res) {
 
-    GAMEMODEL.findById(req.params.id, function (err, result) {
+    try {
+        GAMEMODEL.findById(req.params.id, function (err, result) {
 
-        result.especialDate = req.body.especialDate;
+            result.especialDate = req.body.especialDate;
 
-        result.save(function (err, obj) {
-
-            if (err) return res.send(500, err.message);
-
-            VOTEMODEL.find({game: req.params.id}, function (err, voteList) {
+            result.save(function (err, obj) {
 
                 if (err) return res.send(500, err.message);
 
-                forEachAsync(voteList, function (next, element, index, array) {
+                VOTEMODEL.find({game: req.params.id}, function (err, voteList) {
 
-                    element.date = req.body.especialDate;
-                    element.save(function (err, result) {
-                        if (err)return res.send(500, err.message);
-                        next();
+                    if (err) return res.send(500, err.message);
+
+                    forEachAsync(voteList, function (next, element, index, array) {
+
+                        element.date = req.body.especialDate;
+                        element.save(function (err, result) {
+                            if (err)return res.send(500, err.message);
+                            next();
+                        });
+                    }).then(function () {
+                        console.log('All requests have finished');
                     });
-                }).then(function () {
-                    console.log('All requests have finished');
+                    res.status(200).send('ok');
                 });
-                res.status(200).send('ok');
             });
         });
-    });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'addSpecialDate');
+    }
 };
 
 exports.gameToVoteByDate = function (req, res) {
 
+    try{
     GAMEMODEL.find()
         .populate('localTeam')
         .populate('visitorTeam')
@@ -312,6 +359,9 @@ exports.gameToVoteByDate = function (req, res) {
             res.status(200).jsonp(output);
 
         });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'gameToVoteByDate');
+    }
 };
 
 //OPTIONS Allow CORS to DELETE
@@ -326,6 +376,7 @@ exports.options = function (req, res, next) {
 
 exports.delete = function (req, res) {
 
+    try{
     GAMEMODEL.findById(req.params.id, function (err, game) {
 
         game.remove(function (err) {
@@ -335,5 +386,8 @@ exports.delete = function (req, res) {
             res.status(200).jsonp('OK');
         })
     });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'gameController', 'delete');
+    }
 
 };
