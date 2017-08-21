@@ -21,12 +21,11 @@
   background-image: url('http://via.placeholder.com/100');
 }
 
-#roler{
-  background-image: url("/img/cover.jpg");
+.roler{
+  background-image: url("../img/cover.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: top
-;
+  background-position: top;
 }
 
 .fontCustom {
@@ -63,7 +62,7 @@ h1.viewTitle {
 }
 
 .background.scroll-content {
-  background: url('/img/loginCover.jpg') no-repeat;
+  background: url('../img/loginCover.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   margin: auto;

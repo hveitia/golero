@@ -231,7 +231,7 @@
       <ion-header-bar>
         <h1 class="title" style="color:white;">{{modalEnrolerTitle}}</h1>
       </ion-header-bar>
-      <ion-content style="text-align:center;" id="roler">
+      <ion-content style="text-align:center;" id="roler" ng-class="{'roler': enroler == 'name'}">
         <div class="row">
           <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
         </div>
