@@ -13,7 +13,9 @@ exports = module.exports = function (app, mongoose) {
         lastLogon: {type: Date},
         role: {type: String},
         historicalPunctuation: {type: []},
-        lastPosition: {type: Number}
+        lastPosition: {type: Number},
+        tickets:{type: Number},
+        reputation:{type: Number}
 
     });
 

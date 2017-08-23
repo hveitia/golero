@@ -19,7 +19,6 @@ router.route('/getUserByName/:name')
     .get(middleware.ensureAuthenticated, userController.getUserByName);
 
 router.route('/user/:id')
-    //.put(middleware.ensureAuthenticated, voteController.update)
     .options(middleware.ensureAuthenticated, userController.options)
     .delete(middleware.ensureAuthenticated, userController.delete);
 
@@ -50,9 +49,6 @@ router.route('/getUser')
 router.route('/clearUsers')
     .get(middleware.ensureAuthenticated, userController.clearUsers);
 
-router.route('/getAvatar/:avatar')
-    .get(userController.getAvatar);
-
 router.route('/userRankingUpdate')
     .get(middleware.ensureAuthenticated, userController.userRankingUpdate);
 
@@ -79,6 +75,9 @@ router.route('/userActivation/:hash')
 
 router.route('/verificateUser/:userName')
     .get(userController.verificateUser);
+
+router.route('/getAvatar/:avatar')
+    .get(userController.getAvatar);
 
 
 module.exports = router;

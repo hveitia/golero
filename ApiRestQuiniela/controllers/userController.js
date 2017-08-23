@@ -15,27 +15,8 @@ exports.findAll = function (req, res) {
     //var token = req.headers.authorization.split(" ")[1];
     //res.json({ message: "Estás autenticado correctamente y tu _id es: " + req.user });
 
-    try{
-    USERMODEL.find(function (err, result) {
-
-        if (err) {
-            res.send(500, err.message);
-        }
-
-        res.status(200).jsonp(result);
-    });
-    }
-    catch(e){
-        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'findAll');
-    }
-};
-
-exports.userRanking = function (req, res) {
-try{
-    USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
-        .sort({'points': -1})
-        .limit(200)
-        .exec(function (err, result) {
+    try {
+        USERMODEL.find(function (err, result) {
 
             if (err) {
                 res.send(500, err.message);
@@ -43,44 +24,63 @@ try{
 
             res.status(200).jsonp(result);
         });
+    }
+    catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'findAll');
+    }
+};
 
-}catch(e){
+exports.userRanking = function (req, res) {
+    try {
+        USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
+            .sort({'points': -1})
+            .limit(200)
+            .exec(function (err, result) {
+
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                res.status(200).jsonp(result);
+            });
+
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'userRanking');
     }
 };
 
 exports.userRankingUpdate = function (req, res) {
-try {
-    USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
-        .sort({'points': -1})
-        .limit(200)
-        .exec(function (err, result) {
+    try {
+        USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
+            .sort({'points': -1})
+            .limit(200)
+            .exec(function (err, result) {
 
-            if (err) {
-                res.send(500, err.message);
-            }
+                if (err) {
+                    res.send(500, err.message);
+                }
 
-            forEachAsync(result, function (next, element, index, array) {
+                forEachAsync(result, function (next, element, index, array) {
 
-                element.lastPosition = index + 1;
+                    element.lastPosition = index + 1;
 
-                element.save(function (err, result) {
-                    if (err) {
+                    element.save(function (err, result) {
+                        if (err) {
 
-                        return res.send(500, err.message);
-                    }
-                    next();
+                            return res.send(500, err.message);
+                        }
+                        next();
+                    });
+
+                }).then(function () {
+                    console.log('All requests have finished');
                 });
 
-            }).then(function () {
-                console.log('All requests have finished');
+                res.status(200).jsonp('OK');
             });
-
-            res.status(200).jsonp('OK');
-        });
-} catch(e){
-    logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'userRankingUpdate');
-}
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'userRankingUpdate');
+    }
 };
 
 exports.userRankingPosition = function (req, res) {
@@ -106,7 +106,7 @@ exports.userRankingPosition = function (req, res) {
                     res.status(200).jsonp({'pos': -1, 'points': 0});
 
             });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'userRankingPosition');
     }
 };
@@ -126,7 +126,7 @@ exports.verificateUser = function (req, res) {
             }
         });
     }
-    catch(e){
+    catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'verificateUser');
     }
 };
@@ -145,7 +145,7 @@ exports.verificateEmail = function (req, res) {
                 res.status(200).send(false);
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'verificateEmail');
     }
 };
@@ -185,7 +185,9 @@ exports.add = function (req, res) {
                             registerDate: new Date(),
                             role: req.body.role,
                             historicalPunctuation: [],
-                            lastPosition: 201
+                            lastPosition: 201,
+                            tickets: 0,
+                            reputation: 0
                         });
                         obj.save(function (err, result) {
                             if (err) return res.send(500, err.message);
@@ -207,7 +209,7 @@ exports.add = function (req, res) {
 
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'add');
     }
 
@@ -236,7 +238,9 @@ exports.register = function (req, res) {
                     registerDate: new Date(),
                     role: 'USER',
                     historicalPunctuation: [],
-                    lastPosition: 201
+                    lastPosition: 201,
+                    tickets: 0,
+                    reputation: 0
                 });
                 obj.save(function (err, result) {
                     if (err) return res.send(500, err.message);
@@ -250,9 +254,9 @@ exports.register = function (req, res) {
             }
 
         });
-    }catch(e){
-            logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'register');
-        }
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'register');
+    }
 };
 
 exports.editName = function (req, res) {
@@ -306,7 +310,7 @@ exports.editName = function (req, res) {
                 });
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'editName');
     }
 };
@@ -335,7 +339,7 @@ exports.editFavoriteTeam = function (req, res) {
                 res.send(500, 'User not found');
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'editFavoriteTeam');
     }
 
@@ -350,7 +354,7 @@ exports.resetUserPointsAll = function (req, res) {
 
             res.status(200).send('OK');
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'restUserPointAll');
     }
 };
@@ -364,7 +368,7 @@ exports.insertHistoricPoints = function (req, res) {
 
             res.status(200).send('OK');
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'insertHistoricPoints');
     }
 };
@@ -396,7 +400,7 @@ exports.revertPunctuation = function (req, res) {
 
             res.status(200).jsonp('OK');
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'revertPunctuation');
     }
 };
@@ -423,7 +427,7 @@ exports.editAvatar = function (req, res) {
                 res.send(500, 'User not found');
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'editAvatar');
     }
 };
@@ -456,7 +460,7 @@ exports.editEmail = function (req, res) {
                 }
             });
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'editEmail');
     }
 };
@@ -472,7 +476,7 @@ exports.getUser = function (req, res) {
 
             res.status(200).jsonp(result);
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'getUser');
     }
 };
@@ -499,7 +503,7 @@ exports.getUserByName = function (req, res) {
             }
 
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'getUserByName');
     }
 };
@@ -515,7 +519,7 @@ exports.getAvatar = function (req, res) {
 
             res.sendFile(path.join(__dirname + '/images/avatars/user.png'));
         }
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'getAvatar');
     }
 
@@ -532,7 +536,7 @@ exports.getTeamLogo = function (req, res) {
 
             res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
         }
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'getTeamLogo');
     }
 
@@ -544,7 +548,7 @@ exports.getTeamLogoEmpty = function (req, res) {
     res.sendFile(path.join(__dirname + '/images/teamLogos/noteam.png'));
 };
 
-exports.clearUsers = function(req, res){
+exports.clearUsers = function (req, res) {
 
     try {
         USERMODEL.remove({user: ''}, function (err) {
@@ -553,7 +557,7 @@ exports.clearUsers = function(req, res){
 
             res.status(200).jsonp('OK');
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'clearUsers');
     }
 };
@@ -584,7 +588,7 @@ exports.confirmRegistration = function (req, res) {
 
 
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'confirmRegistration');
     }
 };
@@ -611,7 +615,7 @@ exports.activateAccount = function (req, res) {
                 res.status(404).send('404');
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'activateAccount');
 
     }
@@ -660,7 +664,7 @@ sendRegistrationConfirmation = function (obj) {
                 }
             }
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'sendRegistrationConfirmation');
     }
 
@@ -679,7 +683,7 @@ exports.options = function (req, res, next) {
 
 exports.delete = function (req, res) {
 
-    try{
+    try {
         USERMODEL.findById(req.params.id, function (err, user) {
 
             user.remove(function (err) {
@@ -689,7 +693,7 @@ exports.delete = function (req, res) {
                 res.status(200).jsonp('OK');
             })
         });
-    } catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'delete');
     }
 

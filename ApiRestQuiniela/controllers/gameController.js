@@ -271,6 +271,7 @@ exports.update = function (req, res) {
                         if (element && element.user) {
 
                             element.user.points += value;
+                            element.user.ticket += value == 3 ? 5 : 0;
 
                             if(element.user.points <= 0) {
                                 element.user.historicalPunctuation.unshift(0);
@@ -282,6 +283,7 @@ exports.update = function (req, res) {
                             if (element.user.points < 0 || element.user.state != 'ACTIVE') element.user.points = 0;
 
                             element.user.save(function (err, result) {
+
                                 if (err) {
                                     logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Saving new user points ' + err.messag, 'gameController', 'update');
                                     return res.send(500, err.message);

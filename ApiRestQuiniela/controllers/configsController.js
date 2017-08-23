@@ -1,4 +1,5 @@
 var CONFIGSMODEL = mongoose.model('CONFIGSMODEL');
+var logController = require('./logController');
 
 //OPTIONS Allow CORS to DELETE
 exports.options = function (req, res, next) {
@@ -32,32 +33,41 @@ exports.loadConfigs = function (req, res) {
 
 exports.getIosVersion = function (req, res) {
 
-    CONFIGSMODEL.find(function (err, obj) {
+    try {
+        CONFIGSMODEL.find(function (err, obj) {
 
-        if (err)
-            res.status(500).send(err.message);
+            if (err)
+                res.status(500).send(err.message);
 
-        if (obj.length == 1) {
-            res.status(200).send(obj[0].iosVersion);
-        } else {
-            res.status(200).send(0);
-        }
-    });
+            if (obj.length == 1) {
+                res.status(200).send(obj[0].iosVersion);
+            } else {
+                res.status(200).send(0);
+            }
+        });
+    }catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'configController', 'getIosVersion');
+    }
 };
 
 exports.getAndroidVersion = function (req, res) {
 
-    CONFIGSMODEL.find(function (err, obj) {
+    try {
+        CONFIGSMODEL.find(function (err, obj) {
 
-        if (err) res.status(500).send(err.message);
+            if (err) res.status(500).send(err.message);
 
-        if (obj.length == 1) {
-            res.status(200).send(obj[0].androidVersion);
-        }
-        else {
-            res.status(200).send(0);
-        }
-    });
+            if (obj.length == 1) {
+                res.status(200).send(obj[0].androidVersion);
+            }
+            else {
+                res.status(200).send(0);
+            }
+        });
+    }
+    catch(e){
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'configController', 'getAndroidVersion');
+    }
 };
 
 exports.updateSaveLogs = function (req, res) {

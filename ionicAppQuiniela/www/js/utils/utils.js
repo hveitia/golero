@@ -9,7 +9,6 @@
 //todo: Poner % ganados y perdidos en la vista del user
 
 
-
 var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
 //var urlApi = 'http://localhost:3000/api/';
 

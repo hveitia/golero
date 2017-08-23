@@ -51,7 +51,12 @@ angular.module('QuinielaIonicApp')
     $scope.getGameVoted = function () {
       $scope.gameVotedList = [];
 
-      Game.getAllGames().success(function (data) {
+      var idList = [];
+      for (var i = 0; i < $scope.voteList.length; i++) {
+        idList.push($scope.voteList[i].game);
+      }
+
+      Game.findGameByIdMany(idList).success(function (data){
 
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < $scope.voteList.length; j++) {
@@ -78,7 +83,6 @@ angular.module('QuinielaIonicApp')
                 }
               }
               $scope.gameVotedList.push(data[i]);
-              $scope.voteList.splice(i, 1);
             }
           }
         }
