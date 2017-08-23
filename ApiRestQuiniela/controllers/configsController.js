@@ -40,9 +40,9 @@ exports.getIosVersion = function (req, res) {
                 res.status(500).send(err.message);
 
             if (obj.length == 1) {
-                res.status(200).send(obj[0].iosVersion);
+                res.status(200).jsonp(obj[0].iosVersion);
             } else {
-                res.status(200).send(0);
+                res.status(200).jsonp(0);
             }
         });
     }catch(e){
@@ -58,10 +58,10 @@ exports.getAndroidVersion = function (req, res) {
             if (err) res.status(500).send(err.message);
 
             if (obj.length == 1) {
-                res.status(200).send(obj[0].androidVersion);
+                res.status(200).jsonp(obj[0].androidVersion);
             }
             else {
-                res.status(200).send(0);
+                res.status(200).jsonp(0);
             }
         });
     }
