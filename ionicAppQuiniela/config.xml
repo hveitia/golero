@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.hectorveitia.golero" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.hectorveitia.golero" version="0.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Golero</name>
   <description>Ataja todos los balones que puedas y demuestra que eres quien más sabe de la liga.</description>
   <author email="goleroapp@gmail.com" href="www.soygolero.com">Golero Team</author>

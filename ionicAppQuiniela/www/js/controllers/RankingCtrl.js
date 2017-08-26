@@ -78,7 +78,7 @@ angular.module('QuinielaIonicApp')
 
               data[i].backGroundClass = $scope.getBackgroundVotesList($scope.voteList[j], data[i]);
               $scope.gameVotedList.push(data[i]);
-              $scope.voteList.splice(i, 1);
+              //$scope.voteList.splice(i, 1);
             }
           }
         }
