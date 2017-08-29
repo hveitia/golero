@@ -621,6 +621,35 @@ exports.activateAccount = function (req, res) {
     }
 };
 
+exports.resendConfirmationMail = function(req, res){
+
+    try {
+        USERMODEL.findById(req.params.id, function (err, user) {
+
+            if (err) return res.status(500).send(err.message);
+
+            if(user){
+
+                user.resendMailDate = new Date();
+
+                user.save(function (err, result) {
+                    if (err) return res.send(500, err.message);
+
+                    sendRegistrationConfirmation(user);
+
+                    res.status(200).send('ok');
+                });
+
+            }
+            else{
+                res.status(404).jsonp('No encontrado');
+            }
+        });
+    } catch (e) {
+        logController.saveLog('Crash', 'GET', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'resendConfirmationMail');
+    }
+};
+
 sendRegistrationConfirmation = function (obj) {
 
     try {
