@@ -51,6 +51,20 @@ angular.module('QuinielaApp')
 
             };
 
+            $scope.resendConfirmationMail = function (item) {
+
+                HandleDataService.resendConfirmationMail(item._id).success(function () {
+
+                    alert('Mail Resended OK');
+
+                }).error(function (err) {
+
+                    console.log(err);
+
+                });
+
+            };
+
             $scope.deleteUser = function () {
 
                 if ($scope.idDelete != '') {
@@ -86,6 +100,16 @@ angular.module('QuinielaApp')
                     }
                 }
             });
+
+            $scope.editPoints = function () {
+                HandleDataService.editPoints($scope.userNewPoint, $scope.newPoint).success(function (data) {
+
+                    alert('dddd');
+
+                }).error(function (err) {
+                    console.log(err);
+                })
+            };
 
             $scope.pageload();
 

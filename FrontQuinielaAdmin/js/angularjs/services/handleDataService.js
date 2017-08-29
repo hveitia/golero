@@ -33,6 +33,16 @@
                         }
                     });
                 },
+                resendConfirmationMail: function (user) {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'resendConfirmationMail/' + user,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 getTexts: function () {
                     return $http({
                         method: 'GET',
@@ -186,6 +196,19 @@
                         url: urlApi + 'activateUnactivateSeason/' + season._id,
                         data: {
                             "active": season.active
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                editPoints: function (user, point) {
+                    return $http({
+                        method: 'PUT',
+                        url: urlApi + 'editPoints/' + user,
+                        data: {
+                            "point": point
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),

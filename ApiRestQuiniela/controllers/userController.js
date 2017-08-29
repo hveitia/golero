@@ -345,6 +345,33 @@ exports.editFavoriteTeam = function (req, res) {
 
 };
 
+exports.editPoints = function (req, res) {
+
+    try {
+        USERMODEL.findOne({_id: req.params.id}, function (err, user) {
+
+            if (err) res.send(500, err.message);
+
+            if (user) {
+
+                user.point = req.body.point;
+
+                user.save(function (err, result) {
+                    if (err) return res.send(500, err.message);
+
+                    res.status(200).send('ok');
+                });
+
+            } else {
+                res.send(500, 'User not found');
+            }
+        });
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'editFavoriteTeam');
+    }
+
+};
+
 exports.resetUserPointsAll = function (req, res) {
 
     try {
