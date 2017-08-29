@@ -354,7 +354,7 @@ exports.editPoints = function (req, res) {
 
             if (user) {
 
-                user.point = req.body.point;
+                user.points = req.body.point;
 
                 user.save(function (err, result) {
                     if (err) return res.send(500, err.message);
