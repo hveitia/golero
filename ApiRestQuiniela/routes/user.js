@@ -22,6 +22,9 @@ router.route('/user/:id')
     .options(middleware.ensureAuthenticated, userController.options)
     .delete(middleware.ensureAuthenticated, userController.delete);
 
+router.route('/resendConfirmationMail/:id')
+    .get(middleware.ensureAuthenticated, userController.resendConfirmationMail);
+
 router.route('/editFavoriteTeam')
     .put(middleware.ensureAuthenticated, userController.editFavoriteTeam);
 
