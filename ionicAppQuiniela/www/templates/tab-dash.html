@@ -8,6 +8,9 @@
     </div>
     <div class="dashboard-main-container animated bounceInDown">
       <!--<h3>Nombre</h3>-->
+
+      <i class="fa fa-newspaper-o fa-2x" aria-hidden="true" style="position: absolute; top: 215px; left: 30px; color:#190855;" data-ng-click="goToViewNews()"></i>
+
       <div class="avatar-conatainer">
 
         <img ng-src="./img/avatars/{{user.avatar}}" data-ng-click="openModalAvatar()">
@@ -260,10 +263,10 @@
           </button>
           <div class="row">
             <div class="col-20">
-            <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%; border: none; min-height: 32px; background-color: transparent;">
-            </ion-checkbox>
+              <ion-checkbox ng-model="data.terminosLeidos" style="margin-top: 5%; border: none; min-height: 32px; background-color: transparent;">
+              </ion-checkbox>
             </div>
-            <div class="col-90 text-left"  style="margin-top: 10px; margin-left: 5px;">
+            <div class="col-90 text-left" style="margin-top: 10px; margin-left: 5px;">
               <span data-ng-click="showInformativePopup('terminosCondiciones')"
                     style="font-style: oblique; text-decoration: underline; color: white; font-weight: bold;">Acepto Términos y Condiciones</span>
             </div>

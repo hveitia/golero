@@ -95,6 +95,10 @@ angular.module('QuinielaIonicApp')
       $state.go('tab.pronosticar');
     };
 
+    $scope.goToViewNews = function(){
+      $state.go('news');
+    };
+
     // --------- Redirect zone  --------------
 
     $scope.showTodayVote = function () {

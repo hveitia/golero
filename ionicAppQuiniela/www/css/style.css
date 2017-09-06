@@ -216,3 +216,8 @@ ion-content {
 
 }
 
+.newsHeader{
+  white-space: normal !important;
+  font-size: 13px !important;
+}
+

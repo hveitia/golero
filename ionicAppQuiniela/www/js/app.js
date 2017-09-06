@@ -46,6 +46,7 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         }
       }
 
+
     });
   })
 
@@ -68,6 +69,12 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         url: '/lostConnection',
         templateUrl: 'templates/lostConnection.html',
         controller: 'LostConnectionCtrl'
+      })
+
+      .state('news', {
+        url: '/news',
+        templateUrl: 'templates/news.html',
+        controller: 'NewsController'
       })
 
 

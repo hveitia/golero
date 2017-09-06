@@ -42,7 +42,6 @@ angular.module('QuinielaApp')
                 });
             };
 
-
             $scope.updateIosVersion = function () {
 
                 HandleDataService.updateIosVersion($scope.configs).success(function (data) {
@@ -184,24 +183,7 @@ angular.module('QuinielaApp')
 
             };
 
-            /*
-            $scope.loadComercionRSS = function () {
-
-                var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22'+encodeURIComponent('http://www.elcomercio.com/rss/deportes')+'%22&format=json';
-
-                $http({
-                    method: 'GET',
-                    url: url
-                }).success(function (data) {
-
-                    var lista = data.query.results.item;
-
-                });
-
-            };*/
-
             $scope.pageload();
-
 
         }
     ]);

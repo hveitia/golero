@@ -1,0 +1,55 @@
+<ion-view view-title="Noticias">
+
+  <div class="bar bar-header bar-light">
+    <button class="button button-clear button-primary" ng-click="goToHome()" style="color: white; font-weight: bold;">
+      <i class="fa fa-angle-left" aria-hidden="true" style="font-weight: bold;"></i> Atrás</button>
+    <h1 class="title viewTitle">Noticias</h1>
+  </div>
+
+  <ion-content style="background: ghostwhite; margin-top: 12%;">
+
+    <div class="row" style="padding-top: 0;">
+      <ion-spinner icon="lines" class="centerWithAuto" data-ng-show="loading"></ion-spinner>
+    </div>
+    <div class="list card" ng-repeat="item in newsList track by $index" data-ng-show='!loading'>
+      <div class="item" data-ng-click="openModal(item)">
+        <h6 style="color: #ccc">El Comercio</h6>
+        <h2 class="newsHeader">{{item.title}}</h2>
+      </div>
+      <div class="item item-image" data-ng-click="openModal(item)">
+        <img src="{{item.enclosure.url}}">
+      </div>
+      <a class="item positive" data-ng-click="openModal(item)">
+        Leer más...
+      </a>
+    </div>
+
+  </ion-content>
+
+  <script id="view-textsNews-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <button class="button button-clear button-primary" ng-click="modal.hide()" style="color: white; font-weight: bold;">
+          <i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+      </ion-header-bar>
+      <ion-content style="text-align:left; padding: 10px;">
+        <div>
+          <p style="font-weight: bold;">{{newsTitle}}</p>
+        </div>
+        <div>
+          <img src="{{newsImage}}" style="width: 100%;">
+        </div>
+        <div>
+          <p>{{newsText}}</p>
+        </div>
+        <div>
+          <a class="" ng-click="openFullNews()">
+            Artículo completo
+          </a>
+        </div>
+
+      </ion-content>
+    </ion-modal-view>
+  </script>
+
+</ion-view>
