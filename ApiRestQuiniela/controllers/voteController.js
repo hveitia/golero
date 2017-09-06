@@ -45,15 +45,24 @@ exports.add = function (req, res) {
                             insertedDate: new Date().toString('dd/MM/yyyy HH:mm:ss')
 
                         });
-                        obj.save(function (err, result) {
-                            if (err) {
-                                return res.send(500, err.message);
-                                logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Log Save Failed', 'voteController', 'add');
-                            }
 
-                            logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Vote Saved OK', 'voteController', 'add');
-                            res.status(200).jsonp(result);
-                        });
+                        if(utils.isActiveVote(obj.date)) {
+
+                            obj.save(function (err, result) {
+                                if (err) {
+                                    return res.send(500, err.message);
+                                    logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Log Save Failed', 'voteController', 'add');
+                                }
+
+                                logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Vote Saved OK', 'voteController', 'add');
+                                res.status(200).jsonp(result);
+                            });
+
+                        }else{
+
+                            logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Vote Inactive Try Save', 'voteController', 'add');
+                            res.status(200).jsonp('Try Save Inactive Vote');
+                        }
                     });
                 });
             }

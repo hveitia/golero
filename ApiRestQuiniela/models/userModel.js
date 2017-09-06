@@ -14,9 +14,10 @@ exports = module.exports = function (app, mongoose) {
         role: {type: String},
         historicalPunctuation: {type: []},
         lastPosition: {type: Number},
-        tickets:{type: Number},
-        reputation:{type: Number},
-        resendMailDate:{type:Date}
+        tickets: {type: Number},
+        reputation: {type: Number},
+        resendMailDate: {type: Date},
+        ticketsState: {type: String}
 
     });
 

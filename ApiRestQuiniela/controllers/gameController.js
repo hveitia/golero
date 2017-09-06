@@ -289,7 +289,7 @@ exports.update = function (req, res) {
                                     return res.send(500, err.message);
                                 }
 
-                                logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'New Points Saved', 'gameController', 'update');
+                                //logController.saveLog(req.user, 'PUT', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'New Points Saved', 'gameController', 'update');
                                 next();
 
                             });

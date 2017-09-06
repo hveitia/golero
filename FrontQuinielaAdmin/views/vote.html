@@ -1,68 +1,101 @@
-
-
 <div class="col-lg-12">
-  <h1 class="page-header">Votes List</h1>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="col-lg-2" style="padding-left: 0;">
-        <input placeholder="User" type="text" class="form-control" data-ng-model="userFinded"/>
-      </div>
-      <div class="col-lg-2" style="padding-left: 0;">
-        <input placeholder="Date" type="text" class="form-control" data-ng-model="dateFinded"/>
-      </div>
-      <div class="col-lg-2" style="padding-left: 0;">
-        <input placeholder="Working Date" type="number" class="form-control" data-ng-model="workingDayFinded"/>
-      </div>
-      <div class="col-lg-2">
-        <button type="button" class="btn btn-primary" data-ng-click="filterByWorkingDate()">Filter</button>
-        <button type="button" class="btn btn-primary" data-ng-click="filterInactives()">Show Inactives</button>
-      </div>
+    <h1 class="page-header">Votes List</h1>
 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-2" style="padding-left: 0;">
+                <input placeholder="User" type="text" class="form-control" data-ng-model="userFinded"/>
+            </div>
+            <div class="col-lg-2" style="padding-left: 0;">
+                <input placeholder="Date" type="text" class="form-control" data-ng-model="dateFinded"/>
+            </div>
+            <div class="col-lg-2" style="padding-left: 0;">
+                <input placeholder="Working Date" type="number" class="form-control" data-ng-model="workingDayFinded"/>
+            </div>
+            <div class="col-lg-4">
+                <button type="button" class="btn btn-primary" data-ng-click="filterByWorkingDate()">Filter</button>
+                <button type="button" class="btn btn-info" data-ng-click="filterInactives()">Show Inactives</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalShowVotesCoun" data-ng-click="verifyList()">Show Votes</button>
+            </div>
+
+        </div>
     </div>
-  </div>
-  <hr>
-  <table class="table table-bordered table-hover table-striped"  style="margin-top: 10px;">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Value</th>
-        <th>Local</th>
-        <th>Visitor</th>
-        <th>Date</th>
-        <th>Inserted Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="vote in voteList">
-        <td>{{vote.user.user}}</td>
-        <td>{{vote.valueVote}}</td>
-        <td>{{vote.game.localTeam.name}}</td>
-        <td>{{vote.game.visitorTeam.name}}</td>
-        <td>{{vote.date | date}}</td>
-        <td>{{vote.insertedDate | date : 'dd-MM-yyyy HH:mm:ss'}}</td>
-        <td><i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteVoteClick(vote)" style="cursor:pointer;"></i></td>
-      </tr>
-    </tbody>
-  </table>
+    <hr>
+    <table class="table table-bordered table-hover table-striped" style="margin-top: 10px;">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Value</th>
+            <th>Local</th>
+            <th>Visitor</th>
+            <th>Date</th>
+            <th>Inserted Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="vote in voteList">
+            <td>{{vote.user.user}}</td>
+            <td>{{vote.valueVote}}</td>
+            <td>{{vote.game.localTeam.name}}</td>
+            <td>{{vote.game.visitorTeam.name}}</td>
+            <td>{{vote.date | date}}</td>
+            <td>{{vote.insertedDate | date : 'dd-MM-yyyy HH:mm:ss'}}</td>
+            <td>
+                <i class="fa fa-fw fa-trash" title="Delete" data-toggle="modal" data-target="#myModalConfirm" ng-click="deleteVoteClick(vote)" style="cursor:pointer;"></i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!--Modal Delete -->
 <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Delete</h4>
-      </div>
-      <div class="modal-body">
-        Sure you want to delete the selected record?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteVote()">NO</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteVote()">YES</button>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete</h4>
+            </div>
+            <div class="modal-body">
+                Sure you want to delete the selected record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="canceldeleteVote()">NO</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteVote()">YES</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- Modal Delete -->
+
+<!--Modal Show Votes Count -->
+<div class="modal fade" id="myModalShowVotesCoun" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalShowVotesCountLabel">Vote Count List</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding:35px; padding-top: 20px;">
+                    <table class="table table-bordered table-hover table-striped" style="margin-top: 10px;">
+                        <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="vote in listVoteCountByUser" class="{{vote.type}}">
+                            <td>{{vote.user}}</td>
+                            <td>{{vote.votes}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Show Votes Count -->

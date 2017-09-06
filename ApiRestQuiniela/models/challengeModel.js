@@ -8,7 +8,8 @@ exports = module.exports = function (app, mongoose) {
         userToChallenge: {type: mongoose.Schema.ObjectId, ref: "USERMODEL"},
         userChallenged: {type: mongoose.Schema.ObjectId, ref: "USERMODEL"},
         game: {type: mongoose.Schema.ObjectId, ref: "GAMEMODEL"},
-        state:{type: String}
+        state: {type: String},
+        points: {type: String}
 
     });
 
@@ -17,5 +18,5 @@ exports = module.exports = function (app, mongoose) {
 };
 
 /*
-  States:CREATED, ACCEPTED, REJECTED, INACTIVE
+ States:CREATED, ACCEPTED, REJECTED, INACTIVE
  */

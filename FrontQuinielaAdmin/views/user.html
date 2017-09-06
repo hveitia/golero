@@ -17,10 +17,12 @@
   <table class="table table-bordered table-hover table-striped">
     <thead>
       <tr>
-        <th>Id</th>
+        <!--<th>Id</th>-->
         <th>User</th>
         <th>Email</th>
         <th data-ng-show="!showOnlyCreated">Points</th>
+        <th>Tickets</th>
+        <th>Tickets State</th>
         <th>State</th>
         <th>Favorite Team</th>
         <th>Avatar</th>
@@ -32,17 +34,19 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in registeredUsersToShow">
-        <th>{{user._id}}</th>
+        <!--<th>{{user._id}}</th>-->
         <td>{{user.user}}</td>
-        <!--<td>{{user.email}}</td>-->
-        <td>{{user.historicalPunctuation}}</td>
+        <td>{{user.email}}</td>
+        <!--<td>{{user.historicalPunctuation}}</td>-->
         <td data-ng-show="!showOnlyCreated">{{user.points}}</td>
+        <td>{{user.tickets}}</td>
+        <td>{{user.ticketsState}}</td>
         <td>{{user.state}}</td>
         <td>{{user.favoriteTeam}}</td>
         <td>{{user.avatar}}</td>
         <td>{{user.registerHash}}</td>
         <td>{{user.registerDate | date : 'dd-MM-yyyy HH:mm:ss'}}</td>
-        <td data-ng-show="showOnlyCreated">{{user.resendMailDate}}</td>
+        <td data-ng-show="showOnlyCreated">{{user.resendMailDate | date : 'dd-MM-yyyy HH:mm:ss'}}</td>
         <td>
           <i class="fa fa-fw fa-eye" title="Show User" style="cursor:pointer;"></i>
           <i class="fa fa-fw fa-envelope-o" title="Resend Confirmation Mail" style="cursor:pointer;" data-ng-show="showOnlyCreated" data-ng-click="resendConfirmationMail(user)"></i>

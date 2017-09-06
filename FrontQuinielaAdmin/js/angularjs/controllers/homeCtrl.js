@@ -78,31 +78,33 @@ angular.module('QuinielaApp')
                     });
 
                 }).error(function (err) {
-                        $scope.registeredUsers = [];
-                        console.log(err);
-                    });
+                    $scope.registeredUsers = [];
+                    console.log(err);
+                });
             };
 
             $scope.loadGames = function () {
                 $scope.gameList = [];
-                HandleDataService.getGamesByWorkingDay($scope.workinDaySelected._id).success(function (data) {
-                    $scope.gameList = data;
+                if (!EsNuloVacio($scope.workinDaySelected)) {
+                    HandleDataService.getGamesByWorkingDay($scope.workinDaySelected._id).success(function (data) {
+                        $scope.gameList = data;
 
-                    for (var i = 0; i < $scope.gameList.length; i++) {
+                        for (var i = 0; i < $scope.gameList.length; i++) {
 
-                        $scope.gameList[i].date = ($scope.gameList[i].especialDate) ? $scope.gameList[i].especialDate : $scope.gameList[i].workingDay.date;
+                            $scope.gameList[i].date = ($scope.gameList[i].especialDate) ? $scope.gameList[i].especialDate : $scope.gameList[i].workingDay.date;
 
-                        if (isGameToUpdate($scope.gameList[i])) {
-                            $scope.gameList[i].toUpdate = true;
-                        } else {
-                            $scope.gameList[i].toUpdate = false;
+                            if (isGameToUpdate($scope.gameList[i])) {
+                                $scope.gameList[i].toUpdate = true;
+                            } else {
+                                $scope.gameList[i].toUpdate = false;
+                            }
                         }
-                    }
-                })
-                    .error(function (err) {
-                        $scope.gameList = [];
-                        console.log(err);
-                    });
+                    })
+                        .error(function (err) {
+                            $scope.gameList = [];
+                            console.log(err);
+                        });
+                }
             };
 
             $scope.showGamesToUpdate = function () {
@@ -182,7 +184,24 @@ angular.module('QuinielaApp')
 
             };
 
+            /*
+            $scope.loadComercionRSS = function () {
+
+                var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22'+encodeURIComponent('http://www.elcomercio.com/rss/deportes')+'%22&format=json';
+
+                $http({
+                    method: 'GET',
+                    url: url
+                }).success(function (data) {
+
+                    var lista = data.query.results.item;
+
+                });
+
+            };*/
+
             $scope.pageload();
+
 
         }
     ]);

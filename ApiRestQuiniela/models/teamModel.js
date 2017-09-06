@@ -1,14 +1,13 @@
-exports = module.exports = function(app, mongoose) {
+exports = module.exports = function (app, mongoose) {
 
-  var teamSchema = new mongoose.Schema({
-    name: {
-      type: String
-    },
-    logo: {
-      type: String
-    }
-  });
+    var LEAGUEMODEL = mongoose.model('LEAGUEMODEL');
 
-  mongoose.model('TEAMMODEL', teamSchema);
+    var teamSchema = new mongoose.Schema({
+        name: {type: String},
+        logo: {type: String},
+        league: {type: mongoose.Schema.ObjectId, ref: "LEAGUEMODEL"}
+    });
+
+    mongoose.model('TEAMMODEL', teamSchema);
 
 };

@@ -11,7 +11,7 @@ mongoose = require('mongoose');
 var dbName = 'apiRestQuinielaDB';
 
 //PORT LISTEN
-var port = 80;
+var port = 3000;
 
 //var dbLocation = 'ec2-52-35-13-146.us-west-2.compute.amazonaws.com';
 var dbLocation = 'localhost';
@@ -34,9 +34,11 @@ app.use(methodOverride());
 app.use(cors());
 
 
+
 // API routes
 var routesIndex = require('./routes/index');
 var routesUser = require('./routes/user');
+var routesLeague = require('./routes/league');
 var routesTeam = require('./routes/team');
 var routesSeason = require('./routes/season');
 var routesGame = require('./routes/game');
@@ -49,6 +51,7 @@ var routesTexts = require('./routes/texts');
 var routesTest = require('./routes/test');
 
 app.use('/api', routesIndex);
+app.use('/api', routesLeague);
 app.use('/api', routesGame);
 app.use('/api', routesUser);
 app.use('/api', routesTeam);
@@ -60,9 +63,6 @@ app.use('/api', routesConfigs);
 app.use('/api', routesTexts);
 
 app.use('/api', routesTest);
-
-
-
 
 
 // Start server

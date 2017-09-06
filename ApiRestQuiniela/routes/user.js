@@ -31,6 +31,9 @@ router.route('/editFavoriteTeam')
 router.route('/editAvatar')
     .put(middleware.ensureAuthenticated, userController.editAvatar);
 
+router.route('/claimTickets')
+    .put(middleware.ensureAuthenticated, userController.claimTickets);
+
 router.route('/editEmail')
     .put(middleware.ensureAuthenticated, userController.editEmail);
 

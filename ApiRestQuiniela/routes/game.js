@@ -8,9 +8,6 @@ var middleware = require('../middleware');
 var gameModel = require('../models/gameModel')(app, mongoose);
 var voteModel = require('../models/voteModel')(app, mongoose);
 
-
-
-
 var gameController = require('../controllers/gameController');
 
 

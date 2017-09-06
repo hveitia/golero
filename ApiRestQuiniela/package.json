@@ -11,6 +11,7 @@
     "mongoose": "~3.6.11"
   },
   "devDependencies": {
+    "cron": "^1.2.1",
     "fs": "0.0.1-security",
     "nodemailer": "^3.1.1",
     "random-js": "^1.0.8"

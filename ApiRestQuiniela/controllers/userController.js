@@ -5,6 +5,7 @@ var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require("path");
 var utils = require('../utils/utils.js');
+var cron = require('cron');
 var forEachAsync = require('forEachAsync').forEachAsync;
 
 var logController = require('./logController');
@@ -459,6 +460,39 @@ exports.editAvatar = function (req, res) {
     }
 };
 
+exports.claimTickets = function (req, res) {
+
+    try {
+        USERMODEL.findOne({_id: req.user}, function (err, user) {
+            if (err) {
+                res.send(500, err.message);
+            }
+
+            if (user && user.ticketsState == 'FULL') {
+
+                if (!user.tickets) {
+                    user.tickets = 1;
+                } else {
+                    user.tickets += 1;
+                }
+
+                user.ticketsState = 'WAITING';
+
+                user.save(function (err, result) {
+                    if (err) return res.send(500, err.message);
+
+                    res.status(200).send('ok');
+                });
+
+            } else {
+                res.send(500, 'User not found');
+            }
+        });
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'claimTickets');
+    }
+};
+
 exports.editEmail = function (req, res) {
 
     try {
@@ -648,14 +682,14 @@ exports.activateAccount = function (req, res) {
     }
 };
 
-exports.resendConfirmationMail = function(req, res){
+exports.resendConfirmationMail = function (req, res) {
 
     try {
         USERMODEL.findById(req.params.id, function (err, user) {
 
             if (err) return res.status(500).send(err.message);
 
-            if(user){
+            if (user) {
 
                 user.resendMailDate = new Date();
 
@@ -668,7 +702,7 @@ exports.resendConfirmationMail = function(req, res){
                 });
 
             }
-            else{
+            else {
                 res.status(404).jsonp('No encontrado');
             }
         });
@@ -754,3 +788,46 @@ exports.delete = function (req, res) {
     }
 
 };
+
+//Automatic Process
+exports.updateTicketFree = new cron.CronJob({
+    cronTime: '00 12 * * *',
+    onTick: function () {
+
+        console.log('job 1 ticked -> ' + new Date().toString('dd/MM/yyyy HH:mm:ss'));
+
+        try {
+            USERMODEL.find(function (err, result) {
+
+                if (err) {
+                    console.log('Error->' + err);
+                    return;
+                }
+
+                forEachAsync(result, function (next, element, index, array) {
+
+                    if (!element.ticketsState || element.ticketsState == 'WAITING') {
+
+                        element.ticketsState = 'FULL';
+
+                        element.save(function (err, result) {
+
+                            if (err) {
+                                console.log('Error->' + err);
+                                return;
+                            }
+                            next();
+                        });
+                    }
+
+                }).then(function () {
+                    console.log('Tickets Updated');
+                });
+            });
+        }
+        catch (e) {
+            logController.saveLog('Crash', 'PROGRAMED', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'addDayliTicketsToUser');
+        }
+    },
+    start: true
+});

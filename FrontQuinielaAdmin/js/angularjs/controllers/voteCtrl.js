@@ -70,20 +70,77 @@ angular.module('QuinielaApp')
                 }
             };
 
-            $scope.filterByWorkingDate = function(){
-                if(EsNuloVacio($scope.workingDayFinded)){
+            $scope.filterByWorkingDate = function () {
+                if (EsNuloVacio($scope.workingDayFinded)) {
                     $scope.voteList = $scope.voteListBackup;
-                }else {
+                } else {
                     $scope.voteList = $scope.voteListBackup.filter(function (x) {
                         return x.game.workingDay.name == $scope.workingDayFinded;
                     });
+
+                    $scope.createList();
                 }
             };
 
             $scope.filterInactives = function () {
                 $scope.voteList = $scope.voteListBackup.filter(function (x) {
-                    return x.user.state == 'CREATED';
+                    return x.user == null || x.user.state != 'ACTIVE';
                 });
+            };
+
+            $scope.voteNumberByUser = function (vote) {
+
+                var array = $scope.voteList.filter(function (x) {
+                    return x.user != null && x.user._id == vote.user._id;
+                });
+
+                var type = 'success';
+                if (array.length > 6) {
+
+                    type = 'danger';
+                }
+                else{
+                    if (array.length < 6){
+                        type = 'warning';
+                    }
+                }
+
+                return {
+                    user: array[0].user.user,
+                    votes: array.length,
+                    type: type
+                };
+
+            };
+
+            $scope.findUser = function (user, list) {
+
+                var array = list.filter(function (x) {
+                    return x.user != null && x.user == user.user;
+                });
+
+                return array.length > 0;
+            };
+
+            $scope.createList = function () {
+
+                var arrayResult = [];
+
+                for(var i = 0; i < $scope.voteList.length; i++){
+
+                    if(!$scope.findUser($scope.voteList[i].user, arrayResult)){
+                        arrayResult.push($scope.voteNumberByUser($scope.voteList[i]));
+                    }
+                }
+
+                $scope.listVoteCountByUser = arrayResult;
+            };
+
+            $scope.verifyList =function(){
+
+                if(!$scope.listVoteCountByUser || $scope.listVoteCountByUser.length == 0){
+                    $scope.createList();
+                }
             };
 
 

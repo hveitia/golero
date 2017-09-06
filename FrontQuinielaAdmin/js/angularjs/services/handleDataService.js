@@ -167,6 +167,16 @@
                         }
                     });
                 },
+                getAllLeagues: function () {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'league',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 getAllSeansonsActive: function () {
                     return $http({
                         method: 'GET',
@@ -181,8 +191,22 @@
                     return $http({
                         method: 'POST',
                         url: urlApi + 'season',
-                        data:{
+                        data: {
                             "name": name
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addLeague: function (name) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'league',
+                        data: {
+                            "name": name,
+                            "logo": logo
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
@@ -238,7 +262,7 @@
                         data: {
                             "key": key,
                             "text": text,
-                            "title":title
+                            "title": title
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
@@ -426,7 +450,7 @@
                         }
                     });
                 },
-                deleteWorkingDay: function(wd){
+                deleteWorkingDay: function (wd) {
                     return $http({
                         method: 'DELETE',
                         url: urlApi + 'workingDayName/' + wd,
@@ -437,6 +461,7 @@
                     });
                 }
                 //////////////////////////////////////////////
+
             }
         }]);
 
