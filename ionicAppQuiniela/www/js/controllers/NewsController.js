@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('NewsController', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform, $http, $cordovaInAppBrowser) {
+  .controller('NewsController', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform, $http) {
 
     $ionicModal.fromTemplateUrl('view-textsNews-modal.html', {
       scope: $scope,
