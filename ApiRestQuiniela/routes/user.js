@@ -37,8 +37,8 @@ router.route('/claimTickets')
 router.route('/editEmail')
     .put(middleware.ensureAuthenticated, userController.editEmail);
 
-//router.route('/editPoints/:id')
-//    .put(middleware.ensureAuthenticated, userController.editPoints);
+router.route('/editPoints/:id')
+    .put(middleware.ensureAuthenticated, userController.editPoints);
 
 router.route('/activateAccount')
     .put(middleware.ensureAuthenticated, userController.activateAccount);
