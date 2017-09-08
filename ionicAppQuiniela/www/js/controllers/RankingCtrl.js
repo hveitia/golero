@@ -234,8 +234,8 @@ angular.module('QuinielaIonicApp')
 
     });
 
-    $ionicPlatform.on('resume', function () {
+    /*$ionicPlatform.on('resume', function () {
       $state.go('tab.dash');
-    });
+    });*/
 
   });

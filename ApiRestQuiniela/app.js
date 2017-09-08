@@ -11,7 +11,7 @@ mongoose = require('mongoose');
 var dbName = 'apiRestQuinielaDB';
 
 //PORT LISTEN
-var port = 3000;
+var port = 80;
 
 //var dbLocation = 'ec2-52-35-13-146.us-west-2.compute.amazonaws.com';
 var dbLocation = 'localhost';

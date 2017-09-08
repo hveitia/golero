@@ -95,7 +95,7 @@ angular.module('QuinielaIonicApp')
       $state.go('tab.pronosticar');
     };
 
-    $scope.goToViewNews = function(){
+    $scope.goToViewNews = function () {
       $state.go('news');
     };
 
@@ -642,7 +642,7 @@ angular.module('QuinielaIonicApp')
                   }, {
                     text: 'SI', type: 'button-positive', onTap: function (e) {
                       window.open('https://play.google.com/store/apps/details?id=com.hectorveitia.golero', '_system');
-                     }
+                    }
                   }]
               });
             }
@@ -652,14 +652,16 @@ angular.module('QuinielaIonicApp')
         }
       }
 
-      if(window.Connection) {
-        if(navigator.connection.type == Connection.NONE) {
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.confirm({
             title: textConectionLost.title,
             template: textConectionLost.text,
             buttons: [
               {
-                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {
+                $state.go('tab.dash');
+              }
               }]
           });
         }
@@ -667,6 +669,8 @@ angular.module('QuinielaIonicApp')
     });
 
     $ionicPlatform.on('resume', function () {
-      $state.go('tab.dash');
+      if ($state.current.name != 'news')
+        $state.go('tab.dash');
     });
+
   });

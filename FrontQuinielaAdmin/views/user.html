@@ -9,15 +9,15 @@
 
   <input type="checkbox" data-ng-model="showOnlyCreated"/> Show Only Created
 
-  <!--<input type="text" data-ng-model="newPoint" placeholder="point"/>
+  <input type="text" data-ng-model="newPoint" placeholder="point"/>
   <input type="text" data-ng-model="userNewPoint" placeholder="user"/>
-  <button type="button" class="btn btn-danger" data-ng-click="editPoints()">new point</button>-->
+  <button type="button" class="btn btn-danger" data-ng-click="editPoints()">new point</button>
   <hr>
 
   <table class="table table-bordered table-hover table-striped">
     <thead>
       <tr>
-        <!--<th>Id</th>-->
+        <th>Id</th>
         <th>User</th>
         <th>Email</th>
         <th data-ng-show="!showOnlyCreated">Points</th>
@@ -34,7 +34,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in registeredUsersToShow">
-        <!--<th>{{user._id}}</th>-->
+        <td>{{user._id}}</td>
         <td>{{user.user}}</td>
         <td>{{user.email}}</td>
         <!--<td>{{user.historicalPunctuation}}</td>-->
