@@ -829,5 +829,5 @@ exports.updateTicketFree = new cron.CronJob({
             logController.saveLog('Crash', 'PROGRAMED', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'addDayliTicketsToUser');
         }
     },
-    start: true
+    start: false
 });
