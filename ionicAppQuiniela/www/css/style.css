@@ -221,3 +221,10 @@ ion-content {
   font-size: 13px !important;
 }
 
+.iconNews{
+  position: absolute;
+  top: 185px;
+  left: 35px;
+  color:#190855; width: 10%;
+}
+
