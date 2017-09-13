@@ -4,9 +4,11 @@ angular.module('QuinielaIonicApp')
 
     $scope.login = function () {
 
-      //$scope.data = {};
-      //$scope.data.username = 'admin';
-      //$scope.data.password = 'admin';
+      if (enviroment == 'DEV') {
+        $scope.data = {};
+        $scope.data.username = 'admin';
+        $scope.data.password = 'admin';
+      }
 
       if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
 
@@ -33,7 +35,7 @@ angular.module('QuinielaIonicApp')
             console.log(err);
           });
       } else {
-         $ionicPopup.alert({
+        $ionicPopup.alert({
           title: 'Ingreso Fallido',
           template: 'Verifique que no existen campos vacíos.'
         });
@@ -133,33 +135,38 @@ angular.module('QuinielaIonicApp')
 
     $scope.$on('$ionicView.enter', function () {
 
-      //$scope.login();
-      //$scope.addUserUUDI(Math.floor(Date.now()));
+      if (enviroment == 'DEV') {
+        $scope.login();
+        //$scope.addUserUUDI(Math.floor(Date.now()));
+      } else {
 
-       var user = StorageService.getItem('user');
-       var pass = StorageService.getItem('password');
-       var registred = StorageService.getItem('registred');
+        var user = StorageService.getItem('user');
+        var pass = StorageService.getItem('password');
+        var registred = StorageService.getItem('registred');
 
-       $scope.data = {};
+        $scope.data = {};
 
-       if (registred) {
+        if (registred) {
 
-       $scope.data.username = user;
-       $scope.data.password = pass;
-       $scope.login();
+          $scope.data.username = user;
+          $scope.data.password = pass;
+          $scope.login();
 
-       }
+        }
 
-      if(window.Connection) {
-        if(navigator.connection.type == Connection.NONE) {
-          $ionicPopup.confirm({
-            title: textConectionLost.title,
-            template: textConectionLost.text,
-            buttons: [
-              {
-                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
-              }]
-          });
+        if (window.Connection) {
+          if (navigator.connection.type == Connection.NONE) {
+            $ionicPopup.confirm({
+              title: textConectionLost.title,
+              template: textConectionLost.text,
+              buttons: [
+                {
+                  text: 'Reintentar', type: 'button-positive', onTap: function (e) {
+                  $state.go('tab.dash');
+                }
+                }]
+            });
+          }
         }
       }
 

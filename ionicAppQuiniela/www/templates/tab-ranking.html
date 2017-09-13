@@ -1,10 +1,15 @@
 <!--   oro: #ffd700 plata: #c0c0c0 bronce: #8c7853 ---->
 <ion-view view-title="Rankin">
   <div class="bar bar-header bar-light">
-    <h1 class="title viewTitle">Ranking</h1>
+    <h1 class="title viewTitle">
+      Mejores Goleros
+      <i class="fa fa-share-alt" aria-hidden="true"
+         style="position: absolute; top: 33%; left: 91%;"
+         data-ng-click="captureScreenshot()"></i>
+    </h1>
   </div>
-  <ion-content style="background: ghostwhite;">
-    <div class="bar bar-header item-input-inset" style="margin-top: 12%; height: 60px; padding: 10px;">
+  <ion-content style="background: ghostwhite; margin-top: 12%">
+    <!--<div class="bar bar-header item-input-inset" style="margin-top: 12%; height: 60px; padding: 10px;">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="text" placeholder="Buscar Usuario" data-ng-model="data.userFinded" maxlength="40">
@@ -15,7 +20,7 @@
               data-ng-show="data.userFinded && data.userFinded.length > 0">
         <strong>Buscar</strong>
       </button>
-    </div>
+    </div>-->
     <div class="list  animated bounceInUp">
       <div class="row" style="padding-top: 0;">
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
@@ -26,13 +31,28 @@
            data-ng-click="openModal(item)">
         <img ng-src="./img/avatars/{{item.avatar}}" class="animated flipIxnX">
         <span class="badgetRankingPosition">{{$index + 1}}</span>
+
         <h3 class="userRankingName" style="margin: 0 0 10px 0; !important">{{item.user}}</h3>
 
         <h3 class="userRankingName"><i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 5px;"></i>{{item.points}}</h3>
         <img ng-src="./img/logos/{{item.favoriteTeam}}" class="userRankingTeamLogo">
-        <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index <= 2">
-          <i class="fa fa-trophy fa-lg" aria-hidden="true" style="font-size: 1.8em;"></i>
+
+        <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index == 0">
+
+          <img  width="40" height="40" class="icon" style="margin-left: 10%; margin-top: -30%;" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjI1IDAgMCAtMS4yNSAwIDQ1KSI+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNTVBQ0VFOyIgZD0iTTM0LjIwNC00My42YzE4LjMtMzYuNywxMzYuNS0xNDcuOSwxMzYuNS0xNDcuOWg2OC4zYzAsMCwxMTMuOCwxMTMuOCwxMzYuNSwxNDcuOSAgIGMxMS40LDIyLjctMjYuNSw3OS42LTU2LjgsNzkuNmgtMjI3LjZDNTcuNTA0LDM2LDIyLjkwNC0yMC45LDM0LjIwNC00My42eiBNMjA0LjkwNC0zMi4zYzkxLDAsODUuMy01LjcsNjguMy0yMi44bC02OC4zLTY4LjMgICBsLTY4LjMsNjguNEMxMTMuOTA0LTMyLjMsMTI1LjMwNC0zMi4zLDIwNC45MDQtMzIuM3oiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiMzQjg4QzM7IiBkPSJNMTI2LjQwNC00MS4yYy0xLjQsOC45LDIwLjMsOC45LDc4LjUsOC45YzgzLjEsMCw4NS42LTQuNyw3Mi40LTE4LjZjNjMuMyw2NSw0My45LDg2LjgsMTguNiw4Ni44ICAgaC0xODJDNzMuMjA0LDM2LDEwMi4zMDQtMTAuNSwxMjYuNDA0LTQxLjJ6Ii8+Cgk8Zz4KCQk8cGF0aCBzdHlsZT0iZmlsbDojRkZBQzMzOyIgZD0iTTI5NS45MDQtMjgyLjZjMCwzNC4xLTE4LjgsNjMuOS00Ni42LDc5LjRjMC43LDEuOCwxLjEsMy44LDEuMSw1LjljMCw5LjQtNy42LDE3LjEtMTcuMSwxNy4xICAgIGgtNTYuOWMtOS40LDAtMTcuMS03LjYtMTcuMS0xNy4xYzAtMi4xLDAuNC00LDEuMS01LjljLTI3LjgtMTUuNi00Ni42LTQ1LjMtNDYuNi03OS40YzAtNTAuMyw0MC43LTkxLDkxLTkxICAgIEMyNTUuMjA0LTM3My42LDI5NS45MDQtMzMyLjgsMjk1LjkwNC0yODIuNnoiLz4KCQk8cGF0aCBzdHlsZT0iZmlsbDojOUU1MjAwOyIgZD0iTTE5Ni4xMzMtMjU4LjgxaC0xNS4zYy0xLjYsMC0yLjksMS40LTIuOSwzdjEwYzAsMC42LDAuNSwxLjksMSwyLjRsMjMuMywxOC4yaDE0LjcgICAgYzEuNiwwLDIuOS0xLjQsMi45LTN2LTEwMi40YzAtMS42LTEuMy0zLTIuOS0zaC0xNy43Yy0xLjgsMC0zLDEuNC0zLDN2NzEuOEwxOTYuMTMzLTI1OC44MUwxOTYuMTMzLTI1OC44MXoiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K"/>
+
         </span>
+        <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index == 1">
+
+          <img width="35" height="35" class="icon" style="margin-left: 10%; margin-top: -30%;" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjI1IDAgMCAtMS4yNSAwIDQ1KSI+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNTVBQ0VFOyIgZD0iTTM0LjIwNC00My42YzE4LjMtMzYuNywxMzYuNS0xNDcuOSwxMzYuNS0xNDcuOWg2OC4zYzAsMCwxMTMuOCwxMTMuOCwxMzYuNSwxNDcuOSAgIGMxMS40LDIyLjctMjYuNSw3OS42LTU2LjgsNzkuNmgtMjI3LjZDNTcuNTA0LDM2LDIyLjkwNC0yMC45LDM0LjIwNC00My42eiBNMjA0LjkwNC0zMi4zYzkxLDAsODUuMy01LjcsNjguMy0yMi44bC02OC4zLTY4LjMgICBsLTY4LjMsNjguNEMxMTMuOTA0LTMyLjMsMTI1LjMwNC0zMi4zLDIwNC45MDQtMzIuM3oiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiMzQjg4QzM7IiBkPSJNMTI2LjQwNC00MS4yYy0xLjQsOC45LDIwLjMsOC45LDc4LjUsOC45YzgzLjEsMCw4NS42LTQuNyw3Mi40LTE4LjZjNjMuMyw2NSw0My45LDg2LjgsMTguNiw4Ni44ICAgaC0xODJDNzMuMjA0LDM2LDEwMi4zMDQtMTAuNSwxMjYuNDA0LTQxLjJ6Ii8+Cgk8Zz4KCQk8cGF0aCBzdHlsZT0iZmlsbDojQ0NENkREOyIgZD0iTTI5NS45MDQtMjgyLjZjMCwzNC4xLTE4LjgsNjMuOS00Ni42LDc5LjRjMC43LDEuOCwxLjEsMy44LDEuMSw1LjljMCw5LjQtNy42LDE3LjEtMTcuMSwxNy4xICAgIGgtNTYuOWMtOS40LDAtMTcuMS03LjYtMTcuMS0xNy4xYzAtMi4xLDAuNC00LDEuMS01LjljLTI3LjgtMTUuNi00Ni42LTQ1LjMtNDYuNi03OS40YzAtNTAuMyw0MC43LTkxLDkxLTkxICAgIEMyNTUuMjA0LTM3My42LDI5NS45MDQtMzMyLjgsMjk1LjkwNC0yODIuNnoiLz4KCQk8cGF0aCBzdHlsZT0iZmlsbDojNjI3MDc3OyIgZD0iTTIzOS4wMDQtMzEzLjJoLTMwLjJjNy41LDEwLjUsMjAuNiwyNy42LDI1LjcsMzYuN2MzLjgsNy41LDYuMiwxMi4zLDYuMiwyMC43ICAgIGMwLDE3LjctMTMuNCwzMi4yLTM2LjIsMzIuMmMtMTksMC0zMS45LTE1LjYtMzEuOS0xNS42Yy0xLjEtMS4zLTEtMy4yLDAuMi00LjJsOS43LTkuOWMxLjMtMS4zLDMuMi0xLjMsNC41LDBjMywzLjMsOC45LDgsMTUuNSw4ICAgIGM4LjksMCwxNC4xLTUuNCwxNC4xLTExLjVjMC00LjUtMi4xLTguOS00LjItMTIuMWMtOS40LTE0LjMtMzMtNDYuNC00Mi4zLTU4LjZ2LTMuMmMwLTEuNiwxLjMtMywzLTNoNjZjMS42LDAsMywxLjQsMywzdjE0LjMgICAgQzI0Mi4xMDQtMzE0LjYsMjQwLjYwNC0zMTMuMiwyMzkuMDA0LTMxMy4yeiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+
+        </span>
+
+        <span class="badge" style="color: {{item.class}}; margin-top:3%;" data-ng-show="$index == 2">
+
+          <img width="30" height="30" class="icon" style="margin-left: 10%; margin-top: -30%;"  src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjI1IDAgMCAtMS4yNSAwIDQ1KSI+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNTVBQ0VFOyIgZD0iTTMxOC43MjEsMzZoLTIyNy42Yy0zMy43LDAtNjguMy01Ni45LTU2LjktNzkuNmMxOC4zLTM2LjcsMTM2LjUtMTQ3LjksMTM2LjUtMTQ3LjloNjguMyAgIGMwLDAsMTEzLjgsMTEzLjgsMTM2LjUsMTQ3LjlDMzg2LjkyMS0yMC45LDM0OS4wMjEsMzYsMzE4LjcyMSwzNnogTTI3My4yMjEtNTVsLTY4LjMtNjguM2wtNjguMyw2OC4zICAgYy0yMi44LDIyLjgtMTEuNCwyMi44LDY4LjMsMjIuOEMyOTUuOTIxLTMyLjMsMjkwLjIyMS0zOCwyNzMuMjIxLTU1eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzNCODhDMzsiIGQ9Ik0xMjYuNDIxLTQxLjJjLTEuNCw4LjksMjAuMyw4LjksNzguNSw4LjljODMuMSwwLDg1LjYtNC43LDcyLjQtMTguNmM2My4zLDY1LDQzLjksODYuOCwxOC42LDg2LjggICBoLTE4MkM3My4yMjEsMzYsMTAyLjMyMS0xMC41LDEyNi40MjEtNDEuMnoiLz4KCTxnPgoJCTxwYXRoIHN0eWxlPSJmaWxsOiNGRjhBM0I7IiBkPSJNMjk1LjkyMS0yODIuNmMwLDM0LjEtMTguOCw2My45LTQ2LjYsNzkuNGMwLjcsMS44LDEuMSwzLjgsMS4xLDUuOWMwLDkuNC03LjYsMTcuMS0xNy4xLDE3LjEgICAgaC01Ni45Yy05LjQsMC0xNy4xLTcuNi0xNy4xLTE3LjFjMC0yLjEsMC40LTQsMS4xLTUuOWMtMjcuOC0xNS42LTQ2LjYtNDUuMy00Ni42LTc5LjRjMC01MC4zLDQwLjctOTEsOTEtOTEgICAgQzI1NS4yMjEtMzczLjYsMjk1LjkyMS0zMzIuOCwyOTUuOTIxLTI4Mi42eiIvPgoJCTxwYXRoIHN0eWxlPSJmaWxsOiM3QzQxMTk7IiBkPSJNMjIzLjIyMS0yNzcuOHYwLjVjNy4yLDMuMywxNi40LDEyLjQsMTYuNCwyNC43YzAsMTcuOS0xNiwyOS4yLTM0LjUsMjkuMiAgICBjLTE3LjQsMC0zMC41LTE0LjEtMzAuNS0xNC4xYy0xLjEtMS4xLTEuMy0zLDAtNC4xbDkuNy05LjZjMS4zLTEuMSwzLjItMS4xLDQuMywwLjJjMi40LDIuNyw2LjksNi40LDEzLjksNi40ICAgIGM2LjksMCwxMi44LTUuMSwxMi44LTEyYzAtNi45LTUuOS0xMi4zLTE3LjEtMTIuM2gtNS40Yy0xLjYsMC0zLTEuMy0zLTN2LTEzLjJjMC0xLjYsMS40LTMsMy0zaDUuNGMxMS44LDAsMTktNS45LDE5LTEyLjkgICAgcy03LTEyLjgtMTMuOS0xMi44Yy03LjYsMC0xNy41LDcuMy0xNy41LDcuM2MtMS4zLDEtMi45LDAuOC00LTAuM2wtMTAuMS0xMC4xYy0xLTEuMS0xLjEtMi45LTAuMi00YzMuMy00LjMsMTMuNi0xNC4yLDMzLjctMTQuMiAgICBjMjIsMCwzNy4yLDEzLjEsMzcuMiwzMC41QzI0Mi41MjEtMjkwLjgsMjMwLjcyMS0yODEsMjIzLjIyMS0yNzcuOHoiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+        </span>
+
         <span class="badge" style="margin-top:3%;" data-ng-show="$index > 2">
           <i class="fa fa-caret-up" aria-hidden="true" style="font-size: 1.8em; color: green;" data-ng-show="item.class == 'g'"></i>
           <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 1.8em; color: red;" data-ng-show="item.class == 'r'"></i>

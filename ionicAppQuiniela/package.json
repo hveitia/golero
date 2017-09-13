@@ -39,8 +39,7 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-fcm"
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "ios",

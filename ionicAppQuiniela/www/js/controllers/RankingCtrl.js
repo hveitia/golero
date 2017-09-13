@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,
+  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,$cordovaScreenshot,
                                        RankinService, DatabaseService, Vote, Game, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
@@ -205,6 +205,22 @@ angular.module('QuinielaIonicApp')
         });
 
       }
+
+    };
+
+    $scope.captureScreenshot= function(){
+
+        $cordovaScreenshot.capture('filename', 'png', 100).then(function(result) {
+
+          var message = {
+            text: "Hola, te recomiendo descargar la aplicaci\u00F3n Golero. Demuestra que eres el mejor atrapando balones.",
+            url: result
+          };
+          window.socialmessage.send(message);
+
+        }, function(error) {
+          alert(error);
+        });
 
     };
 

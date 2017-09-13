@@ -9,8 +9,8 @@
 //todo: Poner % ganados y perdidos en la vista del user
 
 
-var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
-//var urlApi = 'http://localhost:3000/api/';
+//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+var urlApi = 'http://localhost:3000/api/';
 
 
 var returnApiCodes = {
@@ -26,8 +26,8 @@ var textConectionLost = {
 };
 
 var iosVersion = 0;
-var androidVersion = 128;
-
+var androidVersion = 138;
+var enviroment = 'DEV';//PROD - DEV
 var tokenUser = '';
 
 canVoteGame = function(game) {

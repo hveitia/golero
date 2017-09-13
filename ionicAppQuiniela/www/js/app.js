@@ -18,38 +18,6 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
 
-        //FCMPlugin.getToken( successCallback(token), errorCallback(err) );
-        //Keep in mind the function will return null if the token has not been established yet.
-        FCMPlugin.getToken(
-          function(token){
-            alert(token);
-            console.log(token);
-          },
-          function(err){
-            console.log('error retrieving token: ' + err);
-          });
-
-        //FCMPlugin.onNotification( onNotificationCallback(data), successCallback(msg), errorCallback(err) )
-        //Here you define your application behaviour based on the notification data.
-        FCMPlugin.onNotification(
-          function(data){
-            if(data.wasTapped){
-              //Notification was received on device tray and tapped by the user.
-              alert( JSON.stringify(data) );
-            }else{
-              //Notification was received in foreground. Maybe the user needs to be notified.
-              alert( JSON.stringify(data) );
-            }
-          },
-          function(msg){
-            console.log('onNotification callback successfully registered: ' + msg);
-          },
-          function(err){
-            console.log('Error registering onNotification callback: ' + err);
-          }
-        );
-
-
 
       }
 
@@ -78,8 +46,6 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
             });
         }
       }
-
-
     });
   })
 
