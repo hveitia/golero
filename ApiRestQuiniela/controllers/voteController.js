@@ -46,7 +46,7 @@ exports.add = function (req, res) {
 
                         });
 
-                        if(utils.isActiveVote(obj.date)) {
+                        if (utils.isActiveVote(obj.date)) {
 
                             obj.save(function (err, result) {
                                 if (err) {
@@ -58,7 +58,7 @@ exports.add = function (req, res) {
                                 res.status(200).jsonp(result);
                             });
 
-                        }else{
+                        } else {
 
                             logController.saveLog(req.user, 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'Vote Inactive Try Save', 'voteController', 'add');
                             res.status(200).jsonp('Try Save Inactive Vote');
@@ -100,46 +100,46 @@ exports.update = function (req, res) {
 
 exports.getVotesActiveByOwnUser = function (req, res) {
 
-    try{
-    VOTEMODEL.find({user: req.user}, function (err, result) {
-        if (err) res.send(500, err.message);
+    try {
+        VOTEMODEL.find({user: req.user}, function (err, result) {
+            if (err) res.send(500, err.message);
 
-        var cant = 0;
+            var cant = 0;
 
-        for (var i = 0; i < result.length; i++) {
-            if (utils.isActiveVote(result[i].date))
-                cant++;
-        }
+            for (var i = 0; i < result.length; i++) {
+                if (utils.isActiveVote(result[i].date))
+                    cant++;
+            }
 
-        res.status(200).jsonp(cant);
-    });
-    }catch(e){
+            res.status(200).jsonp(cant);
+        });
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesActiveByOwnUser');
     }
 };
 
 exports.getVotesTodayByOwnUser = function (req, res) {
 
-    try{
-    VOTEMODEL.find({user: req.user})
-        .populate({
-            path: 'game',
-            populate: {path: 'localTeam'}
-        })
-        .exec(function (err, result) {
+    try {
+        VOTEMODEL.find({user: req.user})
+            .populate({
+                path: 'game',
+                populate: {path: 'localTeam'}
+            })
+            .exec(function (err, result) {
 
-            if (err)res.send(500, err.message);
+                if (err)res.send(500, err.message);
 
-            var resul = [];
+                var resul = [];
 
-            for (var i = 0; i < result.length; i++) {
-                if (utils.isVoteToday(result[i].date))
-                    resul.push(result[i]);
-            }
+                for (var i = 0; i < result.length; i++) {
+                    if (utils.isVoteToday(result[i].date))
+                        resul.push(result[i]);
+                }
 
-            res.status(200).jsonp(resul);
-        });
-    }catch(e){
+                res.status(200).jsonp(resul);
+            });
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesTodayByOwnUser');
     }
 
@@ -147,14 +147,14 @@ exports.getVotesTodayByOwnUser = function (req, res) {
 
 exports.getVotesByOwnUser = function (req, res) {
 
-    try{
-    VOTEMODEL.find({user: req.user}, function (err, result) {
+    try {
+        VOTEMODEL.find({user: req.user}, function (err, result) {
 
-        if (err) res.send(500, err.message);
+            if (err) res.send(500, err.message);
 
-        res.status(200).jsonp(result);
-    });
-    }catch(e){
+            res.status(200).jsonp(result);
+        });
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesbyOwnUser');
     }
 };
@@ -168,26 +168,39 @@ exports.getVotesByUser = function (req, res) {
 
             res.status(200).jsonp(result);
         });
-    }catch(e){
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesByUser');
     }
 };
 
 exports.getVotesByGame = function (game) {
 
-try{
-    VOTEMODEL.find({game: game}, function (err, result) {
+    try {
+        VOTEMODEL.find({game: game}, function (err, result) {
 
-        if (err) res.send(500, err.message);
+            if (err) res.send(500, err.message);
 
-        return result;
-    });
-}catch(e){
-    logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesByGame');
-}
+            return result;
+        });
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'getVotesByGame');
+    }
 };
 
 exports.clearVotes = function (req, res) {
+
+    try {
+
+        VOTEMODEL.remove({_id: {"$in": req.body.idList}}, function (err) {
+
+            if (err) return res.status(500).send(err.message);
+
+            res.status(200).jsonp('OK');
+        });
+
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'delete');
+    }
 
 };
 
@@ -203,17 +216,17 @@ exports.options = function (req, res, next) {
 
 exports.delete = function (req, res) {
 
-    try{
-    VOTEMODEL.findById(req.params.id, function (err, vote) {
+    try {
+        VOTEMODEL.findById(req.params.id, function (err, vote) {
 
-        vote.remove(function (err) {
+            vote.remove(function (err) {
 
-            if (err) return res.status(500).send(err.message);
+                if (err) return res.status(500).send(err.message);
 
-            res.status(200).jsonp('OK');
-        })
-    });
-    }catch(e){
+                res.status(200).jsonp('OK');
+            })
+        });
+    } catch (e) {
         logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'voteController', 'delete');
     }
 

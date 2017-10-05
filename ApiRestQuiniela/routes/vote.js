@@ -7,8 +7,8 @@ var voteController = require('../controllers/voteController');
 
 
 router.route('/vote')
-  .get(middleware.ensureAuthenticated, voteController.findAll)
-  .post(middleware.ensureAuthenticated, voteController.add);
+    .get(middleware.ensureAuthenticated, voteController.findAll)
+    .post(middleware.ensureAuthenticated, voteController.add);
 
 router.route('/vote/:id')
     .put(middleware.ensureAuthenticated, voteController.update)
@@ -27,5 +27,7 @@ router.route('/votesTodayByUser')
 router.route('/voteByUserAny/:user')
     .get(middleware.ensureAuthenticated, voteController.getVotesByUser);
 
+router.route('/clearVotes')
+    .post(middleware.ensureAuthenticated, voteController.clearVotes);
 
 module.exports = router;

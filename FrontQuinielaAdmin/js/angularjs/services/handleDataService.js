@@ -530,6 +530,19 @@
                         }
                     });
                 },
+                clearVotes: function(idList){
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'clearVotes',
+                        data: {
+                            "idList": idList
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 deleteVote: function (vote) {
                     return $http({
                         method: 'DELETE',

@@ -143,6 +143,30 @@ angular.module('QuinielaApp')
                 }
             };
 
+            $scope.clearVotes = function(){
+
+                var idList = [];
+                var arrayToClean = $scope.voteList.filter(function (x) {
+                    return x.user == null;
+
+                });
+
+                for (var i = 0; i < arrayToClean.length; i++) {
+
+                    idList.push(arrayToClean[i]._id);
+                }
+
+                HandleDataService.clearVotes(idList).succes(function (data) {
+
+                    alert('ok');
+                    $scope.pageload();
+
+                }).error(function(err){
+                    console.log(err);
+                });
+
+
+            };
 
             $scope.pageload();
 

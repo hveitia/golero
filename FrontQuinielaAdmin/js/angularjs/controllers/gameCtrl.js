@@ -256,6 +256,7 @@ angular.module('QuinielaApp')
             $scope.specialDate = new Date(item.workingDay.date);
 
         };
+
         $scope.deleteGameClick = function (game) {
             $scope.idDelete = game._id;
         };
