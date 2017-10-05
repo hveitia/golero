@@ -9,6 +9,7 @@ angular.module('QuinielaApp')
                 $scope.gamesToUpdate = 0;
                 $scope.isLogued = false;
 
+
                 if (!GetLocalStorage('isLogued')) {
                     $window.location = 'login.html';
                 } else {
@@ -16,8 +17,23 @@ angular.module('QuinielaApp')
                     $scope.loadWorkingDays();
                     $scope.loadGamesToUpdate();
                     $scope.loadConfigs();
+                    $scope.loadLeagues();
                 }
 
+            };
+
+            $scope.loadLeagues = function () {
+
+                $scope.leagueList = [];
+                HandleDataService.getAllLeagues().success(function (data) {
+
+                    $scope.leagueList = data;
+                    $scope.leagueSelected = $scope.leagueList[0];
+
+
+                }).error(function (err) {
+                    console.log(err);
+                });
             };
 
             $scope.changeLogControl = function () {
@@ -125,9 +141,12 @@ angular.module('QuinielaApp')
 
             $scope.loadWorkingDays = function () {
                 HandleDataService.getAllWorkingDaysActive().success(function (data) {
+
                     $scope.workinDayList = data;
                     $scope.workinDaySelected = data[0];
+                    $scope.workinDayListAll = data;
                     $scope.loadGames();
+
 
                 })
                     .error(function (err) {
@@ -182,6 +201,26 @@ angular.module('QuinielaApp')
                     });
 
             };
+
+
+            $scope.$watch('leagueSelected', function(){
+
+                if($scope.leagueSelected){
+                    if($scope.workinDayListAll && $scope.workinDayListAll.length > 0){
+                        $scope.workinDayList = $scope.workinDayListAll.filter(function (x) {
+                            return x.league._id == $scope.leagueSelected._id;
+                        });
+
+                        $scope.workinDaySelected = $scope.workinDayList[0];
+                        $scope.loadGames();
+                    }
+
+                }
+
+
+
+
+            });
 
             $scope.pageload();
 

@@ -55,6 +55,9 @@ router.route('/userRankingPosition')
 router.route('/getUser')
     .get(middleware.ensureAuthenticated, userController.getUser);
 
+router.route('/userRankingLeague/:league')
+    .get(middleware.ensureAuthenticated, userController.userRankingLeague);
+
 router.route('/clearUsers')
     .get(middleware.ensureAuthenticated, userController.clearUsers);
 

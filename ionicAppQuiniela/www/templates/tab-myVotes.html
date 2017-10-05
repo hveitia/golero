@@ -18,6 +18,12 @@
       </div>
       <div class="row">
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
+        <div class="col col-50 text-center" data-ng-show="!loading" data-ng-click="serieAClick()">
+          <img src="./img/leaguesLogos/copaPilsener.png" style="width: 30%;" class="{{serieAClass}}">
+        </div>
+        <div class="col col-50 text-center" data-ng-show="!loading"  data-ng-click="championClick()">
+          <img src="./img/leaguesLogos/champion.png" style="width: 30%; padding-top: 5px;" class="{{championClass}}">
+        </div>
       </div>
       <div class="list" data-ng-show="!loading && gameVotedList.length <= 0">
         <div class="item item-divider" style="background: #ea905d; color: white !important; border-top: none;">

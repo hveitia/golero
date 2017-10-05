@@ -1,4 +1,3 @@
-
 //todo: poner logs en los emails
 //todo: hacer e flujo de comentarios
 //todo: actualizar dashboard voto y comentarios
@@ -8,9 +7,15 @@
 //todo: Implementar funcionalidad de Retos
 //todo: Poner % ganados y perdidos en la vista del user
 
+var enviroment = 'PROD';//PROD - DEV
 
-//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
-var urlApi = 'http://localhost:3000/api/';
+var iosVersion = 0;
+var androidVersion = 138;
+
+
+var urlApiAWS = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+var urlApiLocal = 'http://localhost:3000/api/';
+var urlApi = enviroment == 'PROD' ? urlApiAWS : urlApiLocal;
 
 
 var returnApiCodes = {
@@ -21,16 +26,12 @@ var returnApiCodes = {
 };
 
 var textConectionLost = {
-  title:'¡Conexión Perdida!',
-  text:'Lo sentimos, se ha perdido la conexión. Intente reconectar.'
+  title: '¡Conexión Perdida!',
+  text: 'Lo sentimos, se ha perdido la conexión. Intente reconectar.'
 };
 
-var iosVersion = 0;
-var androidVersion = 138;
-var enviroment = 'DEV';//PROD - DEV
-var tokenUser = '';
 
-canVoteGame = function(game) {
+canVoteGame = function (game) {
   var now = new Date();
   var gameDate = new Date(game.workingDay.date);
   now.setHours(0, 0, 0, 0);
@@ -42,7 +43,7 @@ canVoteGame = function(game) {
 
 };
 
-canShowVote = function(game) {
+canShowVote = function (game) {
   var now = new Date();
   var date = (EsNuloVacio(game.especialDate)) ? game.workingDay.date : game.especialDate;
   var gameDate = new Date(date);
@@ -55,7 +56,7 @@ canShowVote = function(game) {
 
 };
 
-EsNuloVacio = function(value) {
+EsNuloVacio = function (value) {
   if (value === null || value === undefined || value === '')
     return true;
   else

@@ -99,6 +99,10 @@ angular.module('QuinielaIonicApp')
       $state.go('news');
     };
 
+    $scope.goToViewPositionsTable = function () {
+      $state.go('positionsTable');
+    };
+
     // --------- Redirect zone  --------------
 
     $scope.showTodayVote = function () {

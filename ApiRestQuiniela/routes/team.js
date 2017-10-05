@@ -13,6 +13,12 @@ router.route('/team')
   .get(middleware.ensureAuthenticated, teamController.findAll)
   .post(middleware.ensureAuthenticated, teamController.add);
 
+router.route('/teamLeague/:league')
+    .get(middleware.ensureAuthenticated, teamController.findByLeague);
+
+router.route('/editTeamLeague/:id')
+    .put(middleware.ensureAuthenticated, teamController.editTeamLeague);
+
 router.route('/editTeamName/:id')
    .put(middleware.ensureAuthenticated, teamController.editTeamName);
 

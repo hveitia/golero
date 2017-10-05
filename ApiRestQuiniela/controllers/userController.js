@@ -50,6 +50,62 @@ exports.userRanking = function (req, res) {
     }
 };
 
+exports.userRankingLeague = function (req, res) {
+    try {
+        USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
+            .exec(function (err, result) {
+
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                result = orderRanking(result, req.params.league);
+
+                res.status(200).jsonp(result);
+            });
+
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), e.message, 'userController', 'userRanking');
+    }
+};
+
+orderRanking = function (list, league) {
+
+    for (var i = 0; i < list.length; i++) {
+
+        for (var j = i + 1; j < list.length; j++) {
+
+            var temp;
+
+            var posI = findLeague(list[i].leaguePoints, league);
+            var posJ = findLeague(list[j].leaguePoints, league);
+
+            if (((posI > -1 && posJ > -1) && (list[i].leaguePoints[posI].points < list[j].leaguePoints[posJ].points))||(posI < 0 &&  posJ >= 0)) {
+
+                temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+
+
+        }
+    }
+
+    return list;
+
+};
+
+findLeague = function (leaguePoints, league) {
+
+    for (var i = 0; i < leaguePoints.length; i++) {
+        if (leaguePoints[i].league == league) {
+            return i;
+        }
+    }
+
+    return -1;
+};
+
 exports.userRankingUpdate = function (req, res) {
     try {
         USERMODEL.find({$and: [{user: {$ne: 'admin'}}, {'state': 'ACTIVE'}]})
@@ -188,7 +244,8 @@ exports.add = function (req, res) {
                             historicalPunctuation: [],
                             lastPosition: 201,
                             tickets: 0,
-                            reputation: 0
+                            reputation: 0,
+                            leaguePoints: []
                         });
                         obj.save(function (err, result) {
                             if (err) return res.send(500, err.message);
@@ -241,7 +298,8 @@ exports.register = function (req, res) {
                     historicalPunctuation: [],
                     lastPosition: 201,
                     tickets: 0,
-                    reputation: 0
+                    reputation: 0,
+                    leaguePoints: []
                 });
                 obj.save(function (err, result) {
                     if (err) return res.send(500, err.message);

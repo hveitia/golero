@@ -1,35 +1,72 @@
 <div class="col-lg-12">
-  <h1 class="page-header">Teams List</h1>
+    <h1 class="page-header">Teams List <button type="button" class="btn btn-success" data-ng-show="!showFrmNew" data-ng-click="addTeamClick()"><i class="fa fa-plus" aria-hidden="true"></i> Add New Team</button></h1>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="col-lg-4" style="padding-left: 0;">
-        <input placeholder="Team Name" type="text" class="form-control" data-ng-model="teanName"/>
-      </div>
-      <div class="col-lg-2">
-        <button type="button" class="btn btn-primary" data-ng-click="editTeamName()">Save</button>
-      </div>
+    <div class="row">
+
+        <div class="col-lg-12" data-ng-show="showFrmNew">
+            <div class="col-lg-3" style="padding-left: 0;">
+                <select class="form-control" data-ng-model="leagueSelectedToUpdateNew" data-ng-options="s.name for s in leagueList"></select>
+            </div>
+            <div class="col-lg-3" style="padding-left: 0;">
+                <input placeholder="Name" type="text" class="form-control" data-ng-model="teamNameNew"/>
+            </div>
+            <div class="col-lg-3" style="padding-left: 0;">
+                <input placeholder="Logo" type="text" class="form-control" data-ng-model="teamLogoNew"/>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" data-ng-click="addTeam()">Save</button>
+                <button type="button" class="btn btn-danger" data-ng-click="addTeamCancel()">Cancel</button>
+            </div>
+        </div>
+
+        <div class="col-lg-12" data-ng-show="!showFrmNew">
+            <div class="col-lg-4" style="padding-left: 0;">
+                <input placeholder="Team Name" type="text" class="form-control" data-ng-model="teanName"/>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" data-ng-click="editTeamName()">Save</button>
+            </div>
+        </div>
+
+        <div class="col-lg-12" data-ng-show="showEditFrm" style="margin-top: 10px;">
+
+            <div class="col-lg-4" style="padding-left: 0;">
+                <select class="form-control" data-ng-model="leagueSelectedToUpdate" data-ng-options="s.name for s in leagueList"></select>
+            </div>
+            <div class="col-lg-4" style="padding-left: 0;">
+                <input placeholder="Team To Update" type="text" class="form-control" data-ng-model="teamToUpdateId"/>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" data-ng-click="editTeamLeague()">Save</button>
+                <button type="button" class="btn btn-danger" data-ng-click="cancelUpdateLeague()">Cancel</button>
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <table class="table table-bordered table-hover table-striped"  style="margin-top: 10px;">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Logo</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="t in teamsList">
-        <td>{{t._id}}</td>
-        <td>{{t.name}}</td>
-        <td><img src="{{t.logoUrl}}" style="width: 5%;"></td>
-        <td>
-          <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;" data-ng-click="editTeamClick(t)"></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+    <table class="table table-bordered table-hover table-striped" style="margin-top: 10px;">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>League</th>
+            <th>Logo</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="t in teamsList">
+            <td>{{t._id}}</td>
+            <td>{{t.name}}</td>
+            <td>{{t.league.name}}</td>
+            <td><img src="{{t.logoUrl}}" style="width: 5%;"></td>
+            <td>
+                <i class="fa fa-fw fa-edit" title="Edit" style="cursor:pointer;" data-ng-click="editTeamClick(t)"></i>
+                <i class="fa fa-list" aria-hidden="true" style="cursor:pointer;" title="Edit League" data-ng-click="editTeamLeagueClick(t)"></i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

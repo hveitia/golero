@@ -105,10 +105,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-calendar fa-fw"></i> Calendar
-           <span class="pull-right">Filter by working day
-             <select data-ng-model="workinDaySelected" data-ng-options="w.name for w in workinDayList"
-                     data-ng-change="loadGames()"></select>
-           </span>
+
+                        <span class="pull-right">Filter by working day
+             <select data-ng-model="workinDaySelected" data-ng-options="w.name for w in workinDayList" data-ng-change="loadGames()"></select>
+             </span>
+                        <select style="float: right;" data-ng-model="leagueSelected" data-ng-options="s.name for s in leagueList" data-ng-change="filterWorkingDay()"></select>
                     </h3>
                 </div>
                 <div class="panel-body">

@@ -92,6 +92,7 @@ ion-content {
 
 .avatar-conatainer {
   margin-top: 16%;
+  z-index: 1 !important;
 }
 
 .dashboard-main-container .avatar-conatainer img {
@@ -141,6 +142,7 @@ ion-content {
   position: absolute;
   top: 150px;
   left: 31%;
+  z-index: 5 !important;
 }
 
 .bar-header {
@@ -223,8 +225,17 @@ ion-content {
 
 .iconNews{
   position: absolute;
-  top: 185px;
+  top: 190px;
   left: 35px;
-  color:#190855; width: 10%;
+  width: 10%;
+  z-index: 2 !important;
+}
+
+.iconPositionTable{
+  position: absolute;
+  top: 120px;
+  left: 35px;
+  width: 10%;
+  z-index: 3 !important;
 }
 

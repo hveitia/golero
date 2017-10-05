@@ -16,8 +16,17 @@ router.route('/workingDayActive')
 router.route('/workingDay/:season')
   .get(middleware.ensureAuthenticated, workingDayController.findBySeason);
 
+router.route('/editWorkingDayLeague/:id')
+    .put(middleware.ensureAuthenticated, workingDayController.editWorkingDayLeague);
+
 router.route('/workingDayName/:name')
   .get(middleware.ensureAuthenticated, workingDayController.findByName);
+
+router.route('/workingDayLeague/:league')
+    .get(middleware.ensureAuthenticated, workingDayController.findByLeague);
+
+router.route('/addAllWorkingDayToLeague')
+    .post(middleware.ensureAuthenticated, workingDayController.addAllWorkingDayToLeague);
 
 router.route('/workingDayName/:id')
     .options(middleware.ensureAuthenticated, workingDayController.options)

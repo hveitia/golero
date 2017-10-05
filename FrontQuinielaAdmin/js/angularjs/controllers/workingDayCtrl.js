@@ -13,6 +13,7 @@ angular.module('QuinielaApp')
 
                 $scope.loadWorkingDays();
                 $scope.loadSeasons();
+                $scope.loadLeagues();
 
             };
 
@@ -41,20 +42,82 @@ angular.module('QuinielaApp')
                     });
             };
 
+            $scope.loadWorkingDaysByLeague = function(){
+
+                if(!EsNuloVacio($scope.leagueSelected._id)){
+                    HandleDataService.loadWorkingDaysByLeague($scope.leagueSelected._id).success(function (data) {
+
+                        $scope.workinDayList = data;
+
+                        $scope.loadSeasonByLeague();
+
+                    }).error(function (err) {
+
+                        $scope.workinDayList = [];
+                        console.log(err);
+                    })
+                }
+            };
+
+            $scope.loadSeasonByLeague = function(){
+
+                if(!EsNuloVacio($scope.leagueSelected._id)){
+
+                    HandleDataService.loadSeasonByLeague($scope.leagueSelected._id).success(function (data) {
+
+                        $scope.seasonList = data.filter(function (x) {
+                            return x.active
+                        });
+                        $scope.seasonSelected = $scope.seasonList[0];
+
+                    }).error(function (err) {
+
+                        $scope.workinDayList = [];
+                        console.log(err);
+                    })
+                }
+            };
+
+            $scope.loadLeagues = function () {
+
+                $scope.leagueList = [];
+                HandleDataService.getAllLeagues().success(function (data) {
+                    $scope.leagueList = data;
+                    $scope.leagueSelected = $scope.leagueList[0];
+
+                    $scope.loadWorkingDaysByLeague();
+
+                }).error(function (err) {
+                    console.log(err);
+                });
+            };
+
             $scope.addWorkingDay = function () {
 
                 var obj = {
                     "date": $scope.workinDayDate,
                     "season": $scope.seasonSelected._id,
-                    "name": $scope.workinDayName
+                    "name": $scope.workinDayName,
+                    "league": $scope.leagueSelected._id
                 };
 
                 HandleDataService.addWorkingDay(obj).success(function (data) {
-                    $scope.loadWorkingDays();
+
+                    alert('ok');
+
+                    $scope.loadWorkingDaysByLeague();
                 })
                     .error(function (err) {
                         console.log(err);
                     });
+            };
+
+            $scope.addAllWorkingDayToLeague = function () {
+                HandleDataService.addAllWorkingDayToLeague($scope.leagueSelected._id).success(function (data) {
+                    alert('ok');
+                }).error(function (err) {
+                    console.log(err);
+                })
             };
 
             $scope.deleteWorkingDay = function () {

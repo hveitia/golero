@@ -1,5 +1,11 @@
-var urlApi = 'http://localhost:3000/api/';
-//var urlApi = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+
+
+var enviroment = 'PROD';//PROD - DEV
+
+var urlApiAWS = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
+var urlApiLocal = 'http://localhost:3000/api/';
+var urlApi = enviroment == 'PROD' ? urlApiAWS : urlApiLocal;
+
 
 var modeAddEdit = {
   add: 'ADD',

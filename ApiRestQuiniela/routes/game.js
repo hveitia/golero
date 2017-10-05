@@ -18,6 +18,12 @@ router.route('/game')
 router.route('/findByIdMany')
     .post(middleware.ensureAuthenticated, gameController.findByIdMany);
 
+router.route('/addAllGamesToLeague')
+    .post(middleware.ensureAuthenticated, gameController.addAllGamesToLeague);
+
+router.route('/gameLeague/:league')
+    .get(middleware.ensureAuthenticated, gameController.findByLeague);
+
 router.route('/gameById/:id')
     .get(middleware.ensureAuthenticated, gameController.findById);
 
@@ -35,6 +41,9 @@ router.route('/gameUpdate/:id')
 router.route('/setUpdateState/:id')
     .options(middleware.ensureAuthenticated, gameController.options)
     .put(middleware.ensureAuthenticated, gameController.setUpdateState);
+
+router.route('/editGameLeague/:id')
+    .put(middleware.ensureAuthenticated, gameController.editGameLeague);
 
 router.route('/simpleUpdate/:id')
     .put(middleware.ensureAuthenticated, gameController.simpleUpdate);

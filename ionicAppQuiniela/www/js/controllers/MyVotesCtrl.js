@@ -38,6 +38,7 @@ angular.module('QuinielaIonicApp')
             $scope.gameVotedList = [];
             $scope.deleting = false;
             $scope.loadVotesByUser();
+
           })
             .error(function (err) {
               console.log(err);
@@ -56,7 +57,7 @@ angular.module('QuinielaIonicApp')
         idList.push($scope.voteList[i].game);
       }
 
-      Game.findGameByIdMany(idList).success(function (data){
+      Game.findGameByIdMany(idList).success(function (data) {
 
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < $scope.voteList.length; j++) {
@@ -98,7 +99,10 @@ angular.module('QuinielaIonicApp')
         if ($scope.gameVotedList.length > 0) {
           $scope.gameVotedList[0].showDivid = true;
         }
-        $scope.loading = false;
+
+        $scope.gameVotedListAll = $scope.gameVotedList;
+        $scope.loadLeagues();
+
       })
         .error(function (err) {
           $scope.gameVotedList = [];
@@ -143,23 +147,88 @@ angular.module('QuinielaIonicApp')
       $scope.deleting = !$scope.deleting;
     };
 
+    $scope.loadLeagues = function () {
+
+      Game.getAllLeagues().success(function (data) {
+
+        $scope.serieALeague = data.filter(function (x) {
+          return x.name.indexOf('Copa Pilsener') > -1;
+        })[0];
+
+        $scope.championLeague = data.filter(function (x) {
+          return x.name.indexOf('UEFA') > -1;
+        })[0];
+
+        $scope.gameVotedList = $scope.gameVotedListAll.filter(function (x) {
+          return x.league._id == $scope.serieALeague._id;
+        });
+
+        $scope.loading = false;
+        $scope.resumeAction();
+      }).error(function (err) {
+
+      });
+
+    };
+
+    $scope.championClick = function () {
+
+      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
+      $scope.championClass = 'animated zoomIn';
+      $scope.activeLeague = 'CH';
+      $scope.gameVotedList = $scope.gameVotedListAll.filter(function (x) {
+        return x.league._id == $scope.championLeague._id;
+      });
+
+    };
+
+    $scope.serieAClick = function () {
+
+      $scope.serieAClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.activeLeague = 'SA';
+      $scope.gameVotedList = $scope.gameVotedListAll.filter(function (x) {
+        return x.league._id == $scope.serieALeague._id;
+      });
+
+    };
+
+    $scope.resumeAction = function(){
+
+      switch ($scope.activeLeague){
+        case  'SA':{
+          $scope.serieAClick();
+        }break;
+        case 'CH':{
+          $scope.championClick();
+        }break;
+        default :
+          $scope.serieAClick();
+      }
+
+    };
+
     $scope.$on('$ionicView.enter', function () {
       $scope.loading = false;
       $scope.showTipsHowToEdit = StorageService.getItem('showTipsHowToEdit') == null;
       $scope.voteList = [];
       $scope.gameVotedList = [];
       $scope.deleting = false;
+      $scope.serieAClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
       $ionicScrollDelegate.scrollTop();
       $scope.loadVotesByUser();
 
-      if(window.Connection) {
-        if(navigator.connection.type == Connection.NONE) {
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.confirm({
             title: textConectionLost.title,
             template: textConectionLost.text,
             buttons: [
               {
-                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {
+                $state.go('tab.dash');
+              }
               }]
           });
         }

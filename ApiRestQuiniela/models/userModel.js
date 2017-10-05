@@ -17,7 +17,8 @@ exports = module.exports = function (app, mongoose) {
         tickets: {type: Number},
         reputation: {type: Number},
         resendMailDate: {type: Date},
-        ticketsState: {type: String}
+        ticketsState: {type: String},
+        leaguePoints: {type: []}
 
     });
 

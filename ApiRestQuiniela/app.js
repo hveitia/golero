@@ -1,17 +1,18 @@
 var express = require("express"),
-  cors = require('cors'),
-  app = express(),
-  bodyParser = require("body-parser"),
-  methodOverride = require("method-override");
+    cors = require('cors'),
+    app = express(),
+    bodyParser = require("body-parser"),
+    methodOverride = require("method-override");
 mongoose = require('mongoose');
 
 /* ---------- CONFIGS ---------- */
 
 //Db Name
 var dbName = 'apiRestQuinielaDB';
+var enviroment = 'PROD';//PROD - DEV
 
 //PORT LISTEN
-var port = 80;
+var port = enviroment == 'DEV' ? 3000 : 80;
 
 //var dbLocation = 'ec2-52-35-13-146.us-west-2.compute.amazonaws.com';
 var dbLocation = 'localhost';
@@ -20,20 +21,19 @@ var dbLocation = 'localhost';
 /* ---------- CONFIGS ---------- */
 
 // Connection to DB
-mongoose.connect('mongodb://'+dbLocation+'/' + dbName, function(err, res) {
-  if (err) throw err;
-  console.log('Connected to Database: ' + dbName + ' on server: ' + dbLocation);
+mongoose.connect('mongodb://' + dbLocation + '/' + dbName, function (err, res) {
+    if (err) throw err;
+    console.log('Connected to Database: ' + dbName + ' on server: ' + dbLocation);
+    console.log('Server started at: ' + new Date());
 });
 
 // Middlewares
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cors());
-
-
 
 
 // API routes
@@ -67,6 +67,6 @@ app.use('/api', routesTest);
 
 
 // Start server
-app.listen(port, function() {
-  console.log("Node server running on http://localhost:" + port);
+app.listen(port, function () {
+    console.log("Node server running on http://localhost:" + port);
 });

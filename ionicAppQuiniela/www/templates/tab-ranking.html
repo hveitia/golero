@@ -4,7 +4,7 @@
     <h1 class="title viewTitle">
       Mejores Goleros
       <i class="fa fa-share-alt" aria-hidden="true"
-         style="position: absolute; top: 33%; left: 91%;"
+         style="position: absolute; top: 33%; left: 91%;" data-ng-show="false"
          data-ng-click="captureScreenshot()"></i>
     </h1>
   </div>
@@ -24,6 +24,15 @@
     <div class="list  animated bounceInUp">
       <div class="row" style="padding-top: 0;">
         <ion-spinner icon="lines" class="centerWithAuto" data-ng-show='loading'></ion-spinner>
+        <div class="col col-30 text-center" data-ng-show="!loading" data-ng-click="generalClick()">
+          <img src="./img/guantedeoro.svg" style="width: 30%; padding-top: 3px;" class="{{generalClass}}">
+        </div>
+        <div class="col col-30 text-center" data-ng-show="!loading" data-ng-click="serieAClick()">
+          <img src="./img/leaguesLogos/copaPilsener.png" style="width: 30%;" class="{{serieAClass}}">
+        </div>
+        <div class="col col-30 text-center" data-ng-show="!loading"  data-ng-click="championClick()">
+          <img src="./img/leaguesLogos/champion.png" style="width: 30%; padding-top: 5px;" class="{{championClass}}">
+        </div>
       </div>
       <div class="item item-remove-animate  chat-item item-avatar"
            ng-repeat="item in rankinList track by $index"
@@ -53,11 +62,11 @@
           <img width="30" height="30" class="icon" style="margin-left: 10%; margin-top: -30%;"  src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjI1IDAgMCAtMS4yNSAwIDQ1KSI+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNTVBQ0VFOyIgZD0iTTMxOC43MjEsMzZoLTIyNy42Yy0zMy43LDAtNjguMy01Ni45LTU2LjktNzkuNmMxOC4zLTM2LjcsMTM2LjUtMTQ3LjksMTM2LjUtMTQ3LjloNjguMyAgIGMwLDAsMTEzLjgsMTEzLjgsMTM2LjUsMTQ3LjlDMzg2LjkyMS0yMC45LDM0OS4wMjEsMzYsMzE4LjcyMSwzNnogTTI3My4yMjEtNTVsLTY4LjMtNjguM2wtNjguMyw2OC4zICAgYy0yMi44LDIyLjgtMTEuNCwyMi44LDY4LjMsMjIuOEMyOTUuOTIxLTMyLjMsMjkwLjIyMS0zOCwyNzMuMjIxLTU1eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzNCODhDMzsiIGQ9Ik0xMjYuNDIxLTQxLjJjLTEuNCw4LjksMjAuMyw4LjksNzguNSw4LjljODMuMSwwLDg1LjYtNC43LDcyLjQtMTguNmM2My4zLDY1LDQzLjksODYuOCwxOC42LDg2LjggICBoLTE4MkM3My4yMjEsMzYsMTAyLjMyMS0xMC41LDEyNi40MjEtNDEuMnoiLz4KCTxnPgoJCTxwYXRoIHN0eWxlPSJmaWxsOiNGRjhBM0I7IiBkPSJNMjk1LjkyMS0yODIuNmMwLDM0LjEtMTguOCw2My45LTQ2LjYsNzkuNGMwLjcsMS44LDEuMSwzLjgsMS4xLDUuOWMwLDkuNC03LjYsMTcuMS0xNy4xLDE3LjEgICAgaC01Ni45Yy05LjQsMC0xNy4xLTcuNi0xNy4xLTE3LjFjMC0yLjEsMC40LTQsMS4xLTUuOWMtMjcuOC0xNS42LTQ2LjYtNDUuMy00Ni42LTc5LjRjMC01MC4zLDQwLjctOTEsOTEtOTEgICAgQzI1NS4yMjEtMzczLjYsMjk1LjkyMS0zMzIuOCwyOTUuOTIxLTI4Mi42eiIvPgoJCTxwYXRoIHN0eWxlPSJmaWxsOiM3QzQxMTk7IiBkPSJNMjIzLjIyMS0yNzcuOHYwLjVjNy4yLDMuMywxNi40LDEyLjQsMTYuNCwyNC43YzAsMTcuOS0xNiwyOS4yLTM0LjUsMjkuMiAgICBjLTE3LjQsMC0zMC41LTE0LjEtMzAuNS0xNC4xYy0xLjEtMS4xLTEuMy0zLDAtNC4xbDkuNy05LjZjMS4zLTEuMSwzLjItMS4xLDQuMywwLjJjMi40LDIuNyw2LjksNi40LDEzLjksNi40ICAgIGM2LjksMCwxMi44LTUuMSwxMi44LTEyYzAtNi45LTUuOS0xMi4zLTE3LjEtMTIuM2gtNS40Yy0xLjYsMC0zLTEuMy0zLTN2LTEzLjJjMC0xLjYsMS40LTMsMy0zaDUuNGMxMS44LDAsMTktNS45LDE5LTEyLjkgICAgcy03LTEyLjgtMTMuOS0xMi44Yy03LjYsMC0xNy41LDcuMy0xNy41LDcuM2MtMS4zLDEtMi45LDAuOC00LTAuM2wtMTAuMS0xMC4xYy0xLTEuMS0xLjEtMi45LTAuMi00YzMuMy00LjMsMTMuNi0xNC4yLDMzLjctMTQuMiAgICBjMjIsMCwzNy4yLDEzLjEsMzcuMiwzMC41QzI0Mi41MjEtMjkwLjgsMjMwLjcyMS0yODEsMjIzLjIyMS0yNzcuOHoiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
         </span>
 
-        <span class="badge" style="margin-top:3%;" data-ng-show="$index > 2">
+       <!-- <span class="badge" style="margin-top:3%;" data-ng-show="$index > 2">
           <i class="fa fa-caret-up" aria-hidden="true" style="font-size: 1.8em; color: green;" data-ng-show="item.class == 'g'"></i>
           <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 1.8em; color: red;" data-ng-show="item.class == 'r'"></i>
           <i class="fa fa-minus" aria-hidden="true" style="font-size: 1.8em; color: gold;" data-ng-show="item.class == 'y'"></i>
-        </span>
+        </span>-->
 
       </div>
     </div>

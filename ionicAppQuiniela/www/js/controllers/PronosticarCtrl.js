@@ -53,9 +53,14 @@ angular.module('QuinielaIonicApp')
             }
           }
         }
-        if ($scope.gameToVoteList.length > 0)
+
+        if ($scope.gameToVoteList.length > 0) {
           $scope.gameToVoteList[0].showDivid = true;
-        $scope.loading = false;
+        }
+
+        $scope.gameToVoteListAll = $scope.gameToVoteList;
+        $scope.loadLeagues();
+
       })
         .error(function (err) {
           $scope.gameToVoteList = [];
@@ -205,12 +210,71 @@ angular.module('QuinielaIonicApp')
       $scope.showTipsHowToVote = false;
     };
 
+    $scope.championClick = function(){
+      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
+      $scope.championClass = 'animated zoomIn';
+      $scope.activeLeague = 'CH';
+      $scope.gameToVoteList = $scope.gameToVoteListAll.filter(function (x) {
+        return x.league._id ==  $scope.championLeague._id;
+      });
+    };
+
+    $scope.serieAClick = function(){
+      $scope.serieAClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.activeLeague = 'SA';
+      $scope.gameToVoteList = $scope.gameToVoteListAll.filter(function (x) {
+        return x.league._id ==  $scope.serieALeague._id;
+      });
+    };
+
+    $scope.loadLeagues = function(){
+
+      Game.getAllLeagues().success(function(data){
+
+        $scope.serieALeague = data.filter(function (x) {
+          return x.name.indexOf('Copa Pilsener') > -1;
+        })[0];
+
+        $scope.championLeague = data.filter(function (x) {
+          return x.name.indexOf('UEFA') > -1;
+        })[0];
+
+        $scope.gameToVoteList = $scope.gameToVoteListAll.filter(function (x) {
+          return x.league._id ==  $scope.serieALeague._id;
+        });
+
+        $scope.loading = false;
+        $scope.resumeAction();
+      }).error(function (err) {
+
+      });
+
+    };
+
+    $scope.resumeAction = function(){
+
+      switch ($scope.activeLeague){
+        case  'SA':{
+          $scope.serieAClick();
+        }break;
+        case 'CH':{
+          $scope.championClick();
+        }break;
+        default :
+          $scope.serieAClick();
+      }
+
+    };
+
     $scope.$on('$ionicView.enter', function () {
       $scope.loading = false;
       $scope.gameToVoteList = [];
       $scope.gameToVoteListByDate = [];
       $scope.voteList = [];
       $ionicScrollDelegate.scrollTop();
+      $scope.serieAClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
       $scope.showTipsHowToVote = StorageService.getItem('showTipsHowToVote') == null;
       $scope.loadVotesByUser();
 
@@ -227,9 +291,5 @@ angular.module('QuinielaIonicApp')
         }
       }
     });
-
-    /*$ionicPlatform.on('resume', function () {
-      $state.go('tab.dash');
-    });*/
 
   });

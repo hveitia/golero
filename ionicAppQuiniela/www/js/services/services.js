@@ -81,6 +81,18 @@ angular.module('QuinielaIonicApp.Services', [])
           }
         });
       },
+
+      userRankingLeague: function (league) {
+        return $http({
+          method: 'GET',
+          url: urlApi + 'userRankingLeague/' + league,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+
       getRankingPosition: function () {
         return $http({
           method: 'GET',
@@ -160,6 +172,17 @@ angular.module('QuinielaIonicApp.Services', [])
         return $http({
           method: 'GET',
           url: urlApi + 'gameById/' + idGame,
+          headers: {
+            'Authorization': 'Bearer ' + StorageService.getItem('token'),
+            'Content-Type': 'application/json'
+          }
+        });
+      },
+
+      getAllLeagues: function () {
+        return $http({
+          method: 'GET',
+          url: urlApi + 'league',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'
@@ -354,15 +377,15 @@ angular.module('QuinielaIonicApp.Services', [])
     };
   }])
 
-  .service('$cordovaScreenshot', ['$q', function ($q){
+  .service('$cordovaScreenshot', ['$q', function ($q) {
     return {
-      capture: function (filename, extension, quality){
+      capture: function (filename, extension, quality) {
         extension = extension || 'jpg';
         quality = quality || '100';
 
         var defer = $q.defer();
 
-        navigator.screenshot.save(function (error, res){
+        navigator.screenshot.save(function (error, res) {
           if (error) {
 
             defer.reject(error);

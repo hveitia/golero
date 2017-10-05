@@ -83,10 +83,40 @@
                         }
                     });
                 },
-                getAllWorkingDays: function () {
+                loadWorkingDaysByLeague: function (league) {
                     return $http({
                         method: 'GET',
-                        url: urlApi + 'workingDay',
+                        url: urlApi + 'workingDayLeague/' + league,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                loadSeasonByLeague: function (league) {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'seasonLeague/' + league,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                loadTeamsByLeague: function (league) {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'teamLeague/' + league,
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                loadGameByLeague: function (league) {
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'gameLeague/' + league,
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
                             'Content-Type': 'application/json'
@@ -187,12 +217,12 @@
                         }
                     });
                 },
-                addSeanson: function (name) {
+                updateLeague: function (season, league) {
                     return $http({
-                        method: 'POST',
-                        url: urlApi + 'season',
+                        method: 'PUT',
+                        url: urlApi + 'editLeague/' + season,
                         data: {
-                            "name": name
+                            "league": league
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
@@ -200,7 +230,75 @@
                         }
                     });
                 },
-                addLeague: function (name) {
+                editTeamLeague: function (team, league) {
+                    return $http({
+                        method: 'PUT',
+                        url: urlApi + 'editTeamLeague/' + team,
+                        data: {
+                            "league": league
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addSeanson: function (name, league) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'season',
+                        data: {
+                            "name": name,
+                            "league": league
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addTeam: function (team) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'team',
+                        data: {
+                            name: team.name,
+                            logo: team.logo,
+                            league: team.league
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addAllGamesToLeague: function (league) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'addAllGamesToLeague',
+                        data: {
+                            league: league
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addAllWorkingDayToLeague: function (league) {
+                    return $http({
+                        method: 'POST',
+                        url: urlApi + 'addAllWorkingDayToLeague',
+                        data: {
+                            league: league
+                        },
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
+                addLeague: function (name, logo) {
                     return $http({
                         method: 'POST',
                         url: urlApi + 'league',
@@ -341,7 +439,8 @@
                         data: {
                             "workingDay": obj.workinDaySelected,
                             "localTeam": obj.teamLocal,
-                            "visitorTeam": obj.teamVisitor
+                            "visitorTeam": obj.teamVisitor,
+                            "league": obj.league
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
@@ -356,7 +455,8 @@
                         data: {
                             "date": obj.date,
                             "season": obj.season,
-                            "name": obj.name
+                            "name": obj.name,
+                            "league": obj.league
                         },
                         headers: {
                             'Authorization': 'Bearer ' + GetLocalStorage('userToken'),

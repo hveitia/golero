@@ -1,5 +1,5 @@
 angular.module('QuinielaIonicApp')
-  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform,$cordovaScreenshot,
+  .controller('RankingCtrl', function ($scope, $timeout, $ionicModal, $ionicPopup, $ionicScrollDelegate, $state, $ionicPlatform, $cordovaScreenshot,
                                        RankinService, DatabaseService, Vote, Game, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
@@ -142,7 +142,7 @@ angular.module('QuinielaIonicApp')
         $scope.rankinList = data;
 
         for (var i = 0; i < $scope.rankinList.length; i++) {
-          switch (i) {
+          /*switch (i) {
             case 0:
               $scope.rankinList[i].class = '#ffd700';
               break;
@@ -167,7 +167,7 @@ angular.module('QuinielaIonicApp')
                 $scope.rankinList[i].class = 'y';
               }
             }
-          }
+          }*/
 
           if ($scope.rankinList[i].user == StorageService.getItem('user')) {
             $scope.rankinList[i].backGroundClass = '#ddd';
@@ -175,7 +175,9 @@ angular.module('QuinielaIonicApp')
             $scope.rankinList[i].backGroundClass = '#fff';
           }
         }
+
         $scope.loading = false;
+
       })
         .error(function (err) {
           console.log(err);
@@ -208,19 +210,133 @@ angular.module('QuinielaIonicApp')
 
     };
 
-    $scope.captureScreenshot= function(){
+    $scope.captureScreenshot = function () {
 
-        $cordovaScreenshot.capture('filename', 'png', 100).then(function(result) {
+      $cordovaScreenshot.capture('filename', 'png', 100).then(function (result) {
 
-          var message = {
-            text: "Hola, te recomiendo descargar la aplicaci\u00F3n Golero. Demuestra que eres el mejor atrapando balones.",
-            url: result
-          };
-          window.socialmessage.send(message);
+        var message = {
+          text: "Hola, te recomiendo descargar la aplicaci\u00F3n Golero. Demuestra que eres el mejor atrapando balones.",
+          url: result
+        };
 
-        }, function(error) {
-          alert(error);
-        });
+        window.socialmessage.send(message);
+
+      }, function (error) {
+        alert(error);
+      });
+
+    };
+
+    $scope.championClick = function () {
+      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
+      $scope.championClass = 'animated zoomIn';
+      $scope.generalClass = 'animated zoomIn imagenGrayScale';
+      $scope.activeLeague = 'CH';
+      $scope.loading = true;
+      RankinService.userRankingLeague($scope.championLeague._id).success(function (data) {
+
+        $scope.rankinList = data;
+
+        for (var i = 0; i < $scope.rankinList.length; i++) {
+
+          $scope.rankinList[i].points = 0;
+
+          for(var j =0;j<$scope.rankinList[i].leaguePoints.length;j++){
+
+            if($scope.rankinList[i].leaguePoints[j].league == $scope.championLeague._id){
+              $scope.rankinList[i].points = $scope.rankinList[i].leaguePoints[j].points;
+              break;
+            }
+
+            if ($scope.rankinList[i].user == StorageService.getItem('user')) {
+              $scope.rankinList[i].backGroundClass = '#ddd';
+            } else {
+              $scope.rankinList[i].backGroundClass = '#fff';
+            }
+          }
+
+        }
+
+        $scope.loading = false;
+      }).error(function (err) {
+
+        $scope.loading = false;
+        console.log(err);
+
+      });
+
+    };
+
+    $scope.serieAClick = function () {
+      $scope.loading = true;
+      $scope.serieAClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.generalClass = 'animated zoomIn imagenGrayScale';
+      $scope.activeLeague = 'SA';
+
+      RankinService.userRankingLeague($scope.serieALeague._id).success(function (data) {
+
+        $scope.rankinList = data;
+
+        for (var i = 0; i < $scope.rankinList.length; i++) {
+
+          $scope.rankinList[i].points = 0;
+
+          for(var j =0;j<$scope.rankinList[i].leaguePoints.length;j++){
+
+            if($scope.rankinList[i].leaguePoints[j].league == $scope.serieALeague._id){
+              $scope.rankinList[i].points = $scope.rankinList[i].leaguePoints[j].points;
+              break;
+            }
+
+            if ($scope.rankinList[i].user == StorageService.getItem('user')) {
+              $scope.rankinList[i].backGroundClass = '#ddd';
+            } else {
+              $scope.rankinList[i].backGroundClass = '#fff';
+            }
+
+          }
+
+        }
+
+        $scope.loading = false;
+      }).error(function (err) {
+
+        $scope.loading = false;
+        console.log(err);
+
+      });
+
+    };
+
+    $scope.loadLeagues = function () {
+
+      $scope.loading = true;
+      Game.getAllLeagues().success(function (data) {
+
+        $scope.serieALeague = data.filter(function (x) {
+          return x.name.indexOf('Copa Pilsener') > -1;
+        })[0];
+
+        $scope.championLeague = data.filter(function (x) {
+          return x.name.indexOf('UEFA') > -1;
+        })[0];
+
+        $scope.loading = false;
+
+      }).error(function (err) {
+
+      });
+
+    };
+
+    $scope.generalClick = function () {
+
+      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
+      $scope.generalClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.activeLeague = 'GE';
+      $scope.loadRanking();
 
     };
 
@@ -233,25 +349,27 @@ angular.module('QuinielaIonicApp')
       $ionicScrollDelegate.scrollTop();
       $scope.voteList = [];
       $scope.gameVotedList = [];
+      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
+      $scope.generalClass = 'animated zoomIn';
+      $scope.championClass = 'animated zoomIn imagenGrayScale';
       $scope.loadRanking();
+      $scope.loadLeagues();
 
-      if(window.Connection) {
-        if(navigator.connection.type == Connection.NONE) {
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.confirm({
             title: textConectionLost.title,
             template: textConectionLost.text,
             buttons: [
               {
-                text: 'Reintentar', type: 'button-positive', onTap: function (e) {$state.go('tab.dash');}
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {
+                $state.go('tab.dash');
+              }
               }]
           });
         }
       }
 
     });
-
-    /*$ionicPlatform.on('resume', function () {
-      $state.go('tab.dash');
-    });*/
 
   });

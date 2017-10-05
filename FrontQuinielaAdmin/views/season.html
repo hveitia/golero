@@ -1,7 +1,11 @@
 <div class="col-lg-12">
     <h1 class="page-header">Seasons List</h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" data-ng-show="!showEditFrm">
+            <h5 class="page-header" style="margin-top: 0px;">Add Season</h5>
+            <div class="col-lg-4" style="padding-left: 0;">
+                <select class="form-control" data-ng-model="leagueSelected" data-ng-options="s.name for s in leagueList"></select>
+            </div>
             <div class="col-lg-4" style="padding-left: 0;">
                 <input placeholder="Season Name" type="text" class="form-control" data-ng-model="nameSeason"/>
             </div>
@@ -9,11 +13,27 @@
                 <button type="button" class="btn btn-primary" data-ng-click="addSeason()">Save</button>
             </div>
         </div>
+
+        <div class="col-lg-12" data-ng-show="showEditFrm" style="margin-top: 10px;">
+            <h5 class="page-header" style="margin-top: 0px;">Edit Season</h5>
+            <div class="col-lg-4" style="padding-left: 0;">
+                <select class="form-control" data-ng-model="leagueSelectedToUpdate" data-ng-options="s.name for s in leagueList"></select>
+            </div>
+            <div class="col-lg-4" style="padding-left: 0;">
+                <input placeholder="Season To Update" type="text" class="form-control" data-ng-model="seasonToUpdateId"/>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" data-ng-click="updateLeague()">Save</button>
+                <button type="button" class="btn btn-danger" data-ng-click="cancelUpdateLeague()">Cancel</button>
+            </div>
+
+        </div>
     </div>
     <table class="table table-bordered table-hover table-striped" style="margin-top: 10px;">
         <thead>
         <tr>
             <th>Name</th>
+            <th>League</th>
             <th>Active</th>
             <th>Actions</th>
         </tr>
@@ -21,10 +41,12 @@
         <tbody>
         <tr ng-repeat="s in seasonList">
             <td>{{s.name}}</td>
+            <td>{{s.league.name}}</td>
             <td>{{s.active}}</td>
             <td>
                 <i class="fa fa-fw fa-calendar-check-o" title="Activate Season" ng-click="activateUnactivateSeason(s,true)" style="cursor:pointer;"></i>
                 <i class="fa fa-fw fa-calendar-minus-o" title="Unactivate Season" ng-click="activateUnactivateSeason(s,false)" style="cursor:pointer;"></i>
+                <i class="fa fa-fw fa-edit" title="Update Season" ng-click="selectSeasonToUpdate(s)" style="cursor:pointer;"></i>
             </td>
         </tr>
         </tbody>
