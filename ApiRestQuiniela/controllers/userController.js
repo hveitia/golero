@@ -276,7 +276,8 @@ exports.add = function (req, res) {
 exports.register = function (req, res) {
 
     try {
-        USERMODEL.findOne({registerHash: req.body.pass}, function (err, user) {
+
+        USERMODEL.findOne({pass: req.body.pass}, function (err, user) {
 
             if (err) {
                 res.send(500, err.message);
@@ -304,12 +305,14 @@ exports.register = function (req, res) {
                 obj.save(function (err, result) {
                     if (err) return res.send(500, err.message);
 
-                    res.status(200).jsonp(result);
+                    res.status(200).jsonp('OK');
                 });
             }
             else {
+
                 logController.saveLog('Register', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'DUPLEX', 'userController', 'register');
-                res.status(200).jsonp('DUPLEX');
+
+                res.status(200).jsonp(user);
             }
 
         });

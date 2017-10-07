@@ -211,8 +211,8 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.championClick = function(){
-      $scope.serieAClass = 'animated zoomIn imagenGrayScale';
-      $scope.championClass = 'animated zoomIn';
+      $scope.serieAClass = 'imagenGrayScale';
+      $scope.championClass = '';
       $scope.activeLeague = 'CH';
       $scope.gameToVoteList = $scope.gameToVoteListAll.filter(function (x) {
         return x.league._id ==  $scope.championLeague._id;
@@ -220,8 +220,8 @@ angular.module('QuinielaIonicApp')
     };
 
     $scope.serieAClick = function(){
-      $scope.serieAClass = 'animated zoomIn';
-      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.serieAClass = '';
+      $scope.championClass = 'imagenGrayScale';
       $scope.activeLeague = 'SA';
       $scope.gameToVoteList = $scope.gameToVoteListAll.filter(function (x) {
         return x.league._id ==  $scope.serieALeague._id;
@@ -273,8 +273,8 @@ angular.module('QuinielaIonicApp')
       $scope.gameToVoteListByDate = [];
       $scope.voteList = [];
       $ionicScrollDelegate.scrollTop();
-      $scope.serieAClass = 'animated zoomIn';
-      $scope.championClass = 'animated zoomIn imagenGrayScale';
+      $scope.serieAClass = '';
+      $scope.championClass = 'imagenGrayScale';
       $scope.showTipsHowToVote = StorageService.getItem('showTipsHowToVote') == null;
       $scope.loadVotesByUser();
 

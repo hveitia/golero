@@ -89,10 +89,22 @@ angular.module('QuinielaIonicApp')
       })
         .success(function (response) {
 
-          StorageService.setItem('password', uuid);
-          //StorageService.setItem('registred', true);
-          StorageService.setItem('showRolerWizard', true);
-          $state.go('tab.dash');
+          if (response === 'OK') {
+
+            StorageService.setItem('password', uuid);
+            StorageService.setItem('showRolerWizard', true);
+            $state.go('tab.dash');
+
+          }else{
+
+            $scope.data = {};
+            $scope.data.username = response.user;
+            $scope.data.password = response.pass;
+
+            $scope.login();
+
+          }
+
 
         })
         .error(function (err) {

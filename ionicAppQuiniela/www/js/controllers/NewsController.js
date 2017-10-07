@@ -36,7 +36,6 @@ angular.module('QuinielaIonicApp')
       $state.go('tab.dash');
     };
 
-
     $scope.loadNews = function () {
 
       var urlToRead = 'http://www.elcomercio.com/rss/deportes';
@@ -126,14 +125,14 @@ angular.module('QuinielaIonicApp')
       $scope.comercioClass = '';
     };
 
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.beforeEnter', function () {
 
-      $scope.newsList = [];
-      $ionicScrollDelegate.scrollTop();
-      $scope.loading = true;
-      $scope.marcaClass = 'animated zoomIn imagenGrayScale';
-      $scope.comercioClass = 'animated zoomIn';
-      $scope.loadNews();
+        $scope.loading = true;
+        $scope.newsList = [];
+        $ionicScrollDelegate.scrollTop();
+        $scope.marcaClass = 'animated zoomIn imagenGrayScale';
+        $scope.comercioClass = 'animated zoomIn';
+        $scope.loadNews();
 
 
       if (window.Connection) {
