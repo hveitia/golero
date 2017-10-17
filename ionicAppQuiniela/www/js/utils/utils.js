@@ -10,7 +10,7 @@
 var enviroment = 'PROD';//PROD - DEV
 
 var iosVersion = 0;
-var androidVersion = 138;
+var androidVersion = 148;
 
 
 var urlApiAWS = 'http://ec2-52-35-13-146.us-west-2.compute.amazonaws.com/api/';
