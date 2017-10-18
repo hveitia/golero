@@ -543,6 +543,16 @@
                         }
                     });
                 },
+                clearUsers: function(){
+                    return $http({
+                        method: 'GET',
+                        url: urlApi + 'clearUsers',
+                        headers: {
+                            'Authorization': 'Bearer ' + GetLocalStorage('userToken'),
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                },
                 deleteVote: function (vote) {
                     return $http({
                         method: 'DELETE',

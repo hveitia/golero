@@ -111,6 +111,20 @@ angular.module('QuinielaApp')
                 })
             };
 
+            $scope.clearUsers = function(){
+
+                HandleDataService.clearUsers().succes(function (data) {
+
+                    alert('ok');
+                    $scope.pageload();
+
+                }).error(function(err){
+                    console.log(err);
+                });
+
+
+            };
+
             $scope.pageload();
 
         }
