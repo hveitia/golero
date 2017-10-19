@@ -383,9 +383,9 @@ exports.update = function (req, res) {
 
                                             updated = true;
                                             var old = element.user.leaguePoints[i].points;
-                                            var neww = old + val;
+                                            old += value;
 
-                                            element.user.leaguePoints.set(i, {league: keyLeague, points: neww});
+                                            element.user.leaguePoints.set(i, {league: keyLeague, points: old});
 
                                             if (element.user.leaguePoints[i].points < 0) {
                                                 element.user.leaguePoints[i].points = 0;

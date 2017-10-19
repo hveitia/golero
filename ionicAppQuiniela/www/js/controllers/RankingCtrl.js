@@ -52,7 +52,7 @@ angular.module('QuinielaIonicApp')
 
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < $scope.voteList.length; j++) {
-            if ($scope.voteList[j].game == data[i]._id && data[i].state == 'UPDATED') {
+            if ($scope.voteList[j].game == data[i]._id && data[i].state == 'UPDATED' && ($scope.activeLeagueId == data[i].league._id || $scope.activeLeagueId == '')) {
 
               if (data[i].especialDate) {
                 data[i].date = data[i].especialDate;
@@ -232,6 +232,7 @@ angular.module('QuinielaIonicApp')
       $scope.championClass = 'animated zoomIn';
       $scope.generalClass = 'animated zoomIn imagenGrayScale';
       $scope.activeLeague = 'CH';
+      $scope.activeLeagueId = $scope.championLeague._id;
       $scope.loading = true;
       RankinService.userRankingLeague($scope.championLeague._id).success(function (data) {
 
@@ -273,7 +274,7 @@ angular.module('QuinielaIonicApp')
       $scope.championClass = 'animated zoomIn imagenGrayScale';
       $scope.generalClass = 'animated zoomIn imagenGrayScale';
       $scope.activeLeague = 'SA';
-
+      $scope.activeLeagueId = $scope.serieALeague._id;
       RankinService.userRankingLeague($scope.serieALeague._id).success(function (data) {
 
         $scope.rankinList = data;
@@ -336,6 +337,7 @@ angular.module('QuinielaIonicApp')
       $scope.generalClass = 'animated zoomIn';
       $scope.championClass = 'animated zoomIn imagenGrayScale';
       $scope.activeLeague = 'GE';
+      $scope.activeLeagueId = '';
       $scope.loadRanking();
 
     };
@@ -349,6 +351,8 @@ angular.module('QuinielaIonicApp')
       $ionicScrollDelegate.scrollTop();
       $scope.voteList = [];
       $scope.gameVotedList = [];
+      $scope.activeLeague = 'GE';
+      $scope.activeLeagueId = '';
       $scope.serieAClass = 'animated zoomIn imagenGrayScale';
       $scope.generalClass = 'animated zoomIn';
       $scope.championClass = 'animated zoomIn imagenGrayScale';

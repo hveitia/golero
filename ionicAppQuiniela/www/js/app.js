@@ -76,13 +76,6 @@ angular.module('QuinielaIonicApp', ['ionic', 'chart.js', 'QuinielaIonicApp.Servi
         controller: 'NewsController'
       })
 
-      .state('positionsTable', {
-        url: '/positionsTable',
-        templateUrl: 'templates/positionsTable.html',
-        controller: 'PositionsTableController'
-      })
-
-
       // setup an abstract state for the tabs directive
       .state('tab', {
         url: '/tab',
