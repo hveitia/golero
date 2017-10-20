@@ -236,7 +236,7 @@
   <script id="roler-user-modal.html" type="text/ng-template">
     <ion-modal-view>
       <ion-header-bar>
-        <h1 class="title" style="color:white;">{{modalEnrolerTitle}}</h1>
+        <h1 class="title" style="color:white; text-align: center;">{{modalEnrolerTitle}}</h1>
       </ion-header-bar>
       <ion-content style="text-align:center;" id="roler" ng-class="{'roler': enroler == 'name'}">
         <div class="row">
@@ -273,6 +273,26 @@
             <div class="col-90 text-left" style="margin-top: 10px; margin-left: 5px;">
               <span data-ng-click="showInformativePopup('terminosCondiciones')"
                     style="font-style: oblique; text-decoration: underline; color: white; font-weight: bold;">Acepto Términos y Condiciones</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center" style="margin-top: 40px;">
+              <span style="color: white; font-weight: bold;">Ya tengo una cuenta en Golero</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-80" style="margin-left: auto; margin-right: auto;">
+              <label class="item item-input" style="border: none; padding: 0 0 5px 16px;">
+                <i class="icon ion-email "></i>
+                <input type="text" placeholder="Número de recuperación" data-ng-model="data.recoveryNum" maxlength="6" style="margin-left: 10px;">
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-80" style="margin-left: auto; margin-right: auto;">
+              <button class="button button-block button-small"
+                      data-ng-click="recoverAccount()" style="background: #190855; color: white;">Aceptar
+              </button>
             </div>
           </div>
 

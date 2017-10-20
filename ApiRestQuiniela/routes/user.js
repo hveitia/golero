@@ -79,6 +79,9 @@ router.route('/editName')
 router.route('/register')
     .post(userController.register);
 
+router.route('/recoverAccount')
+    .post(userController.recoverAccount);
+
 router.route('/authenticate')
     .post(authController.authenticate);
 

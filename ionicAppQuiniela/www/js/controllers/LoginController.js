@@ -10,7 +10,7 @@ angular.module('QuinielaIonicApp')
         $scope.data.password = 'admin';
       }
 
-      if ($scope.data.username && $scope.data.username != '' && $scope.data.password && $scope.data.password != '') {
+      if (!EsNuloVacio($scope.data.username) && !EsNuloVacio($scope.data.password)) {
 
         $http.post(urlApi + 'authenticate', {
           "user": $scope.data.username,
@@ -95,7 +95,7 @@ angular.module('QuinielaIonicApp')
             StorageService.setItem('showRolerWizard', true);
             $state.go('tab.dash');
 
-          }else{
+          } else {
 
             $scope.data = {};
             $scope.data.username = response.user;
@@ -135,7 +135,6 @@ angular.module('QuinielaIonicApp')
       return true;
     };
 
-
     document.addEventListener("deviceready", function () {
 
       var registred = StorageService.getItem('registred');
@@ -148,8 +147,9 @@ angular.module('QuinielaIonicApp')
     $scope.$on('$ionicView.enter', function () {
 
       if (enviroment == 'DEV') {
-        $scope.login();
-        //$scope.addUserUUDI(Math.floor(Date.now()));
+        //$scope.login();
+        $scope.uuidDEV = Math.floor(Date.now());
+        $scope.addUserUUDI($scope.uuidDEV);
       } else {
 
         var user = StorageService.getItem('user');

@@ -576,6 +576,89 @@ angular.module('QuinielaIonicApp')
 
     };
 
+    $scope.recoverAccount = function () {
+
+      if (!EsNuloVacio($scope.data.recoveryNum)) {
+
+        $http.post(urlApi + 'recoverAccount', {
+          "recoverCode": $scope.data.recoveryNum,
+          "pass": (enviroment == 'DEV') ? Math.floor(Date.now()) : $cordovaDevice.getUUID()
+        })
+          .success(function (response) {
+
+            if (response === '404') {
+              $ionicPopup.alert({
+                title: 'Ingreso Fallido',
+                template: 'El número de recuperación es incorrecto. Por favor intente de nuevo.'
+              });
+            } else {
+
+              $scope.data = {};
+              $scope.data.username = response.user;
+              $scope.data.password = response.pass;
+
+              $scope.login();
+            }
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }else{
+        $ionicPopup.alert({
+          title: 'Ingreso Fallido',
+          template: 'El número de recuperación no puede estar vacío.'
+        });
+      }
+
+    };
+
+    $scope.login = function () {
+
+      if (!EsNuloVacio($scope.data.username) && !EsNuloVacio($scope.data.password)) {
+
+        $http.post(urlApi + 'authenticate', {
+          "user": $scope.data.username,
+          "pass": $scope.data.password
+        })
+          .success(function (response) {
+
+            if (!response.success) {
+              $ionicPopup.alert({
+                title: 'Ingreso Fallido',
+                template: returnApiCodes[response.message]
+              });
+
+            } else {
+
+              StorageService.setItem('token', response.token);
+              StorageService.setItem('user', $scope.data.username);
+              StorageService.setItem('password', $scope.data.password);
+              StorageService.setItem('showRolerWizard', false);
+
+              $scope.voteList = [];
+              $scope.todayVoteList = [];
+              $scope.teamList = [];
+              $scope.closeModalRoler();
+              $scope.loadUserData();
+              $scope.loadTeamsAll();
+              $scope.username = StorageService.getItem('user');
+              $scope.loadVotesByUser();
+              $scope.loadRankingPosition();
+              $scope.loadactiveVotesByUser();
+              $scope.loadTodayVotes();
+
+              $ionicHistory.clearHistory();
+              $ionicHistory.clearCache();
+
+              $scope.verifyUpdate();
+            }
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
+    };
+
     $scope.$on('$ionicView.enter', function () {
       $scope.showNavBar = true;
       $scope.data = {};
@@ -603,6 +686,26 @@ angular.module('QuinielaIonicApp')
 
       $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
+
+      $scope.verifyUpdate();
+
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+            title: textConectionLost.title,
+            template: textConectionLost.text,
+            buttons: [
+              {
+                text: 'Reintentar', type: 'button-positive', onTap: function (e) {
+                $state.go('tab.dash');
+              }
+              }]
+          });
+        }
+      }
+    });
+
+    $scope.verifyUpdate = function () {
 
       if (ionic.Platform.isIOS()) {
 
@@ -655,22 +758,7 @@ angular.module('QuinielaIonicApp')
           });
         }
       }
-
-      if (window.Connection) {
-        if (navigator.connection.type == Connection.NONE) {
-          $ionicPopup.confirm({
-            title: textConectionLost.title,
-            template: textConectionLost.text,
-            buttons: [
-              {
-                text: 'Reintentar', type: 'button-positive', onTap: function (e) {
-                $state.go('tab.dash');
-              }
-              }]
-          });
-        }
-      }
-    });
+    }
 
     $ionicPlatform.on('resume', function () {
       if ($state.current.name != 'news')

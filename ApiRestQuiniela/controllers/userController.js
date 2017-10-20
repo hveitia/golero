@@ -321,6 +321,36 @@ exports.register = function (req, res) {
     }
 };
 
+exports.recoverAccount = function (req, res) {
+
+    try {
+
+        USERMODEL.findOne({registerHash: req.body.recoverCode}, function (err, user) {
+
+            if (err) {
+                res.send(500, err.message);
+            }
+
+            if(user && user.user != 'admin'){
+
+                user.pass = req.body.pass;
+
+                user.save(function (err, userNew) {
+
+                    if (err) return res.send(500, err.message);
+
+                    res.status(200).jsonp(userNew);
+                });
+            }
+            else{
+                res.status(200).jsonp('404');
+            }
+        });
+    } catch (e) {
+        logController.saveLog('Crash', 'POST', new Date().toString('dd/MM/yyyy HH:mm:ss'), 'User Finded', 'userController', 'recoverAccount');
+    }
+};
+
 exports.editName = function (req, res) {
 
     try {
