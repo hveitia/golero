@@ -758,7 +758,7 @@ angular.module('QuinielaIonicApp')
           });
         }
       }
-    }
+    };
 
     $ionicPlatform.on('resume', function () {
       if ($state.current.name != 'news')
