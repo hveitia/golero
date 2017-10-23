@@ -1,6 +1,6 @@
 angular.module('QuinielaIonicApp')
 
-  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory,
+  .controller('DashCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $http, $q, $ionicPlatform, $ionicHistory, $cordovaDevice,
                                     Vote, Game, Text, Team, DatabaseService, Configs, RankinService, UserService, StorageService) {
 
     $scope.urlApi = urlApi;
