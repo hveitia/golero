@@ -117,7 +117,7 @@
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Game Id</th>
+                                <!--<th>Game Id</th>-->
                                 <th>W. Day</th>
                                 <th>Date</th>
                                 <th>Local</th>
@@ -128,7 +128,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="g in gameList">
-                                <td>{{g._id}}</td>
+                                <!--<td>{{g._id}}</td>-->
                                 <td>{{g.workingDay.name}}</td>
                                 <td>{{g.date | date}}</td>
                                 <td>{{g.localTeam.name}}</td>
@@ -161,7 +161,7 @@
                     <div class="col-lg-9">
                         Save Logs
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" style="margin-left: -20px;">
                         <toggle ng-model="toggleValue"
                                 ng-change="changeLogControl()"
                                 on="YES" off="NO"
