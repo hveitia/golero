@@ -7,6 +7,8 @@
 //todo: Implementar funcionalidad de Retos
 //todo: Poner % ganados y perdidos en la vista del user
 
+//Admob: ca-app-pub-2184234238287268~4884168391
+
 var enviroment = 'PROD';//PROD - DEV
 
 var iosVersion = 0;

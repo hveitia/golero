@@ -6,6 +6,7 @@ angular.module('QuinielaApp')
             $scope.pageload = function () {
 
                 $scope.showOnlyCreated = false;
+                $scope.showUsersOrder = false;
                 $scope.loaded = false;
                 $scope.loadRegisteredUsers();
 
@@ -100,6 +101,20 @@ angular.module('QuinielaApp')
                     }
                 }
             });
+
+            $scope.$watch('showUsersOrder', function () {
+
+                if ($scope.loaded) {
+                    if ($scope.showUsersOrder) {
+
+                        $scope.registeredUsersToShow = $scope.registeredUsers.sort(compare);
+
+                    } else {
+                        $scope.registeredUsersToShow = $scope.registeredUsers;
+                    }
+                }
+            });
+
 
             $scope.editPoints = function () {
                 HandleDataService.editPoints($scope.userNewPoint, $scope.newPoint).success(function (data) {

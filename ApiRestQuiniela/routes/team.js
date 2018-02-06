@@ -13,6 +13,9 @@ router.route('/team')
   .get(middleware.ensureAuthenticated, teamController.findAll)
   .post(middleware.ensureAuthenticated, teamController.add);
 
+router.route('/teamSA')
+    .get(middleware.ensureAuthenticated, teamController.findAllSerieA);
+
 router.route('/teamLeague/:league')
     .get(middleware.ensureAuthenticated, teamController.findByLeague);
 

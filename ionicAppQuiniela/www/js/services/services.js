@@ -281,7 +281,7 @@ angular.module('QuinielaIonicApp.Services', [])
       getTeamsAll: function () {
         return $http({
           method: 'GET',
-          url: urlApi + 'team',
+          url: urlApi + 'teamSA',
           headers: {
             'Authorization': 'Bearer ' + StorageService.getItem('token'),
             'Content-Type': 'application/json'

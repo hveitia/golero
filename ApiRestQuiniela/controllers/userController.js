@@ -467,7 +467,7 @@ exports.editPoints = function (req, res) {
 exports.resetUserPointsAll = function (req, res) {
 
     try {
-        USERMODEL.update({}, {points: 0}, {multi: true}, function (err) {
+        USERMODEL.update({}, {points: 0, leaguePoints: [], tickets: 0, reputation: 0, historicalPunctuation: [], ticketsState: 'WAITING'}, {multi: true}, function (err) {
 
             if (err)res.status(500).send(err.message);
 

@@ -160,6 +160,13 @@
                  data-ng-click="editFAvoriteTeam(item.logo)">
           </div>
         </div>
+        <div class="row" style="margin-top:30px;">
+          <div class="col-30" ng-repeat="item in teamList track by $index">
+            <img ng-src="./img/logos/{{item.logo}}"
+                 style="width:80%;" data-ng-show="$index > 11"
+                 data-ng-click="editFAvoriteTeam(item.logo)">
+          </div>
+        </div>
       </ion-content>
     </ion-modal-view>
   </script>
